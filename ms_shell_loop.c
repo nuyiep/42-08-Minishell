@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2022/12/24 18:03:11 by plau             ###   ########.fr       */
+/*   Updated: 2022/12/26 22:00:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	read_command(t_prg *prg)
 int	parse_command(t_prg *prg)
 {
 	prg->cmd = ft_split(prg->input, ' ');
+	get_command();
 	return (0);
 }
 
@@ -40,7 +41,7 @@ int	execute_command(t_prg *prg, char **envp)
 		return (0);
 	get_path(prg, envp);
 	get_address(prg);
-	child_process(prg, envp);
+	//child_process(prg, envp);
 	return (0);
 }
 
@@ -54,5 +55,5 @@ void	shell_loop(t_prg *prg, char **envp)
 		parse_command(prg);
 		execute_command(prg, envp);
 	}
-	ft_printf("exit\n");
+	ft_printf("bye");
 }

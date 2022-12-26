@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2022/12/24 17:31:52 by plau             ###   ########.fr       */
+/*   Updated: 2022/12/26 20:56:39 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
  * cmd = aftersplit input
  * envp = list of envp
  * npath = number of path taken from $PATH 
+ * hed = heredoc (whether there is two <<)
+ * cmdc = cmd count
  */
 typedef struct s_prg
 {
@@ -33,6 +35,8 @@ typedef struct s_prg
 	char	*cmdpath;
 	char	**envp;
 	int		npath;
+	int		hed;
+	int		cmdc;
 }	t_prg;
 
 void	init_struct(t_prg *prg);
