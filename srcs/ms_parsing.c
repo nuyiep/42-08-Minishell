@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2022/12/27 21:15:53 by plau             ###   ########.fr       */
+/*   Created: 2022/12/27 15:44:42 by plau              #+#    #+#             */
+/*   Updated: 2022/12/27 21:46:50 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+/* cat <       |infile|
+grep-n merry_xmas&haooy_mew_year > outfile */
+void	ms_parse(t_prg *prg)
 {
-	t_prg	prg;
+	int	i;
+	int	j;
 
-	init_struct(&prg, av, ac, envp);
-	setup_signal();
-	shell_loop(&prg, envp);
+	i = 0;
+	j = 0;
+	while (prg->cmd[i] != NULL)
+		i++;
 }

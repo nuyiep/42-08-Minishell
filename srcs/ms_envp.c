@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:35:47 by plau              #+#    #+#             */
-/*   Updated: 2022/12/24 18:02:22 by plau             ###   ########.fr       */
+/*   Updated: 2022/12/27 21:47:49 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,20 @@ void	get_address(t_prg *prg)
 		}
 		free(cmd);
 		free(temp);
+	}
+}
+
+void	print_env(t_prg *prg)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strcmp(prg->cmd[0], "env") == 0)
+	{
+		while (prg->ls_envp[i] != NULL)
+		{
+			ft_printf("%s\n", prg->ls_envp[i]);
+			i++;
+		}
 	}
 }

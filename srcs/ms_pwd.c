@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2022/12/27 21:15:53 by plau             ###   ########.fr       */
+/*   Created: 2022/12/27 16:57:15 by plau              #+#    #+#             */
+/*   Updated: 2022/12/27 21:47:08 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+/* PWD */
+void	pwd(t_prg *prg)
 {
-	t_prg	prg;
+	char	*pwd;
 
-	init_struct(&prg, av, ac, envp);
-	setup_signal();
-	shell_loop(&prg, envp);
+	pwd = getcwd(NULL, 0);
+	if (pwd == NULL)
+		exit_error("Pwd failed");
+	if (ft_strcmp(prg->cmd[0], "pwd") == 0)
+		ft_printf("%s\n", pwd);
+	free(pwd);
 }

@@ -6,41 +6,38 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2022/12/24 18:03:11 by plau             ###   ########.fr       */
+/*   Updated: 2022/12/27 21:46:02 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Main function to read command */
-/* Sucess return 0  */
-/* Fail to read or reach EOF return -1 */
 int	read_command(t_prg *prg)
 {	
 	prg->input = readline("$> ");
 	if (prg->input == NULL)
 		return (-1);
+	add_history(prg->input);
 	return (0);
 }
 
 /* Main function to parse command */
-/* Fail return -1 */
-int	parse_command(t_prg *prg)
+int	parsing(t_prg *prg)
 {
 	prg->cmd = ft_split(prg->input, ' ');
+	ms_parse(prg);
 	return (0);
 }
 
 /* Main function to execute command */
-/* Success return 0 */
-/* Fail return -1 */
+	// child_process(prg, envp);
 int	execute_command(t_prg *prg, char **envp)
 {
 	if (ft_strcmp(prg->cmd[0], "") == 0)
 		return (0);
 	get_path(prg, envp);
 	get_address(prg);
-	child_process(prg, envp);
 	return (0);
 }
 
@@ -51,8 +48,16 @@ void	shell_loop(t_prg *prg, char **envp)
 	{
 		if (read_command(prg) == -1)
 			break ;
-		parse_command(prg);
+		parsing(prg);
+		builtins(prg);
 		execute_command(prg, envp);
 	}
-	ft_printf("exit\n");
+	ft_printf("bye\n");
+}
+
+/* Main function for builtins */
+void	builtins(t_prg *prg)
+{
+	pwd(prg);
+	print_env(prg);
 }

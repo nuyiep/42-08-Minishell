@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2022/12/24 17:32:55 by plau             ###   ########.fr        #
+#    Updated: 2022/12/27 16:58:28 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,13 @@ CFLAGS		    +=		-I/usr/local/opt/readline/include
 READLINE		=		-lreadline
 READLINE		+=		-L/usr/local/opt/readline/lib
 SRCS_FILES    	=   	ms_main \
+						ms_pwd \
 						ms_init \
 						ms_exit \
 						ms_envp \
 						ms_signal \
 						ms_execute \
+						ms_parsing \
 						ms_shell_loop
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJS        	=     	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS_FILES)))
