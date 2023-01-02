@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 13:45:41 by plau              #+#    #+#             */
-/*   Updated: 2022/12/24 18:03:23 by plau             ###   ########.fr       */
+/*   Updated: 2022/12/30 13:30:39 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	setup_signal(void)
 	controlc.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &controlc);
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	//signal(SIGQUIT, SIG_IGN);
 }

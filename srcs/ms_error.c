@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/01/02 18:40:36 by plau             ###   ########.fr       */
+/*   Created: 2022/12/24 16:49:20 by plau              #+#    #+#             */
+/*   Updated: 2022/12/30 13:24:54 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+/* Go to new line- invalid command */
+// void	new_line(t_prg *prg)
+// {
+// 	read_command(prg);
+// }
+
+/* Prints error and go to new line */
+void	error_nl(t_prg *prg, char *str)
 {
-	t_prg	prg;
-
-	init_struct(&prg, av, ac, envp);
-	setup_signal();
-	shell_loop(&prg, envp);
+	perror(str);
+	read_command(prg);
 }
-

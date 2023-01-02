@@ -6,13 +6,15 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:35:47 by plau              #+#    #+#             */
-/*   Updated: 2022/12/27 21:47:49 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/02 15:31:41 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* To get the "PATH=" line from envp */
+/* To calculate the number of path */
+/* Calculate the number of env lines */
 void	get_path(t_prg *prg, char **envp)
 {
 	char	*path;
@@ -31,10 +33,12 @@ void	get_path(t_prg *prg, char **envp)
 	}
 	while (prg->envp[prg->npath] != NULL)
 		prg->npath++;
+	while (prg->ls_envp[prg->n_env] != NULL)
+		prg->n_env++;
 }
 
 /* To get the PATH address */
-void	get_address(t_prg *prg)
+void	get_address_one(t_prg *prg)
 {
 	int		i;
 	char	*temp;
@@ -44,11 +48,11 @@ void	get_address(t_prg *prg)
 	while (i < prg->npath)
 	{
 		temp = ft_strjoin(prg->envp[i], "/");
-		cmd = ft_strjoin(temp, prg->cmd[0]);
+		cmd = ft_strjoin(temp, prg->token.cmd1);
 		i++;
 		if (access(cmd, F_OK) == 0)
 		{
-			prg->cmdpath = cmd;
+			prg->cmdpath1 = cmd;
 			free(temp);
 			return ;
 		}
@@ -57,17 +61,38 @@ void	get_address(t_prg *prg)
 	}
 }
 
-void	print_env(t_prg *prg)
+void	get_address_two(t_prg *prg)
+{
+	int		i;
+	char	*temp;
+	char	*cmd;
+
+	i = 0;
+	while (i < prg->npath)
+	{
+		temp = ft_strjoin(prg->envp[i], "/");
+		cmd = ft_strjoin(temp, prg->token.cmd2);
+		i++;
+		if (access(cmd, F_OK) == 0)
+		{
+			prg->cmdpath2 = cmd;
+			free(temp);
+			return ;
+		}
+		free(cmd);
+		free(temp);
+	}
+}
+
+/* To print the list of env */
+void	env(t_prg *prg)
 {
 	int	i;
 
 	i = 0;
-	if (ft_strcmp(prg->cmd[0], "env") == 0)
+	while (prg->ls_envp[i] != NULL)
 	{
-		while (prg->ls_envp[i] != NULL)
-		{
-			ft_printf("%s\n", prg->ls_envp[i]);
-			i++;
-		}
+		ft_printf("%s\n", prg->ls_envp[i]);
+		i++;
 	}
 }

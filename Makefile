@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2022/12/27 16:58:28 by plau             ###   ########.fr        #
+#    Updated: 2023/01/02 13:50:00 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,10 @@ READLINE		+=		-L/usr/local/opt/readline/lib
 SRCS_FILES    	=   	ms_main \
 						ms_pwd \
 						ms_init \
-						ms_exit \
+						ms_echo \
+						ms_error \
 						ms_envp \
+						ms_export \
 						ms_signal \
 						ms_execute \
 						ms_parsing \

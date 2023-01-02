@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2022/12/27 20:56:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/02 17:28:13 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,26 @@ void	init_struct(t_prg *prg, char **av, int ac, char **envp)
 	prg->npath = 0;
 	prg->av = av;
 	prg->ac = ac;
+	
 	prg->ls_envp = envp;
+	prg->fd_in = -3;
+	prg->fd_out = -3;
+	prg->cmdpath2 = NULL;
+	prg->ccmd = 1;
+	prg->n_env = 0;
+	prg->echo_f = 0;
+}
+
+/* cat <       |infile|
+// grep-n merry_xmas&haooy_mew_year > outfile */
+
+// Only handling this grammar for now
+// ls < infile | cat > outfile
+// 7 tokens 
+/* Initialize tokens */
+void	init_token(t_prg *prg)
+{
+	prg->token.all_token = ft_split(prg->input, ' ');
+	prg->token.cmd1 = prg->token.all_token[0];
+	prg->token.all_cmd1 = ft_split(prg->token.cmd1, ' ');
 }

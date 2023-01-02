@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/01/02 18:40:36 by plau             ###   ########.fr       */
+/*   Created: 2023/01/02 13:39:53 by plau              #+#    #+#             */
+/*   Updated: 2023/01/02 15:47:25 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+// export PANDA=cute
+// env PANDA (will print cute)
+// exit
+
+/* If export is called without any arguments, print env */
+/* Otherwise, add the given variables to the env variables */
+void	export(t_prg *prg)
 {
-	t_prg	prg;
-
-	init_struct(&prg, av, ac, envp);
-	setup_signal();
-	shell_loop(&prg, envp);
+	if (prg->token.all_token[1] == NULL)
+		env(prg);
+	else
+	{
+		ft_printf("\nchecking here\n\n");
+		//ft_printf("%d\n", prg->n_env);
+		prg->ls_envp[prg->n_env] = prg->token.all_token[1];
+		env(prg);
+	}
 }
-

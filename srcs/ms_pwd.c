@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:57:15 by plau              #+#    #+#             */
-/*   Updated: 2022/12/27 21:47:08 by plau             ###   ########.fr       */
+/*   Updated: 2022/12/30 21:29:37 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	pwd(t_prg *prg)
 
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
-		exit_error("Pwd failed");
-	if (ft_strcmp(prg->cmd[0], "pwd") == 0)
-		ft_printf("%s\n", pwd);
+		error_nl(prg, "Pwd failed");
+	ft_printf("%s\n", pwd);
 	free(pwd);
 }
