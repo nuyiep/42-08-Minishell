@@ -6,26 +6,84 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:39:53 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 14:20:43 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/10 19:43:15 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// export PANDA=cute
-// env PANDA (will print cute)
+/* print sorted env with declare -x suffix */
+void	declare_x(t_prg *prg, char **envp)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*smaller;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while (prg->ls_envp[k] != NULL)
+		k++;
+	while (j < k - 1)
+	{
+		i = 0;
+		while (i < k - 1)
+		{
+			if (ft_strcmp(prg->ls_envp[i], prg->ls_envp[i + 1]) > 0)
+			{
+				smaller = prg->ls_envp[i + 1];
+				prg->ls_envp[i + 1] = prg->ls_envp[i];
+				prg->ls_envp[i] = smaller;
+			}
+			else
+				i++;
+		}
+		j++;
+	}
+	i = 0;
+	while (i < k)
+	{
+		ft_printf("declare -x %s\n", prg->ls_envp[i]);
+		i++;
+	}
+	(void)envp;
+}
+
+// export BBTEAM=Giants
+// env $BBTEAM (will print Giants)
 // exit
 
-/* If export is called without any arguments, print env */
+/* If export is called without any arguments, print env with declare -x */
 /* Otherwise, add the given variables to the env variables */
-void	export(t_prg *prg)
+void	export(t_prg *prg, char **envp)
 {
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	j = 0;
+	k = 0;
 	if (prg->token.all_token[1] == NULL)
-		env(prg);
+		declare_x(prg, envp);
 	else
 	{
-		ft_printf("\nchecking here\n\n");
-		prg->ls_envp[prg->n_env] = prg->token.all_token[1];
-		env(prg);
+		if (ft_strcmp(prg->token.all_token[1], "=") == 0)
+			error_nl(prg, "export = is not a valid identifier");
+		while (prg->ls_envp[i] != NULL)
+			i++;
+		prg->ls_envp[i] = malloc(sizeof(char) * ft_strlen(prg->token.all_token[1]) + 1);
+		prg->ls_envp[i] = prg->token.all_token[1];
+		// while (prg->token.all_token[1][j] != '\0')
+		// {
+		// 	prg->ls_envp[i][k] = prg->token.all_token[1][j]; 
+		// 	j++;
+		// 	k++;
+		// 	if (prg->ls_envp[i][k] == '=')
+		// 	{
+		// 		prg->ls_envp[i][k++] == '"';
+		// 	}
+		// }
 	}
 }

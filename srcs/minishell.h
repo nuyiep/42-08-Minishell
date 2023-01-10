@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 13:13:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/10 17:37:23 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_token
 /**
  * input = what user typed
  * cmd = aftersplit input
- * envp = list of envp
+ * envp = list of envp where PATH=
  * npath = number of path taken from $PATH 
  * fd_in = fd number for infile
  * n_env = number of env lines
@@ -85,7 +85,7 @@ int		builtins(t_prg *prg, char **envp);
 void	pwd(t_prg *prg);
 void	env(t_prg *prg);
 void	echo(t_prg *prg, char **av);
-void	export(t_prg *prg);
+void	export(t_prg *prg, char **envp);
 int		check_flag(char *arg);
 void	cd(t_prg *prg, char **envp);
 
