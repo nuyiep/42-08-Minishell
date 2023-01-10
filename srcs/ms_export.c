@@ -6,25 +6,17 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:39:53 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 19:43:15 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/10 19:54:11 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* print sorted env with declare -x suffix */
-void	declare_x(t_prg *prg, char **envp)
+/* Bubble sort */
+void	bubble_sort(t_prg *prg, int j, int k, int i)
 {
-	int		i;
-	int		j;
-	int		k;
 	char	*smaller;
 
-	i = 0;
-	j = 0;
-	k = 0;
-	while (prg->ls_envp[k] != NULL)
-		k++;
 	while (j < k - 1)
 	{
 		i = 0;
@@ -41,6 +33,21 @@ void	declare_x(t_prg *prg, char **envp)
 		}
 		j++;
 	}
+}
+
+/* print sorted env with declare -x suffix */
+void	declare_x(t_prg *prg, char **envp)
+{
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while (prg->ls_envp[k] != NULL)
+		k++;
+	bubble_sort(prg, j, k, i);
 	i = 0;
 	while (i < k)
 	{
