@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:57:15 by plau              #+#    #+#             */
-/*   Updated: 2022/12/30 21:29:37 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/09 13:54:26 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	pwd(t_prg *prg)
 {
 	char	*pwd;
 
+	if (prg->token.all_token[1] != NULL)
+		ft_printf("Too many arguments\n");
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 		error_nl(prg, "Pwd failed");

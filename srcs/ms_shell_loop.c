@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/01/02 18:43:03 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/10 14:27:41 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,6 @@ int	get_data(t_prg *prg, char **envp)
 	return (0);
 }
 
-/* Main function for builtins */
-int	builtins(t_prg *prg)
-{
-	if (ft_strcmp(prg->token.all_token[0], "pwd") == 0)
-	{
-		pwd(prg);
-		return (1);
-	}
-	if (ft_strcmp(prg->token.all_token[0], "echo") == 0)
-	{
-		echo(prg, prg->token.all_token);
-		return (1);
-	}
-	if (ft_strcmp(prg->token.all_token[0], "env") == 0)
-	{
-		env(prg);
-		return (1);
-	}
-	if (ft_strcmp(prg->token.all_token[0], "export") == 0)
-	{
-		export(prg);
-		return (1);
-	}
-	else
-		return (0);
-}
-
 /* Main function for shell loop */
 void	shell_loop(t_prg *prg, char **envp)
 {
@@ -77,14 +50,14 @@ void	shell_loop(t_prg *prg, char **envp)
 			break ;
 		parsing(prg);
 		get_data(prg, envp);
-		if (builtins(prg))
+		if (builtins(prg, envp))
 			continue ;
 		if (prg->fd_in != -3)
 			check_open(prg);
 		if (prg->cmdpath2 == NULL)
 		{
 			execve(prg->cmdpath1, prg->token.all_cmd1, envp);
-			continue ; 
+			continue ;
 		}
 		create_child(prg);
 	}

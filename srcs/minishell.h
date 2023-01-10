@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/01/02 18:40:18 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/10 13:13:13 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_prg
 	char	**av;
 	char	**envp;
 	char	**ls_envp;
+	char	*home;
 	int		ac;
 	int		npath;
 	int		fd_in;
@@ -80,19 +81,18 @@ void	get_address_one(t_prg *prg);
 void	get_address_two(t_prg *prg);
 
 /* Builtins */
-int		builtins(t_prg *prg);
+int		builtins(t_prg *prg, char **envp);
 void	pwd(t_prg *prg);
 void	env(t_prg *prg);
 void	echo(t_prg *prg, char **av);
 void	export(t_prg *prg);
 int		check_flag(char *arg);
+void	cd(t_prg *prg, char **envp);
 
 /* Helper functions */
 void	error_nl(t_prg *prg, char *str);
 
 /* Initialize */
 void	check_open(t_prg *prg);
-
-
 
 #endif

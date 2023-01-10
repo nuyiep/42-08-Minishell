@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:39:53 by plau              #+#    #+#             */
-/*   Updated: 2023/01/02 15:47:25 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/10 14:20:43 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	export(t_prg *prg)
 	else
 	{
 		ft_printf("\nchecking here\n\n");
-		//ft_printf("%d\n", prg->n_env);
 		prg->ls_envp[prg->n_env] = prg->token.all_token[1];
 		env(prg);
 	}

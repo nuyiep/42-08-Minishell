@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/01/02 17:28:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/10 13:14:54 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	init_struct(t_prg *prg, char **av, int ac, char **envp)
 	prg->npath = 0;
 	prg->av = av;
 	prg->ac = ac;
-	
 	prg->ls_envp = envp;
 	prg->fd_in = -3;
 	prg->fd_out = -3;

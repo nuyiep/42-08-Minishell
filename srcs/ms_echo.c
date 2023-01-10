@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:27:26 by plau              #+#    #+#             */
-/*   Updated: 2023/01/02 18:46:22 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/10 13:16:39 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_flag(char *arg)
 		if (arg[i] != 'n')
 			return (0);
 	}
-	return (1);			
+	return (1);
 }	
 
 /* Echo with \n */
@@ -57,8 +57,7 @@ void	echo(t_prg *prg, char **input)
 	}
 	if (check_flag(input[1]) == 0)
 		ft_printf("\n");
-}		
-	
+}
 	/*
 		check if echo command
 		int i = 1;
