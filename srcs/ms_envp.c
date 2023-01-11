@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:35:47 by plau              #+#    #+#             */
-/*   Updated: 2023/01/02 15:31:41 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/11 18:32:20 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,6 @@ void	get_address_one(t_prg *prg)
 		if (access(cmd, F_OK) == 0)
 		{
 			prg->cmdpath1 = cmd;
-			free(temp);
-			return ;
-		}
-		free(cmd);
-		free(temp);
-	}
-}
-
-void	get_address_two(t_prg *prg)
-{
-	int		i;
-	char	*temp;
-	char	*cmd;
-
-	i = 0;
-	while (i < prg->npath)
-	{
-		temp = ft_strjoin(prg->envp[i], "/");
-		cmd = ft_strjoin(temp, prg->token.cmd2);
-		i++;
-		if (access(cmd, F_OK) == 0)
-		{
-			prg->cmdpath2 = cmd;
 			free(temp);
 			return ;
 		}

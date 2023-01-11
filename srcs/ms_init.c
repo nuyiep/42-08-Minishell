@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 13:14:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/11 18:31:29 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,5 @@ void	init_struct(t_prg *prg, char **av, int ac, char **envp)
 /* Initialize tokens */
 void	init_token(t_prg *prg)
 {
-	prg->token.all_token = ft_split(prg->input, ' ');
-	prg->token.cmd1 = prg->token.all_token[0];
-	prg->token.all_cmd1 = ft_split(prg->token.cmd1, ' ');
+	(void)prg;
 }

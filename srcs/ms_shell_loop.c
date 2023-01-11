@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 14:27:41 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/11 18:37:38 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 /* Main function to read command */
 int	read_command(t_prg *prg)
 {	
+	if (prg->input)
+		free(prg->input);
 	prg->input = readline("$> ");
 	if (prg->input == NULL)
 		return (-1);
@@ -25,20 +27,20 @@ int	read_command(t_prg *prg)
 /* Main function to parse command */
 int	parsing(t_prg *prg)
 {
-	init_token(prg);
+	if (prg->token.all_token)
+		ft_freesplit(prg->token.all_token);
+	prg->token.all_token = ft_split(prg->input, ' ');
 	return (0);
 }
 
 /* Main function to execute command */
-	// child_process(prg, envp);
 int	get_data(t_prg *prg, char **envp)
 {
 	if (ft_strcmp(prg->token.cmd1, "") == 0)
 		return (0);
-	get_path(prg, envp);
 	get_address_one(prg);
-	get_address_two(prg);
 	return (0);
+	(void)envp;
 }
 
 /* Main function for shell loop */
@@ -50,16 +52,9 @@ void	shell_loop(t_prg *prg, char **envp)
 			break ;
 		parsing(prg);
 		get_data(prg, envp);
+		system("leaks -q minishell");
 		if (builtins(prg, envp))
 			continue ;
-		if (prg->fd_in != -3)
-			check_open(prg);
-		if (prg->cmdpath2 == NULL)
-		{
-			execve(prg->cmdpath1, prg->token.all_cmd1, envp);
-			continue ;
-		}
-		create_child(prg);
 	}
 	ft_printf("bye\n");
 }

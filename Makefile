@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/01/10 14:28:29 by plau             ###   ########.fr        #
+#    Updated: 2023/01/11 18:38:11 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ SRCS_FILES    	=   	ms_main \
 						ms_export \
 						ms_signal \
 						ms_execute \
-						ms_parsing \
 						ms_builtins \
 						ms_shell_loop
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))

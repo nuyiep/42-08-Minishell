@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 16:31:01 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/11 18:18:44 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ int	main(int ac, char **av, char **envp)
 	init_struct(&prg, av, ac, envp);
 	setup_signal();
 	shell_loop(&prg, envp);
+	system("leaks -q minishell");
 }

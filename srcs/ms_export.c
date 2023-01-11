@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/02 13:39:53 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 19:54:11 by plau             ###   ########.fr       */
+/*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
+/*   Updated: 2023/01/11 18:37:23 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,40 +57,60 @@ void	declare_x(t_prg *prg, char **envp)
 	(void)envp;
 }
 
-// export BBTEAM=Giants
-// env $BBTEAM (will print Giants)
-// exit
+char	**seperate_key_value(char *arg)
+{
+	char	**output;
+	char	**arg_list;
+
+	output = ft_calloc(3, sizeof(char *));
+	arg_list = ft_split(arg, '=');
+	output[0] = arg_list[0];
+	output[1] = ft_strdup(arg + ft_strlen(output[0]) + 1);
+	output[2] = 0;
+	if (output[1][0] == '\0')
+	{
+		if (arg[ft_strlen(arg) - 1] == '=')
+		{
+			ft_printf("Empty string\n");
+			output[1] = "";
+		}
+		else
+		{
+			ft_printf("No value\n");
+			output[1] = 0;
+		}
+	}
+	return (output);
+}
 
 /* If export is called without any arguments, print env with declare -x */
-/* Otherwise, add the given variables to the env variables */
+/* Otherwise, add the given variables to the end of env variables */
+
+// export a -> No value
+// export a= -> Value is empty string
 void	export(t_prg *prg, char **envp)
 {
-	int		i;
-	int		j;
-	int		k;
+	char	**pair; //[key, value]
 
-	i = 0;
-	j = 0;
-	k = 0;
 	if (prg->token.all_token[1] == NULL)
 		declare_x(prg, envp);
 	else
 	{
-		if (ft_strcmp(prg->token.all_token[1], "=") == 0)
-			error_nl(prg, "export = is not a valid identifier");
-		while (prg->ls_envp[i] != NULL)
-			i++;
-		prg->ls_envp[i] = malloc(sizeof(char) * ft_strlen(prg->token.all_token[1]) + 1);
-		prg->ls_envp[i] = prg->token.all_token[1];
-		// while (prg->token.all_token[1][j] != '\0')
-		// {
-		// 	prg->ls_envp[i][k] = prg->token.all_token[1][j]; 
-		// 	j++;
-		// 	k++;
-		// 	if (prg->ls_envp[i][k] == '=')
-		// 	{
-		// 		prg->ls_envp[i][k++] == '"';
-		// 	}
-		// }
+		pair = seperate_key_value(prg->token.all_token[1]);
+		ft_printf("|%s|\n", pair[0]);
+		ft_printf("|%s|\n", pair[1]);
+		ft_printf("|%s|\n", pair[2]);
+		/*
+		
+			if (already exist)
+				update;
+			else
+			{
+				if (value == 0)
+					put key only;
+				else
+					put key + value;
+			}
+		*/
 	}
 }

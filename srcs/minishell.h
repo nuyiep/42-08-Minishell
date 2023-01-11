@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 17:37:23 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/11 18:32:31 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_prg
 	char	**envp;
 	char	**ls_envp;
 	char	*home;
+	char	*key;
+	char	*value;
 	int		ac;
 	int		npath;
 	int		fd_in;
@@ -78,7 +80,6 @@ void	init_token(t_prg *prg);
 /* Execution */
 void	create_child(t_prg *prg);
 void	get_address_one(t_prg *prg);
-void	get_address_two(t_prg *prg);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp);
