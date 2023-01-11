@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/01/11 18:32:31 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/11 19:18:29 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int		read_command(t_prg *prg);
 
 /* Parsing */
 void	get_path(t_prg *prg, char **envp);
-void	get_address(t_prg *prg);
 void	init_token(t_prg *prg);
 
 /* Execution */
@@ -89,6 +88,8 @@ void	echo(t_prg *prg, char **av);
 void	export(t_prg *prg, char **envp);
 int		check_flag(char *arg);
 void	cd(t_prg *prg, char **envp);
+int		key_exist(t_prg *prg, char *key);
+void	update_key(t_prg *prg, char *key);
 
 /* Helper functions */
 void	error_nl(t_prg *prg, char *str);

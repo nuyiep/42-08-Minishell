@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/01/11 18:37:38 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/11 19:25:14 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	shell_loop(t_prg *prg, char **envp)
 			break ;
 		parsing(prg);
 		get_data(prg, envp);
-		system("leaks -q minishell");
 		if (builtins(prg, envp))
 			continue ;
 	}
