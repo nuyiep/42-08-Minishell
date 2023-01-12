@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:25 by plau              #+#    #+#             */
-/*   Updated: 2023/01/11 19:43:37 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/12 15:12:46 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	key_exist(t_prg *prg, char *key)
 		split = ft_split(prg->ls_envp[i], '=');
 		if (ft_strcmp(split[0], key) == 0)
 		{
-			ft_freesplit(split);	
+			ft_freesplit(split);
 			return (1);
 		}
 		ft_freesplit(split);
@@ -73,7 +73,6 @@ void	update_key(t_prg *prg, char *key)
  */
 // void	add_without_eq(t_prg *prg, char *key)
 // {
-	
 // }
 
 /**

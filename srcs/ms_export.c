@@ -6,16 +6,17 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
-/*   Updated: 2023/01/12 14:42:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/12 15:14:06 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Bubble sort */
-void	bubble_sort(char **envp, int j, int k, int i)
+void	bubble_sort(char **envp, int j, int k)
 {
 	char	*smaller;
+	int		i;
 
 	while (j < k - 1)
 	{
@@ -35,39 +36,7 @@ void	bubble_sort(char **envp, int j, int k, int i)
 	}
 }
 
-/* print sorted env with declare -x suffix */
-// Remember to duplicate envp before sorting
-void	declare_x(t_prg *prg, char **envp)
-{
-	int		i;
-	int		j;
-	int		k;
-	int		h;
-	char	**new_envp;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	h = 0;
-	while (prg->ls_envp[k] != NULL)
-		k++;
-	new_envp = malloc(sizeof(char *) * (k + 1));
-	while (prg->ls_envp[h] != NULL)
-	{
-		new_envp[h] = ft_strdup(prg->ls_envp[h]);
-		h++;
-	}
-	new_envp[h] = NULL;
-	bubble_sort(new_envp, j, k, i);
-	i = 0;
-	while (i < k)
-	{
-		ft_printf("declare -x %s\n", new_envp[i]);
-		i++;
-	}
-	(void)envp;
-}
-
+/* Separate key=value */
 char	**seperate_key_value(char *arg)
 {
 	char	**output;
@@ -90,6 +59,41 @@ char	**seperate_key_value(char *arg)
 	return (output);
 }
 
+/* print sorted env with declare -x suffix */
+// Ok- Remember to duplicate envp before sorting
+// Ok- Remember to add "" to value
+void	declare_x(t_prg *prg, char **envp)
+{
+	int		j;
+	int		k;
+	int		h;
+	char	**new_envp;
+	char	**output;
+
+	j = 0;
+	k = 0;
+	h = 0;
+	while (prg->ls_envp[k] != NULL)
+		k++;
+	new_envp = malloc(sizeof(char *) * (k + 1));
+	while (prg->ls_envp[h] != NULL)
+	{
+		new_envp[h] = ft_strdup(prg->ls_envp[h]);
+		h++;
+	}
+	new_envp[h] = NULL;
+	bubble_sort(new_envp, j, k);
+	j = 0;
+	while (j < k)
+	{
+		output = seperate_key_value(new_envp[j]);
+		ft_printf("declare -x %s", output[0]);
+		ft_printf("=\"%s\"\n", output[1]);
+		j++;
+	}
+	(void)envp;
+}
+
 /* If export is called without any arguments, print env with declare -x */
 /* Otherwise, add the given variables to the end of env variables */
 
@@ -100,8 +104,6 @@ void	export(t_prg *prg, char **envp)
 	char	**pair;
 	int		i;
 
-	// Remember to add "" to value
-	
 	if (prg->token.all_token[1] == NULL)
 		declare_x(prg, envp);
 	else
