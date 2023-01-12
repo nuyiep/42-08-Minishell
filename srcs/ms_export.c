@@ -6,14 +6,14 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
-/*   Updated: 2023/01/11 19:19:44 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/12 14:42:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Bubble sort */
-void	bubble_sort(t_prg *prg, int j, int k, int i)
+void	bubble_sort(char **envp, int j, int k, int i)
 {
 	char	*smaller;
 
@@ -22,11 +22,11 @@ void	bubble_sort(t_prg *prg, int j, int k, int i)
 		i = 0;
 		while (i < k - 1)
 		{
-			if (ft_strcmp(prg->ls_envp[i], prg->ls_envp[i + 1]) > 0)
+			if (ft_strcmp(envp[i], envp[i + 1]) > 0)
 			{
-				smaller = prg->ls_envp[i + 1];
-				prg->ls_envp[i + 1] = prg->ls_envp[i];
-				prg->ls_envp[i] = smaller;
+				smaller = envp[i + 1];
+				envp[i + 1] = envp[i];
+				envp[i] = smaller;
 			}
 			else
 				i++;
@@ -36,22 +36,33 @@ void	bubble_sort(t_prg *prg, int j, int k, int i)
 }
 
 /* print sorted env with declare -x suffix */
+// Remember to duplicate envp before sorting
 void	declare_x(t_prg *prg, char **envp)
 {
 	int		i;
 	int		j;
 	int		k;
+	int		h;
+	char	**new_envp;
 
 	i = 0;
 	j = 0;
 	k = 0;
+	h = 0;
 	while (prg->ls_envp[k] != NULL)
 		k++;
-	bubble_sort(prg, j, k, i);
+	new_envp = malloc(sizeof(char *) * (k + 1));
+	while (prg->ls_envp[h] != NULL)
+	{
+		new_envp[h] = ft_strdup(prg->ls_envp[h]);
+		h++;
+	}
+	new_envp[h] = NULL;
+	bubble_sort(new_envp, j, k, i);
 	i = 0;
 	while (i < k)
 	{
-		ft_printf("declare -x %s\n", prg->ls_envp[i]);
+		ft_printf("declare -x %s\n", new_envp[i]);
 		i++;
 	}
 	(void)envp;
@@ -90,7 +101,7 @@ void	export(t_prg *prg, char **envp)
 	int		i;
 
 	// Remember to add "" to value
-	// Remember to duplicate envp before sorting
+	
 	if (prg->token.all_token[1] == NULL)
 		declare_x(prg, envp);
 	else
