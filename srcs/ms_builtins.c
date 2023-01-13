@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:27:06 by plau              #+#    #+#             */
-/*   Updated: 2023/01/11 15:55:10 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/13 14:25:34 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	builtins(t_prg *prg, char **envp)
 	}
 	if (ft_strcmp(prg->token.all_token[0], "export") == 0)
 	{
-		export(prg, envp);
+		export(prg);
 		return (1);
 	}
 	else

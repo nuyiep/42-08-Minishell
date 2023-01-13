@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:25 by plau              #+#    #+#             */
-/*   Updated: 2023/01/12 15:12:46 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/13 16:51:00 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	key_exist(t_prg *prg, char *key)
  * Free old envp
  * Update new envp
  */
-void	update_key(t_prg *prg, char *key)
+void	update_key(t_prg *prg, char *arg, char *key)
 {
 	char	**new_envp;
 	char	**split;
@@ -56,7 +56,7 @@ void	update_key(t_prg *prg, char *key)
 	while (j < i)
 	{
 		split = ft_split(prg->ls_envp[j], '=');
-		if (ft_strcmp(split[0], key) == 0)
+		if (ft_strcmp(split[0], key) == 0 && ft_strchr(arg, '=') != NULL)
 			new_envp[j] = ft_strdup(prg->token.all_token[1]);
 		else
 			new_envp[j] = ft_strdup(prg->ls_envp[j]);
@@ -70,16 +70,28 @@ void	update_key(t_prg *prg, char *key)
 
 /**
  * declare -x a
- */
-// void	add_without_eq(t_prg *prg, char *key)
-// {
-// }
-
-/**
  * declare -x a="" 
  * declare -x key=value
  */
-// void	add_with_eq(t_prg *prg, char *key)
-// {
+void	add_key(t_prg *prg, char *str)
+{
+	char	**new_envp;
+	int		i;
+	int		j;
 
-// }
+	i = 0;
+	while (prg->ls_envp[i] != NULL)
+		i++;
+	new_envp = malloc(sizeof(char *) * (i + 2));
+	j = 0;
+	while (j < i)
+	{
+		new_envp[j] = ft_strdup(prg->ls_envp[j]);
+		j++;
+	}
+	new_envp[j] = ft_strdup(str);
+	j++;
+	new_envp[j] = 0;
+	ft_freesplit(prg->ls_envp);
+	prg->ls_envp = new_envp;
+}

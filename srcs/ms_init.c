@@ -6,18 +6,18 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/01/11 19:28:37 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/13 16:11:05 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Initialize struct */
-void	init_struct(t_prg *prg, char **av, int ac, char **envp)
+/* Initialize struct for envp */
+void	init_envp(t_prg *prg, char **envp)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (envp[i])
 		i++;
 	prg->ls_envp = ft_calloc(i + 1, sizeof(char *));
@@ -25,6 +25,12 @@ void	init_struct(t_prg *prg, char **av, int ac, char **envp)
 	while (envp[++i])
 		prg->ls_envp[i] = ft_strdup(envp[i]);
 	prg->ls_envp[i] = 0;
+}
+
+/* Initialize struct */
+void	init_struct(t_prg *prg, char **av, int ac, char **envp)
+{
+	init_envp(prg, envp);
 	prg->input = 0;
 	prg->npath = 0;
 	prg->av = av;

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/01/11 19:18:29 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/13 16:51:02 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_prg
 	char	*home;
 	char	*key;
 	char	*value;
+	char	**export;
 	int		ac;
 	int		npath;
 	int		fd_in;
@@ -85,11 +86,14 @@ int		builtins(t_prg *prg, char **envp);
 void	pwd(t_prg *prg);
 void	env(t_prg *prg);
 void	echo(t_prg *prg, char **av);
-void	export(t_prg *prg, char **envp);
+void	export(t_prg *prg);
 int		check_flag(char *arg);
 void	cd(t_prg *prg, char **envp);
 int		key_exist(t_prg *prg, char *key);
-void	update_key(t_prg *prg, char *key);
+void	update_key(t_prg *prg, char *arg, char *key);
+void	declare_x(t_prg *prg);
+char	**seperate_key_value(char *arg);
+void	add_key(t_prg *prg, char *str);
 
 /* Helper functions */
 void	error_nl(t_prg *prg, char *str);

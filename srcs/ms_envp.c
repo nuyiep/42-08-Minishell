@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:35:47 by plau              #+#    #+#             */
-/*   Updated: 2023/01/11 18:32:20 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/13 16:55:57 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,21 @@ void	get_address_one(t_prg *prg)
 	}
 }
 
+/* Check whether key has value */
+int	got_value(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 /* To print the list of env */
 void	env(t_prg *prg)
 {
@@ -69,7 +84,8 @@ void	env(t_prg *prg)
 	i = 0;
 	while (prg->ls_envp[i] != NULL)
 	{
-		ft_printf("%s\n", prg->ls_envp[i]);
+		if (got_value(prg->ls_envp[i]))
+			ft_printf("%s\n", prg->ls_envp[i]);
 		i++;
 	}
 }
