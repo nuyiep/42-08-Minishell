@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:27:06 by plau              #+#    #+#             */
-/*   Updated: 2023/01/13 14:25:34 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/13 18:27:24 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	builtins_2(t_prg *prg, char **envp)
 	if (ft_strcmp(prg->token.all_token[0], "cd") == 0)
 	{
 		cd(prg, envp);
+		return (1);
+	}
+	if (ft_strcmp(prg->token.all_token[0], "unset") == 0)
+	{
+		unset(prg);
 		return (1);
 	}
 	else
