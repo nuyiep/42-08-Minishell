@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/01/13 21:47:30 by plau             ###   ########.fr        #
+#    Updated: 2023/01/16 13:36:31 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC            	=    	gcc
 RM            	=    	rm -f
 CFLAGS       	=    	-Wall -Wextra -Werror
 CFLAGS		    +=		-I/usr/local/opt/readline/include
-CFLAGS       	+=    	-fsanitize=address -g3
+# CFLAGS       	+=    	-fsanitize=address -g3
 READLINE		=		-lreadline
 READLINE		+=		-L/usr/local/opt/readline/lib
 SRCS_FILES    	=   	ms_main \

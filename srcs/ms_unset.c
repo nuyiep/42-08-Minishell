@@ -6,14 +6,13 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:15:00 by plau              #+#    #+#             */
-/*   Updated: 2023/01/14 18:25:57 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/16 15:53:44 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Remove envp */
-// if 
 void	remove_update_envp(t_prg *prg)
 {
 	char	**new_envp;
@@ -27,7 +26,8 @@ void	remove_update_envp(t_prg *prg)
 	output = NULL;
 	while (prg->ls_envp[i] != NULL)
 		i++;
-	new_envp = malloc(sizeof(char *) * (i + 1));
+	new_envp = malloc(sizeof(char *) * i);
+	ft_printf("i: %d\n", i);
 	j = 0;
 	while (k < i)
 	{
@@ -42,13 +42,13 @@ void	remove_update_envp(t_prg *prg)
 		}
 		k++;
 	}
-	ft_printf("j: %d\n", j);
-	ft_printf("k: %d\n", k);
 	new_envp[j] = 0;
 	prg->ls_envp = new_envp;
+	ft_freesplit(output);
 }
 
 /* Return 1 if token match with envp token */
+/* Need this function to allocate correct memory */
 int	match(t_prg *prg)
 {
 	int		i;

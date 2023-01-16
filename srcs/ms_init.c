@@ -6,13 +6,13 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/01/13 16:11:05 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/16 14:12:04 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Initialize struct for envp */
+/* Make a copy of env and save into struct */
 void	init_envp(t_prg *prg, char **envp)
 {
 	int	i;
