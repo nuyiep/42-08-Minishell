@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
-/*   Updated: 2023/01/16 13:18:52 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/16 18:18:13 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	bubble_sort(char **envp, int j, int k)
 }
 
 /* Separate key=value */
-char	**seperate_key_value(char *arg)
+char	**separate_key_value(char *arg)
 {
 	char	**output;
 	char	**arg_list;
@@ -60,14 +60,14 @@ char	**seperate_key_value(char *arg)
 	return (output);
 }
 
-void	seperate_print(int k, char **output, char **new_envp)
+void	separate_print(int k, char **output, char **new_envp)
 {
 	int	j;
 
 	j = 0;
 	while (j < k)
 	{
-		output = seperate_key_value(new_envp[j]);
+		output = separate_key_value(new_envp[j]);
 		ft_printf("declare -x %s", output[0]);
 		if (output[1] != NULL)
 			ft_printf("=\"%s\"\n", output[1]);
@@ -92,10 +92,10 @@ void	declare_x(t_prg *prg)
 
 	j = 0;
 	k = 0;
-	h = 0;
 	output = NULL;
 	while (prg->ls_envp[k] != NULL)
 		k++;
+	h = 0;
 	new_envp = malloc(sizeof(char *) * (k + 1));
 	while (prg->ls_envp[h] != NULL)
 	{
@@ -104,7 +104,7 @@ void	declare_x(t_prg *prg)
 	}
 	new_envp[h] = NULL;
 	bubble_sort(new_envp, j, k);
-	seperate_print(k, output, new_envp);
+	separate_print(k, output, new_envp);
 }
 
 /* If export is called without any arguments, print env with declare -x */
@@ -123,7 +123,7 @@ void	export(t_prg *prg)
 		i = 0;
 		while (prg->token.all_token[++i])
 		{
-			pair = seperate_key_value(prg->token.all_token[i]);
+			pair = separate_key_value(prg->token.all_token[i]);
 			if (key_exist(prg, pair[0]))
 				update_key(prg, prg->token.all_token[i], pair[0]);
 			else

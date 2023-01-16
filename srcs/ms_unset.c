@@ -6,13 +6,17 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:15:00 by plau              #+#    #+#             */
-/*   Updated: 2023/01/16 15:53:44 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/16 18:42:50 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Remove envp */
+/* Copy envp to a temp (new_envp) */
+/* free struct envp */
+/* Copy temp to struct envp */
+/* Free temp */
 void	remove_update_envp(t_prg *prg)
 {
 	char	**new_envp;
@@ -20,31 +24,46 @@ void	remove_update_envp(t_prg *prg)
 	int		i;
 	int		j;
 	int		k;
+	int		free;
 
 	i = 0;
-	k = 0;
 	output = NULL;
 	while (prg->ls_envp[i] != NULL)
 		i++;
 	new_envp = malloc(sizeof(char *) * i);
 	ft_printf("i: %d\n", i);
+	k = 0;
 	j = 0;
-	while (k < i)
+	while (prg->ls_envp[k] != NULL)
 	{
-		if (ft_strchr(prg->ls_envp[j], '=') != NULL)
-			output = seperate_key_value(prg->ls_envp[j]);
+		free = 0;
+		if (ft_strchr(prg->ls_envp[k], '=') != NULL)
+		{
+			output = separate_key_value(prg->ls_envp[k]);
+			free = 1;
+		}
 		else
-			output[0] = prg->ls_envp[j];
+			output[0] = prg->ls_envp[k];
 		if (ft_strcmp(prg->token.all_token[1], output[0]) != 0)
 		{
 			new_envp[j] = ft_strdup(prg->ls_envp[k]);
 			j++;
+			if (free == 1)
+				ft_freesplit(output);
 		}
 		k++;
 	}
 	new_envp[j] = 0;
-	prg->ls_envp = new_envp;
-	ft_freesplit(output);
+	ft_freesplit(prg->ls_envp);
+	i = 0;
+	prg->ls_envp = malloc(sizeof(char *) * (j + 1));
+	while (new_envp[i] != 0)
+	{
+		prg->ls_envp[i] = ft_strdup(new_envp[i]);
+		i++;
+	}
+	prg->ls_envp[i] = 0;
+	ft_freesplit(new_envp);
 }
 
 /* Return 1 if token match with envp token */
@@ -56,13 +75,13 @@ int	match(t_prg *prg)
 	int		free;
 
 	i = 0;
-	free = 0;
 	output = NULL;
 	while (prg->ls_envp[i] != NULL)
 	{
+		free = 0;
 		if (ft_strchr(prg->ls_envp[i], '=') != NULL)
 		{
-			output = seperate_key_value(prg->ls_envp[i]);
+			output = separate_key_value(prg->ls_envp[i]);
 			free = 1;
 		}
 		else

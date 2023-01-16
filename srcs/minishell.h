@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/01/13 18:27:48 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/16 17:29:04 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	cd(t_prg *prg, char **envp);
 int		key_exist(t_prg *prg, char *key);
 void	update_key(t_prg *prg, char *arg, char *key);
 void	declare_x(t_prg *prg);
-char	**seperate_key_value(char *arg);
+char	**separate_key_value(char *arg);
 void	add_key(t_prg *prg, char *str);
 void	unset(t_prg *prg);
 
