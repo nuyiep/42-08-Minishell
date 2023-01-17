@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 16:07:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 17:23:48 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,8 @@ void	ms_exit(t_prg *prg);
 
 /* Helper functions */
 void	error_nl(t_prg *prg, char *str);
+
+/* Nicholas */
+char *expand(t_prg *prg, char *key);
 
 #endif

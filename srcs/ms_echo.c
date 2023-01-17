@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:27:26 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 13:16:39 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 17:23:25 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	check_flag(char *arg)
 void	echo(t_prg *prg, char **input)
 {
 	int	i;
+	char *value;
 
 	i = 1;
 	if (ft_strcmp(input[0], "echo") != 0)
@@ -50,9 +51,17 @@ void	echo(t_prg *prg, char **input)
 	}
 	while (input[i] != NULL)
 	{
-		ft_printf("%s", input[i]);
-		if (input[i + 1] != 0)
-			ft_printf(" ");
+		if (input [i][0] == '$')
+		{
+			value = expand(prg, input[i]);
+			printf("%s", value);
+		}
+		else
+		{
+			ft_printf("%s", input[i]);
+			if (input[i + 1] != 0)
+				ft_printf(" ");
+		}
 		i++;
 	}
 	if (check_flag(input[1]) == 0)
