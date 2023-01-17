@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:27:06 by plau              #+#    #+#             */
-/*   Updated: 2023/01/13 18:27:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 15:17:14 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	builtins_2(t_prg *prg, char **envp)
 		unset(prg);
 		return (1);
 	}
+	if (ft_strcmp(prg->token.all_token[0], "exit") == 0)
+	{
+		ms_exit(prg);
+		return (1);
+	}	
 	else
 		return (0);
 }
