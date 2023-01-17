@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 16:31:22 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 14:12:10 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	cd(t_prg *prg, char **envp)
 {
 	char	*newdir;
 
-	if (prg->token.all_token[1] == NULL)
+	if (prg->all_token[1] == NULL)
 	{
 		newdir = get_home_path(envp);
 		chdir(newdir);
 		free(newdir);
 	}
-	else if (prg->token.all_token[1] != NULL)
-		chdir(prg->token.all_token[1]);
+	else if (prg->all_token[1] != NULL)
+		chdir(prg->all_token[1]);
 }

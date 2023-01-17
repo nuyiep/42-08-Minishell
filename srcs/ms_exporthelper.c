@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:25 by plau              #+#    #+#             */
-/*   Updated: 2023/01/13 16:51:00 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	update_key(t_prg *prg, char *arg, char *key)
 	{
 		split = ft_split(prg->ls_envp[j], '=');
 		if (ft_strcmp(split[0], key) == 0 && ft_strchr(arg, '=') != NULL)
-			new_envp[j] = ft_strdup(prg->token.all_token[1]);
+			new_envp[j] = ft_strdup(prg->all_token[1]);
 		else
 			new_envp[j] = ft_strdup(prg->ls_envp[j]);
 		j++;

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
-/*   Updated: 2023/01/16 18:18:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,22 +116,22 @@ void	export(t_prg *prg)
 	char	**pair;
 	int		i;
 
-	if (prg->token.all_token[1] == NULL)
+	if (prg->all_token[1] == NULL)
 		declare_x(prg);
 	else
 	{
 		i = 0;
-		while (prg->token.all_token[++i])
+		while (prg->all_token[++i])
 		{
-			pair = separate_key_value(prg->token.all_token[i]);
+			pair = separate_key_value(prg->all_token[i]);
 			if (key_exist(prg, pair[0]))
-				update_key(prg, prg->token.all_token[i], pair[0]);
+				update_key(prg, prg->all_token[i], pair[0]);
 			else
 			{
 				if (pair[1] == NULL)
 					add_key(prg, pair[0]);
 				else
-					add_key(prg, prg->token.all_token[i]);
+					add_key(prg, prg->all_token[i]);
 			}
 			ft_freesplit(pair);
 		}

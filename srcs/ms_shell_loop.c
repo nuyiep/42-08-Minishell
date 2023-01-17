@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/01/11 19:25:14 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,10 @@ int	read_command(t_prg *prg)
 /* Main function to parse command */
 int	parsing(t_prg *prg)
 {
-	if (prg->token.all_token)
-		ft_freesplit(prg->token.all_token);
-	prg->token.all_token = ft_split(prg->input, ' ');
+	if (prg->all_token)
+		ft_freesplit(prg->all_token);
+	prg->all_token = ft_split(prg->input, ' ');
 	return (0);
-}
-
-/* Main function to execute command */
-int	get_data(t_prg *prg, char **envp)
-{
-	if (ft_strcmp(prg->token.cmd1, "") == 0)
-		return (0);
-	get_address_one(prg);
-	return (0);
-	(void)envp;
 }
 
 /* Main function for shell loop */
@@ -51,7 +41,6 @@ void	shell_loop(t_prg *prg, char **envp)
 		if (read_command(prg) == -1)
 			break ;
 		parsing(prg);
-		get_data(prg, envp);
 		if (builtins(prg, envp))
 			continue ;
 	}

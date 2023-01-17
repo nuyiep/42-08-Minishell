@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/01/17 15:06:45 by plau             ###   ########.fr        #
+#    Updated: 2023/01/17 15:58:47 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ SRCS_FILES    	=   	ms_main \
 						ms_error \
 						ms_export \
 						ms_signal \
-						ms_execute \
 						ms_builtins \
 						ms_shell_loop \
 						ms_exporthelper

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:15:00 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 14:33:46 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	copy_envp(t_prg *prg, int k, char **output, char **new_envp)
 		}
 		else
 			output[0] = prg->ls_envp[k];
-		if (ft_strcmp(prg->token.all_token[1], output[0]) != 0)
+		if (ft_strcmp(prg->all_token[1], output[0]) != 0)
 		{
 			new_envp[j] = ft_strdup(prg->ls_envp[k]);
 			j++;
@@ -90,7 +90,7 @@ int	match(t_prg *prg, char **output)
 		}
 		else
 			output[0] = prg->ls_envp[i];
-		if (ft_strcmp(prg->token.all_token[1], output[0]) == 0)
+		if (ft_strcmp(prg->all_token[1], output[0]) == 0)
 		{
 			if (free == 1)
 				ft_freesplit(output);
@@ -112,7 +112,7 @@ void	unset(t_prg *prg)
 	char	**output;
 
 	output = NULL;
-	if (prg->token.all_token[1] != NULL)
+	if (prg->all_token[1] != NULL)
 	{
 		if (match(prg, output) == 1)
 			remove_update_envp(prg, output);

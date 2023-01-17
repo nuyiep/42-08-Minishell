@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:35:47 by plau              #+#    #+#             */
-/*   Updated: 2023/01/13 16:55:57 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 15:48:53 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,34 +30,6 @@ void	get_path(t_prg *prg, char **envp)
 			free (path);
 		}
 		i++;
-	}
-	while (prg->envp[prg->npath] != NULL)
-		prg->npath++;
-	while (prg->ls_envp[prg->n_env] != NULL)
-		prg->n_env++;
-}
-
-/* To get the PATH address */
-void	get_address_one(t_prg *prg)
-{
-	int		i;
-	char	*temp;
-	char	*cmd;
-
-	i = 0;
-	while (i < prg->npath)
-	{
-		temp = ft_strjoin(prg->envp[i], "/");
-		cmd = ft_strjoin(temp, prg->token.cmd1);
-		i++;
-		if (access(cmd, F_OK) == 0)
-		{
-			prg->cmdpath1 = cmd;
-			free(temp);
-			return ;
-		}
-		free(cmd);
-		free(temp);
 	}
 }
 
