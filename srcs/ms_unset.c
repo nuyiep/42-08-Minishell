@@ -6,32 +6,17 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:15:00 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 13:54:52 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 14:33:46 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Remove envp */
-/* Copy envp to a temp (new_envp) */
-/* free struct envp */
-/* Copy temp to struct envp */
-/* Free temp */
-void	remove_update_envp(t_prg *prg)
+int	copy_envp(t_prg *prg, int k, char **output, char **new_envp)
 {
-	char	**new_envp;
-	char	**output;
-	int		i;
-	int		j;
-	int		k;
-	int		free;
+	int	free;
+	int	j;
 
-	i = 0;
-	output = NULL;
-	while (prg->ls_envp[i] != NULL)
-		i++;
-	new_envp = malloc(sizeof(char *) * i);
-	k = 0;
 	j = 0;
 	while (prg->ls_envp[k] != NULL)
 	{
@@ -52,6 +37,28 @@ void	remove_update_envp(t_prg *prg)
 			ft_freesplit(output);
 		k++;
 	}
+	return (j);
+}
+
+/* Remove envp */
+/* Copy envp to a temp (new_envp) */
+/* free struct envp */
+/* Copy temp to struct envp */
+/* Free temp */
+void	remove_update_envp(t_prg *prg, char **output)
+{
+	char	**new_envp;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	while (prg->ls_envp[i] != NULL)
+		i++;
+	new_envp = malloc(sizeof(char *) * i);
+	k = 0;
+	j = 0;
+	j = copy_envp(prg, k, output, new_envp);
 	new_envp[j] = 0;
 	ft_freesplit(prg->ls_envp);
 	i = 0;
@@ -67,14 +74,12 @@ void	remove_update_envp(t_prg *prg)
 
 /* Return 1 if token match with envp token */
 /* Need this function to allocate correct memory */
-int	match(t_prg *prg)
+int	match(t_prg *prg, char **output)
 {
 	int		i;
-	char	**output;
 	int		free;
 
 	i = 0;
-	output = NULL;
 	while (prg->ls_envp[i] != NULL)
 	{
 		free = 0;
@@ -90,7 +95,6 @@ int	match(t_prg *prg)
 			if (free == 1)
 				ft_freesplit(output);
 			return (1);
-	
 		}
 		if (free == 1)
 			ft_freesplit(output);
@@ -105,9 +109,12 @@ int	match(t_prg *prg)
 /* If no, copy to the new envp */
 void	unset(t_prg *prg)
 {
+	char	**output;
+
+	output = NULL;
 	if (prg->token.all_token[1] != NULL)
 	{
-		if (match(prg) == 1)
-			remove_update_envp(prg);
+		if (match(prg, output) == 1)
+			remove_update_envp(prg, output);
 	}
 }
