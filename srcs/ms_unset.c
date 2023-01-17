@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:15:00 by plau              #+#    #+#             */
-/*   Updated: 2023/01/16 18:42:50 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 13:54:52 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	remove_update_envp(t_prg *prg)
 	while (prg->ls_envp[i] != NULL)
 		i++;
 	new_envp = malloc(sizeof(char *) * i);
-	ft_printf("i: %d\n", i);
 	k = 0;
 	j = 0;
 	while (prg->ls_envp[k] != NULL)
@@ -48,9 +47,9 @@ void	remove_update_envp(t_prg *prg)
 		{
 			new_envp[j] = ft_strdup(prg->ls_envp[k]);
 			j++;
-			if (free == 1)
-				ft_freesplit(output);
 		}
+		if (free == 1)
+			ft_freesplit(output);
 		k++;
 	}
 	new_envp[j] = 0;
@@ -91,11 +90,12 @@ int	match(t_prg *prg)
 			if (free == 1)
 				ft_freesplit(output);
 			return (1);
+	
 		}
+		if (free == 1)
+			ft_freesplit(output);
 		i++;
 	}
-	if (free == 1)
-		ft_freesplit(output);
 	return (0);
 }
 
@@ -105,9 +105,6 @@ int	match(t_prg *prg)
 /* If no, copy to the new envp */
 void	unset(t_prg *prg)
 {
-	int	i;
-
-	i = 0;
 	if (prg->token.all_token[1] != NULL)
 	{
 		if (match(prg) == 1)
