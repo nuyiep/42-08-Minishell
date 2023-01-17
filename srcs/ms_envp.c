@@ -6,32 +6,11 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:35:47 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 15:48:53 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/17 16:38:20 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* To get the "PATH=" line from envp */
-/* To calculate the number of path */
-/* Calculate the number of env lines */
-void	get_path(t_prg *prg, char **envp)
-{
-	char	*path;
-	int		i;
-
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			path = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
-			prg->envp = ft_split(path, ':');
-			free (path);
-		}
-		i++;
-	}
-}
 
 /* Check whether key has value */
 int	got_value(char *str)
