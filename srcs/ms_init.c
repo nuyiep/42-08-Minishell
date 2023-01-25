@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
+/*   Updated: 2023/01/25 13:38:33 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_envp(t_prg *prg, char **envp)
 	i = -1;
 	while (envp[++i])
 		prg->ls_envp[i] = ft_strdup(envp[i]);
-	prg->ls_envp[i] = 0;
+	prg->ls_envp[i] = NULL;
 }
 
 /* Initialize struct */

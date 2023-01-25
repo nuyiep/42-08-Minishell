@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:27:26 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 17:23:25 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/01/25 14:10:19 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,19 @@ void	echo(t_prg *prg, char **input)
 	i = 1;
 	if (ft_strcmp(input[0], "echo") != 0)
 		return ((void)prg);
-	while (input[i] != NULL)
+	while (input[i])
 	{
 		if (check_flag(input[i]) == 0)
 			break ;
 		i++;
 	}
-	while (input[i] != NULL)
+	while (input[i])
 	{
-		if (input [i][0] == '$')
+		if (input[i][0] == '$')
 		{
 			value = expand(prg, input[i]);
-			printf("%s", value);
+			ft_printf("%s", value);
+			break;
 		}
 		else
 		{
