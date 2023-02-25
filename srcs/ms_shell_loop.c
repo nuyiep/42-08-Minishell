@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_shell_loop.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
+/*   Updated: 2023/02/25 15:17:07 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,13 @@ void	shell_loop(t_prg *prg, char **envp)
 		if (builtins(prg, envp))
 			continue ;
 	}
+
+	/*
+	int i = 0;
+	while (prg->all_token[i]) {
+		ft_printf("%s [%d]\n", prg->all_token[i], i);
+		i++;
+	}
+	*/
 	ft_printf("bye\n");
 }

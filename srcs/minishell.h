@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 17:23:48 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/02/25 16:21:02 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 # include <termios.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+
+// typedef struct s_token
+// {
+// 	int len;
+// 	char *word;
+// 	char *c;
+// }	t_token;
 
 /**
  * input = what user typed

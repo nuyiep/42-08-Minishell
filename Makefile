@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+         #
+#    By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/01/17 17:27:10 by nchoo            ###   ########.fr        #
+#    Updated: 2023/02/25 15:09:50 by nchoo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ clean:
 fclean:         clean
 				make fclean -C $(LIBFT_DIR)
 				rm -rf $(NAME)
+				rm -rf $(TEST)
 
 re:             fclean all
 
-.PHONY:         all libft clean fclean re
+.PHONY:         all libft clean fclean re	
