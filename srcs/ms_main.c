@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
-{
-	t_prg	prg;
+// int	main(int ac, char **av, char **envp)
+// {
+// 	t_prg	prg;
 
-	init_struct(&prg, av, ac, envp);
-	setup_signal();
-	shell_loop(&prg, envp);
-	system("leaks -q minishell");
-}
+// 	init_struct(&prg, av, ac, envp);
+// 	setup_signal();
+// 	shell_loop(&prg, envp);
+// 	system("leaks -q minishell");
+// }

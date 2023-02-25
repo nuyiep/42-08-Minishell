@@ -33,7 +33,8 @@ SRCS_FILES    	=   	ms_main \
 						ms_builtins \
 						ms_shell_loop \
 						ms_exporthelper \
-						ms_expand
+						ms_expand \
+						ms_lexer
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJS        	=     	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS_FILES)))
 SRCS_DIR    	=    	srcs/
