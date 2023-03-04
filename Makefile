@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+         #
+#    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/01/17 17:27:10 by nchoo            ###   ########.fr        #
+#    Updated: 2023/03/04 16:18:49 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC            	=    	gcc
 RM            	=    	rm -f
 CFLAGS       	=    	-Wall -Wextra -Werror
 CFLAGS		    +=		-I/usr/local/opt/readline/include
-# CFLAGS       	+=    	-fsanitize=address -g3
+CFLAGS       	+=    	-fsanitize=address -g3
 READLINE		=		-lreadline
 READLINE		+=		-L/usr/local/opt/readline/lib
 SRCS_FILES    	=   	ms_main \
@@ -33,7 +33,9 @@ SRCS_FILES    	=   	ms_main \
 						ms_builtins \
 						ms_shell_loop \
 						ms_exporthelper \
-						ms_expand
+						ms_expand \
+						ms_executor \
+						ms_heredoc
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJS        	=     	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS_FILES)))
 SRCS_DIR    	=    	srcs/

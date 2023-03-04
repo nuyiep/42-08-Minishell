@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/01 15:52:48 by plau             ###   ########.fr       */
+/*   Created: 2023/03/01 15:53:51 by plau              #+#    #+#             */
+/*   Updated: 2023/03/03 17:29:16 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	main(int ac, char **av, char **envp)
-{
-	t_prg	prg;
-
-	init_struct(&prg, av, ac, envp);
-	setup_signal();
-	shell_loop(&prg, envp, av);
-	free(&prg);
-	system("leaks -q minishell");
-}
+ #include "minishell.h"
+ 
+ /* Main function for lexer */
+//  void	lexer(t_prg *prg, char **av)
+//  {
+	
+//  }

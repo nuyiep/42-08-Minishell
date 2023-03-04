@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/01 15:52:48 by plau             ###   ########.fr       */
+/*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
+/*   Updated: 2023/03/03 19:26:23 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
-{
-	t_prg	prg;
 
-	init_struct(&prg, av, ac, envp);
-	setup_signal();
-	shell_loop(&prg, envp, av);
-	free(&prg);
-	system("leaks -q minishell");
+
+/* Main function for executor */
+int	executor(t_prg *prg, char **av, char **envp)
+{
+	heredoc_main(prg, av, envp);
+	// do_pipex(prg, av, envp);
+	return (0);
 }

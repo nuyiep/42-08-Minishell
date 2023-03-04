@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 17:23:48 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/03 19:26:40 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,15 @@ typedef struct s_prg
 
 /* Initialization */
 void	init_struct(t_prg *prg, char **av, int ac, char **envp);
-void	shell_loop(t_prg *prg, char **envp);
+void	shell_loop(t_prg *prg, char **envp, char **av);
 void	setup_signal(void);
 int		read_command(t_prg *prg);
 
 /* Parsing */
 
-/* Execution */
+/* Executor */
+int		executor(t_prg *prg, char **av, char **envp);
+void	heredoc_main(t_prg *prg, char **av, char **envp);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp);

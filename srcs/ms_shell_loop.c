@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/03 17:29:29 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,16 @@ int	parsing(t_prg *prg)
 }
 
 /* Main function for shell loop */
-void	shell_loop(t_prg *prg, char **envp)
+void	shell_loop(t_prg *prg, char **envp, char **av)
 {
 	while (1)
 	{
 		if (read_command(prg) == -1)
 			break ;
+		//lexer(prg, av);
 		parsing(prg);
+		if (executor(prg, av, envp))
+			continue ;
 		if (builtins(prg, envp))
 			continue ;
 	}
