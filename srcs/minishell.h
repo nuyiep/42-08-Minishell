@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/03 19:26:40 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/08 15:14:48 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int		read_command(t_prg *prg);
 
 /* Executor */
 int		executor(t_prg *prg, char **av, char **envp);
-void	heredoc_main(t_prg *prg, char **av, char **envp);
+int		ms_heredoc(t_prg *prg, char **av, char **envp);
+int		ft_execute(char **av, int i, int temp_fd, char **envp, t_prg *prg);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp);
