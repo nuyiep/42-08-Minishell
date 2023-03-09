@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/06 13:56:53 by plau             ###   ########.fr        #
+#    Updated: 2023/03/09 12:12:45 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,12 @@ LIBFT        	=    	libft.a
 CC            	=    	gcc
 RM            	=    	rm -f
 CFLAGS       	=    	-Wall -Wextra -Werror
-# CFLAGS		    +=		-I/usr/local/opt/readline/include
-CFLAGS			+=		-I/opt/homebrew/opt/readline/include
+CFLAGS		    +=		-I/usr/local/opt/readline/include
+# CFLAGS			+=		-I/opt/homebrew/opt/readline/include
 CFLAGS       	+=    	-fsanitize=address -g3
 READLINE		=		-lreadline
-# READLINE		+=		-L/usr/local/opt/readline/lib
-READLINE		+=		-L/opt/homebrew/opt/readline/lib
+READLINE		+=		-L/usr/local/opt/readline/lib
+# READLINE		+=		-L/opt/homebrew/opt/readline/lib
 SRCS_FILES    	=   	ms_main \
 						ms_cd \
 						ms_pwd \

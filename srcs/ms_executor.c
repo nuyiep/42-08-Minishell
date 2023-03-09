@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/08 16:09:00 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/09 12:15:37 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ int	ft_execute(char **av, int i, int temp_fd, char **envp, t_prg *prg)
 /* fd[2] - create an empty fd[0] and fd[1] */
 int	executor(t_prg *prg, char **av, char **envp)
 {
+	if (prg->all_token[0] == NULL)
+		return (3);
 	if (ms_heredoc(prg, av, envp) == 0)
 		return (2);
-
 	int	i;
 	int	temp_fd;
 	int	fd[2];
