@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:44:45 by plau              #+#    #+#             */
-/*   Updated: 2023/03/09 12:17:02 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/09 15:05:57 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_str(t_prg *prg, char *delimiter)
 }
 
 /* Main function for heredoc */
-/* if << is not found at 2nd token then return 0 */
+/* if << is not found at 2nd token then return 1 */
 /* if not heredoc then return 0 */
 /* codes written based on the structure: */
 /* cat << eof */
@@ -50,7 +50,7 @@ int	ms_heredoc(t_prg *prg, char **av, char **envp)
 	int		fd[2];
 
 	if (ft_strcmp("<<", prg->all_token[1]) != 0)
-		return (0);
+		return (1);
 	delimiter = prg->all_token[2];
 	heredoc = NULL;
 	if (pipe(fd) == -1)
