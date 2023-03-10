@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/10 18:12:31 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/11 00:30:43 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	parsing(t_prg *prg)
 	if (prg->all_token)
 		ft_freesplit(prg->all_token);
 	prg->all_token = split_token(prg);
+	prg->all_token = expand_tokens(prg);
 	print_tokens(prg);
 	// prg->all_token = ft_split(prg->input, ' ');
 	return (0);
