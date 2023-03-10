@@ -6,13 +6,13 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/11 00:30:43 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/11 00:58:37 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* test function */
+/* TEST FUNCTION */
 static void print_tokens(t_prg *prg)
 {
 	char **tokens;

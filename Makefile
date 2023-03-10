@@ -6,7 +6,7 @@
 #    By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/10 18:00:36 by nchoo            ###   ########.fr        #
+#    Updated: 2023/03/11 00:51:18 by nchoo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRCS_FILES    	=   	ms_main \
 						ms_shell_loop \
 						ms_exporthelper \
 						ms_expand \
-						ms_lexer
+						ms_lexer \
+						ms_lexer_utils
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJS        	=     	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS_FILES)))
 SRCS_DIR    	=    	srcs/

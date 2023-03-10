@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/10 18:13:56 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/11 00:50:55 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,6 @@
 
 // echo "hi    hello" | grep -n 'el' > outfile
 
-
-static int has_pair(char *s)
-{
-	char *temp;
-	char pair;
-	int i;
-
-	i = 1;
-	temp = s;
-	temp++;
-	pair = *temp;
-	temp++;
-
-	while (*temp)
-	{
-		if (*temp == pair)
-		{
-			// ft_printf("i: %d\n", i);
-			return (i + 1);
-		}
-		i++;
-		temp++;
-	}
-	return (0);
-}
 
 int	count_tab(char *s, char c)
 {

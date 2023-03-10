@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/11 00:32:36 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/11 00:51:37 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	error_nl(t_prg *prg, char *str);
 
 /* Nicholas */
 char *expand(t_prg *prg, char *key);
+int has_pair(char *s);
 char **split_token(t_prg *prg);
 char **expand_tokens(t_prg *prg);
 
