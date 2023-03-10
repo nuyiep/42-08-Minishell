@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/01/25 14:42:23 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/10 18:15:37 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,7 @@ char *expand(t_prg *prg, char *key)
 		if (!ft_strncmp(prg->ls_envp[i], key + 1, ft_strlen(key + 1)) \
 		&& ft_strncmp(prg->ls_envp[ft_strlen(key + 1)], "=", 1))
 		{
-			// ft_printf("%s\n", prg->ls_envp[i]);
 			pair = ft_split(prg->ls_envp[i],'=');
-		
-			/* test */
-			// int j = 0;
-			// while (pair[j])
-			// {
-			// 	ft_printf("pair[%d]:%s\n", j, pair[j]);
-			// 	j++;
-			// }
-			/* end test*/
-			
 
 			ret = ft_strdup(pair[1]);
 			ft_freesplit(pair);

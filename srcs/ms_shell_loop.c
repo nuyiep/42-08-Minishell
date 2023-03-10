@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/10 18:03:59 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/10 18:12:31 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,11 @@ void	shell_loop(t_prg *prg, char **envp)
 			continue ;
 	}
 
-	/*
-	int i = 0;
-	while (prg->all_token[i]) {
-		ft_printf("%s [%d]\n", prg->all_token[i], i);
-		i++;
-	}
-	*/
+	/* temporary free */
+	if (prg->all_token)
+		ft_freesplit(prg->all_token);
+	if (prg->ls_envp)
+		ft_freesplit(prg->ls_envp);
+	
 	ft_printf("bye\n");
 }
