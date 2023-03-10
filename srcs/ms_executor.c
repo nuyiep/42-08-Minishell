@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/10 14:56:53 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/10 19:04:02 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	get_path(t_prg *prg, char **envp)
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
-			path = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
+			path = ft_substr(envp[i], 5, (ft_strlen(envp[i]) - 5));
 			prg->path = ft_split(path, ':');
 			free (path);
 		}
@@ -56,7 +56,7 @@ void	cmd_access(t_prg *prg)
 		if (access(temp, F_OK) == 0)
 		{
 			prg->all_token[0] = temp;
-			free(temp);
+			// free(temp);
 			return ;
 		}
 		j++;
