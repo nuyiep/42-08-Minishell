@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/10 13:47:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/10 21:40:02 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int		read_command(t_prg *prg);
 int		executor(t_prg *prg, char **av, char **envp);
 int		ms_heredoc(t_prg *prg, char **av, char **envp);
 void	do_pipex(t_prg *prg, char **envp);
+void	get_path(t_prg *prg, char **envp);
+void	find_npath(t_prg *prg);
+void	cmd_access(t_prg *prg);
+void	cmd_access_two(t_prg *prg);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp);

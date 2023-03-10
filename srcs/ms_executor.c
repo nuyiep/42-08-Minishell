@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/10 19:04:02 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/10 21:54:22 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,31 @@ void	cmd_access(t_prg *prg)
 	{
 		temp = ft_strjoin(prg->path[j], "/");
 		temp = ft_strjoin(temp, prg->all_token[0]);
-		if (access(temp, F_OK) == 0)
+		if (access(temp, X_OK) == 0)
 		{
 			prg->all_token[0] = temp;
+			// free(temp);
+			return ;
+		}
+		j++;
+		free(temp);
+	}
+	error_nl(prg, "Invalid command");
+}
+
+void	cmd_access_two(t_prg *prg)
+{
+	int		j;
+	char	*temp;
+
+	j = 0;
+	while (j < prg->npath)
+	{
+		temp = ft_strjoin(prg->path[j], "/");
+		temp = ft_strjoin(temp, prg->all_token[2]);
+		if (access(temp, X_OK) == 0)
+		{
+			prg->all_token[2] = temp;
 			// free(temp);
 			return ;
 		}
