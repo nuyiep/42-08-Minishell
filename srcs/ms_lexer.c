@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/10 17:27:29 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/10 18:06:28 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ static int has_pair(char *s)
 
 	while (*temp)
 	{
-		ft_printf("i: %d\n", i);
 		if (*temp == pair)
-			return (i);
+		{
+			ft_printf("i: %d\n", i);
+			return (i + 1);
+		}
 		i++;
 		temp++;
 	}
@@ -82,7 +84,7 @@ static char *copy_token(const char *s, char c)
 	while (s[i] && !(s[i] == c))
 		i++;
 	p = ft_strndup(s, i);
-	ft_printf("copied: %s\n", p);
+	// ft_printf("copied: %s\n", p);
 	return (p);
 }
 
@@ -116,7 +118,7 @@ char **split_token(t_prg *prg)
 		{
 			*tab = copy_token(s, 32);
 			check = 0;
-			ft_printf("check: %s\n", *tab);
+			// ft_printf("check: %s\n", *tab);
 			tab++;
 		}
 		else if (!check && (*s == c))
@@ -127,7 +129,7 @@ char **split_token(t_prg *prg)
 				i = has_pair(s);
 				if (i)
 				{
-					*tab++ = ft_strndup(s, i);
+					*tab++ = ft_strndup(s + 1, i);
 					s += i;
 				}
 			}

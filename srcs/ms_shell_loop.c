@@ -6,28 +6,27 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/10 17:04:21 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/10 18:03:59 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* test function 
+/* test function */
 static void print_tokens(t_prg *prg)
 {
-	// char **tokens;
+	char **tokens;
 	int i = 1;
 	
-	// tokens = prg->all_token;
-	if (!prg->all_token)
+	tokens = prg->all_token;
+	if (!*tokens)
 		ft_printf("error");
-	while (*prg->all_token)
+	while (*tokens)
 	{
-		ft_printf("token #%d: %s\n", i++, *prg->all_token);
-		prg->all_token++;
+		ft_printf("token #%d: %s\n", i++, *tokens);
+		tokens++;
 	}
 }
-*/
 
 /* Main function to read command */
 int	read_command(t_prg *prg)
@@ -47,7 +46,7 @@ int	parsing(t_prg *prg)
 	if (prg->all_token)
 		ft_freesplit(prg->all_token);
 	prg->all_token = split_token(prg);
-	// print_tokens(prg);
+	print_tokens(prg);
 	// prg->all_token = ft_split(prg->input, ' ');
 	return (0);
 }

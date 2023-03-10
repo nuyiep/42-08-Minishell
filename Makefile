@@ -6,7 +6,7 @@
 #    By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/10 17:10:01 by nchoo            ###   ########.fr        #
+#    Updated: 2023/03/10 18:00:36 by nchoo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC            	=    	gcc
 RM            	=    	rm -f
 CFLAGS       	=    	-Wall -Wextra -Werror
 CFLAGS		    +=		-I/usr/local/opt/readline/include
-# CFLAGS       	+=    	-fsanitize=address -g3
+CFLAGS       	+=    	-fsanitize=address -g3
 READLINE		=		-lreadline
 READLINE		+=		-L/usr/local/opt/readline/lib
 SRCS_FILES    	=   	ms_main \
