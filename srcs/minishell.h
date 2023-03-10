@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/09 15:02:57 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/10 13:47:24 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_prg
 	char	*input;
 	char	**ls_envp;
 	char	**all_token;
+	int		npath;
+	char	**path;
 }	t_prg;
 
 /* Initialization */
@@ -45,6 +47,7 @@ int		read_command(t_prg *prg);
 /* Executor */
 int		executor(t_prg *prg, char **av, char **envp);
 int		ms_heredoc(t_prg *prg, char **av, char **envp);
+void	do_pipex(t_prg *prg, char **envp);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp);
