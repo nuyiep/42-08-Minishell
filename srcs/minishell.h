@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/11 00:51:37 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/11 17:12:51 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
-// typedef struct s_token
-// {
-// 	int len;
-// 	char *word;
-// 	char *c;
-// }	t_token;
+typedef struct s_exp
+{
+	char	**pair;
+	char	*key;
+	char	*value;	
+}	t_exp;
 
 /**
  * input = what user typed
@@ -39,6 +39,7 @@ typedef struct s_prg
 	char	*input;
 	char	**ls_envp;
 	char	**all_token;
+	t_exp	*exp;
 }	t_prg;
 
 /* Initialization */
@@ -71,9 +72,17 @@ void	ms_exit(t_prg *prg);
 void	error_nl(t_prg *prg, char *str);
 
 /* Nicholas */
-char *expand(t_prg *prg, char *key);
+
+/* lexer_utils */
 int has_pair(char *s);
+
+/* lexer */
 char **split_token(t_prg *prg);
+
+/* expand */
 char **expand_tokens(t_prg *prg);
+
+/* free */
+void free_exp(t_prg *prg);
 
 #endif

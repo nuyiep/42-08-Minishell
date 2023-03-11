@@ -3,55 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/11 00:45:56 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/11 18:33:21 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *expand(t_prg *prg, char *key)
+static void find_pair(t_prg *prg, char *key)
 {
 	int i = -1;
-	char *ret;
-	char **pair;
+	char ***pair;
+	char **save_state;
 	
-	ret = NULL;
 	while (prg->ls_envp[++i])
 	{
 		if (!ft_strncmp(prg->ls_envp[i], key + 1, ft_strlen(key + 1)) \
 		&& ft_strncmp(prg->ls_envp[ft_strlen(key + 1)], "=", 1))
 		{
-			pair = ft_split(prg->ls_envp[i],'=');
+			save_state = prg->exp->pair;
+			pair = &prg->exp->pair;
+			pair[0] = ft_split(prg->ls_envp[i],'=');
 
-			ret = ft_strdup(pair[1]);
-			ft_freesplit(pair);
-			return (ret);
+			prg->exp->key = ft_strdup(pair[0][0]);
+			if (pair[0][1])
+				prg->exp->value = ft_strdup(pair[0][1]);
+			prg->exp->pair = save_state;
 		}
-		else
-			ret = ft_strdup(" ");
 	}
-	return (ret);
 }
+
+/*
+static int find_new_size(t_prg *prg, char *old)
+{
+	int	size_key;
+	int	size_value;
+	int size_old;
+	int new_size;
+	
+	size_old = ft_strlen(old);
+	ft_printf("old: %d\n", size_old);
+	size_key = ft_strlen(prg->exp->key);
+	ft_printf("key: %d\n", size_key);
+	size_value = ft_strlen(prg->exp->value);
+	ft_printf("value: %d\n", size_value);
+	new_size = size_old - size_key + size_value + 1;
+	ft_printf("size: %d\n", new_size);
+	return (new_size);
+}
+
+static char *create_new_token(t_prg *prg, char *old)
+{
+	char *new_token;
+	char *key;
+	char *value;
+	int i = -1;
+	int j = 0;
+	
+	key = prg->exp->key;
+	value = prg->exp->value;
+	new_token = malloc(sizeof(char) * (find_new_size(prg, old)));
+	while (value[++i])
+		new_token[i] = value[i];
+	j += i;
+	while (old[j])
+		new_token[i++] = old[j++];
+	new_token[i] = '\0';
+	return (new_token);
+}
+ */
 
 char **expand_tokens(t_prg *prg)
 {
 	char **save_state;
-	char *input;
+	char *token;
 	int i;
 	
+	free_exp(prg);
 	save_state = prg->all_token;
 	while (*prg->all_token)
 	{
-		input = *prg->all_token;
+		token = *prg->all_token;
 		i = 0;
-		while (input[i])
+		while (token[i])
 		{
-			if (input[i++] == '$')
+			if (token[i++] == '$')
 			{
-				*prg->all_token = expand(prg, input);
+				find_pair(prg, token);
+				*prg->all_token = ft_strdup(prg->exp->value);
 				// ft_printf("%s\n", input);
 			}
 		}

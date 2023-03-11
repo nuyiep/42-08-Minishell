@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+         #
+#    By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/11 00:51:18 by nchoo            ###   ########.fr        #
+#    Updated: 2023/03/11 17:15:29 by nchoo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRCS_FILES    	=   	ms_main \
 						ms_exporthelper \
 						ms_expand \
 						ms_lexer \
-						ms_lexer_utils
+						ms_lexer_utils \
+						ms_free
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJS        	=     	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS_FILES)))
 SRCS_DIR    	=    	srcs/
@@ -67,4 +68,6 @@ fclean:         clean
 
 re:             fclean all
 
-.PHONY:         all libft clean fclean re	
+.PHONY:         all libft clean fclean re
+
+.SILENT:
