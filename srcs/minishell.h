@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/13 17:30:43 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/13 20:29:29 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ typedef struct s_exp
 {
 	char	**pair;
 	char	*key;
-	char	*value;	
+	char	*value;
+	int		quote;
 }	t_exp;
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/11 17:08:03 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/13 20:29:43 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	init_exp(t_prg *prg)
 	prg->exp->pair = NULL;
 	prg->exp->key = NULL;
 	prg->exp->value = ft_strdup(" ");
+	prg->exp->quote = 0;
 }
 
 /* Initialize struct */

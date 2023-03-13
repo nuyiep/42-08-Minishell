@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/13 17:47:01 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/13 21:10:46 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void find_pair(t_prg *prg, char *key)
 	}
 }
 
-/*
 static int find_new_size(t_prg *prg, char *old)
 {
 	int	size_key;
@@ -50,14 +49,30 @@ static int find_new_size(t_prg *prg, char *old)
 	int new_size;
 	
 	size_old = ft_strlen(old);
-	ft_printf("old: %d\n", size_old);
-	size_key = ft_strlen(prg->exp->key);
-	ft_printf("key: %d\n", size_key);
+	size_key = ft_strlen(prg->exp->key) + 1;
 	size_value = ft_strlen(prg->exp->value);
-	ft_printf("value: %d\n", size_value);
 	new_size = size_old - size_key + size_value + 1;
-	ft_printf("size: %d\n", new_size);
 	return (new_size);
+}
+
+static int find_var_in_token(char *token, char *var)
+{
+	int	i;
+	int j;
+
+	i = -1;
+	if (var[0] == 0)
+		return(0);
+	while (token[++i])
+	{
+		j = 0;
+		while (token[i + j] && var[j] \
+			&& token[i + j] == var[j])
+			j++;
+		if (!var[j])
+			return (i - 1);
+	}
+	return (0);
 }
 
 static char *create_new_token(t_prg *prg, char *old)
@@ -65,21 +80,32 @@ static char *create_new_token(t_prg *prg, char *old)
 	char *new_token;
 	char *key;
 	char *value;
-	int i = -1;
-	int j = 0;
+	int i;
+	int j;
+	int k;
+	int var;
+	int size;
 	
+	i = 0;
+	j = 0;
+	k = 0;
 	key = prg->exp->key;
 	value = prg->exp->value;
-	new_token = malloc(sizeof(char) * (find_new_size(prg, old)));
-	while (value[++i])
-		new_token[i] = value[i];
-	j += i;
-	while (old[j])
-		new_token[i++] = old[j++];
-	new_token[i] = '\0';
+	size = find_new_size(prg, old);
+	new_token = malloc(sizeof(char) * (size));
+	var = find_var_in_token(old, key);
+	while (i < size)
+	{
+		while (i < var)
+			new_token[i++] = old[k++];
+		while (value[j])
+			new_token[i++] = value[j++];
+		if (old[k])
+			new_token[i++] = old[j + k++];
+	}
 	return (new_token);
 }
- */
+
 
 char **expand_tokens(t_prg *prg)
 {
@@ -101,7 +127,8 @@ char **expand_tokens(t_prg *prg)
 				var = get_var(token, i + 1);
 				find_pair(prg, var);
 				free(var);
-				*prg->all_token = ft_strdup(prg->exp->value);
+				*prg->all_token = create_new_token(prg, token);
+				// *prg->all_token = ft_strdup(prg->exp->value);
 				// ft_printf("%s\n", input);
 			}
 			i++;
