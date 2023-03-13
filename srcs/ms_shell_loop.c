@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_shell_loop.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/11 15:28:40 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/13 17:31:07 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	shell_loop(t_prg *prg, char **envp)
 		ft_freesplit(prg->all_token);
 	if (prg->ls_envp)
 		ft_freesplit(prg->ls_envp);
+	free_exp(prg, 0);
 	
 	ft_printf("bye\n");
 }

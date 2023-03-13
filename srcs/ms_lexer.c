@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/11 00:50:55 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/13 17:37:29 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,29 +108,6 @@ char **split_token(t_prg *prg)
 		}
 		s++;
 	}
-	/*
-	while (*s)
-	{
-		if (check && !(*s == 32))
-		{
-			*tab++ = split_strdup(s, 32);
-			check = 0;
-		}
-		else if (!check && (*s == 32))
-			check = 1;
-		s++;
-	}
-	*/
 	*tab = 0;
 	return (tab - count);
 }
-
-/*
-int main(int ac, char **av)
-{
-	(void)ac;
-	int i = count_tab(av[1], ' ');
-
-	ft_printf("%d\n", i);
-}
-*/

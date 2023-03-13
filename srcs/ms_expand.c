@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/11 18:33:21 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/13 17:47:01 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,22 @@ static void find_pair(t_prg *prg, char *key)
 	
 	while (prg->ls_envp[++i])
 	{
-		if (!ft_strncmp(prg->ls_envp[i], key + 1, ft_strlen(key + 1)) \
-		&& ft_strncmp(prg->ls_envp[ft_strlen(key + 1)], "=", 1))
+		if (!ft_strncmp(prg->ls_envp[i], key, ft_strlen(key)) \
+		&& ft_strncmp(prg->ls_envp[ft_strlen(key)], "=", 1))
 		{
 			save_state = prg->exp->pair;
 			pair = &prg->exp->pair;
 			pair[0] = ft_split(prg->ls_envp[i],'=');
 
-			prg->exp->key = ft_strdup(pair[0][0]);
+			if (prg->exp->key)
+				free(prg->exp->key);
+			prg->exp->key = ft_strdup(key);
 			if (pair[0][1])
+			{
+				if (prg->exp->value)
+					free(prg->exp->value);
 				prg->exp->value = ft_strdup(pair[0][1]);
+			}
 			prg->exp->pair = save_state;
 		}
 	}
@@ -79,9 +85,10 @@ char **expand_tokens(t_prg *prg)
 {
 	char **save_state;
 	char *token;
+	char *var;
 	int i;
 	
-	free_exp(prg);
+	free_exp(prg, 1);
 	save_state = prg->all_token;
 	while (*prg->all_token)
 	{
@@ -89,12 +96,15 @@ char **expand_tokens(t_prg *prg)
 		i = 0;
 		while (token[i])
 		{
-			if (token[i++] == '$')
+			if (token[i] == '$')
 			{
-				find_pair(prg, token);
+				var = get_var(token, i + 1);
+				find_pair(prg, var);
+				free(var);
 				*prg->all_token = ft_strdup(prg->exp->value);
 				// ft_printf("%s\n", input);
 			}
+			i++;
 		}
 		prg->all_token++;
 	}

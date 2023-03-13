@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/11 17:12:51 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/13 17:30:43 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ char **split_token(t_prg *prg);
 
 /* expand */
 char **expand_tokens(t_prg *prg);
+char *get_var(char *token, int i);
 
 /* free */
-void free_exp(t_prg *prg);
+void free_exp(t_prg *prg, int value);
 
 #endif

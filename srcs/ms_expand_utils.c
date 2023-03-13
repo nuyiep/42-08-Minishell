@@ -3,27 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:29:40 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/11 17:53:11 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/13 17:26:54 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int *get_new_token_size(
+char *get_var(char *token, int i)
 {
-	int size_old;
-	int size_var;
-	int size_expansion;
-	int new_size;
+	char *var;
+	int j;
 	
-	size_old = ft_strlen(old);
-	size_var = ft_strlen(var);
-	size_expansion = ft_strlen(expansion);
-	
-	
+	j = 0;
+	while (token[i] && token[i] != ' ' \
+	&& token[i] != '\'' && token[i] != '\"')
+	{
+		j++;
+		i++;
+	}
+	var = malloc(sizeof(char) * (j + 1));
+	i -= j;
+	j = 0;
+	while (token[i] && token[i] != ' ' \
+	&& token[i] != '\'' && token[i] != '\"')
+		var[j++] = token[i++];
+	var[j] = '\0';
+	ft_printf("var: %s\n", var);
+	return (var);
 }
-
-char *create_new_token(char **pair, )
