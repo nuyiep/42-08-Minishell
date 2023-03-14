@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/14 13:05:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/14 14:12:08 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	cmd_access(t_prg *prg);
 void	cmd_access_two(t_prg *prg);
 void	close_pipes(int **fd);
 void	fork_process(t_prg *prg, char **envp, int **fd, int i, int no_cmds);
+void	dup_last_process(int **fd, int i);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp);

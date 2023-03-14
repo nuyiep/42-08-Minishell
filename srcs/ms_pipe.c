@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/14 13:14:02 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/14 15:11:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	count_pipe(t_prg *prg)
 			no_pipe++;
 		i++;
 	}
-	printf("no_pipe= %d\n", no_pipe);
 	return (no_pipe);
 }
 
@@ -86,7 +85,6 @@ void	do_pipex(t_prg *prg, char **envp)
 	while (prg->all_token[no_tokens] != NULL)
 		no_tokens++;
 	no_cmds = no_tokens - no_pipes;
-	printf("number of cmd: %d\n", no_cmds);
 	i = 0;
 	while (i < no_cmds)
 	{
@@ -98,9 +96,7 @@ void	do_pipex(t_prg *prg, char **envp)
 		}
 		fork_process(prg, envp, fd, i, no_cmds);
 		i++;
-		printf("before ending i = %d\n", i);
 	}
-	i++;
-	printf("last pipe i = %d\n", i);
+	printf("i = %d\n", i);
 	fork_process(prg, envp, fd, i, no_cmds);
 }

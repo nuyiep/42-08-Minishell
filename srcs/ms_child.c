@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/14 13:16:58 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/14 15:28:44 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	dup_first_process(int **fd)
 {
 	dup2(fd[0][1], STDIN);
 	dup2(fd[0][0], fd[0][1]);
-	printf("dup first process\n");
+	printf("first process\n");
 	close(fd[0][1]);
 }
 
@@ -29,18 +29,19 @@ void	dup_middle_process(int **fd, int i)
 {
 	dup2(fd[i][1], fd[i - 1][0]);
 	dup2(fd[i][0], fd[i][1]);
-	printf("dup middle proces\n");
-	close(fd[0][0]);
+	printf("middle proces\n");
+	close(fd[i - 1][0]);
 	close(fd[i][1]);
 }
 
 void	dup_last_process(int **fd, int i)
 {
 	dup2(fd[i][1], fd[i - 1][0]);
+	printf("last process\n");
 	dup2(STDOUT, fd[i][1]);
-	printf("dup last process\n");
 	close(fd[i - 1][0]);
 	close(fd[i][1]);
+	close(fd[i][0]);
 }
 
 /* Finds the PATH where the command is located */
@@ -54,16 +55,14 @@ void	run_process(int i, t_prg *prg, char **env)
 	// 	find_npath(prg);
 	// 	cmd_access(prg);
 	// }
-	char	**av = NULL;
-	if (i == 0)
-		av[i] = "/bin/ls";
-	else if (i == 1) // token[2] ls | ls 
-		av[i] = "/bin/ls";
-	else if (i == 2) //token [3] ls | ls | ls
-		av[i] = "/bin/ls";
-	printf("run process\n");
-	execve("ls", av, env);
+	char	*path = "/bin/ls";
+	char	**split;
+	char	*hard_code = "ls";
+
+	split = ft_split(hard_code, ' ');
+	execve(path, split, env);
 	error_nl(prg, prg->all_token[0]);
+	(void)i;
 }
 
 /* SIGINT - CONTROL C */
@@ -91,12 +90,14 @@ void	fork_process(t_prg *prg, char **envp, int **fd, int i, int no_cmds)
 		}
 		else if (i == no_cmds)
 		{
-			printf("no_cmds: %d\n", no_cmds);
+			printf("here\n");
 			dup_last_process(fd, i);
 		}
 		else
+		{
 			dup_middle_process(fd, i);
-		run_process(i, prg, envp);
+			run_process(i, prg, envp);
+		}
 	}
 	else
 		waitpid(pid, NULL, 0);
