@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/10 22:24:40 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/13 18:15:58 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	cmd_access(t_prg *prg)
 		j++;
 		free(temp);
 	}
-	error_nl(prg, "Invalid command");
+	error_nl(prg, prg->all_token[0]);
 }
 
 void	cmd_access_two(t_prg *prg)
@@ -110,6 +110,8 @@ int	ft_execute(int i, int temp_fd, char **envp, t_prg *prg)
 }
 
 /* Main function for executor */
+/* If only one command, just execute using ft_execute */
+/* Else, do_pipex */
 /* temp_fd = dup(0) - Save stdin 0 to temp_fd */
 /* fd[2] - create an empty fd[0] and fd[1] */
 int	executor(t_prg *prg, char **av, char **envp)
@@ -118,9 +120,9 @@ int	executor(t_prg *prg, char **av, char **envp)
 	int	temp_fd;
 
 	i = 0;
-	temp_fd = dup(0);
 	if (prg->all_token[1] == NULL)
 	{
+		temp_fd = dup(0);
 		if (fork() == 0)
 		{
 			if (ft_execute(i, temp_fd, envp, prg))

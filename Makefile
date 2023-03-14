@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/10 19:04:38 by plau             ###   ########.fr        #
+#    Updated: 2023/03/13 13:51:55 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ SRCS_FILES    	=   	ms_main \
 						ms_expand \
 						ms_executor \
 						ms_heredoc \
-						ms_pipe
+						ms_pipe \
+						ms_child
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJS        	=     	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS_FILES)))
 SRCS_DIR    	=    	srcs/

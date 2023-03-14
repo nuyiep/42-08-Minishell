@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/10 21:40:02 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/14 13:05:13 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <termios.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+
+# define STDIN 0
+# define STDOUT 1
 
 /**
  * input = what user typed
@@ -52,6 +55,8 @@ void	get_path(t_prg *prg, char **envp);
 void	find_npath(t_prg *prg);
 void	cmd_access(t_prg *prg);
 void	cmd_access_two(t_prg *prg);
+void	close_pipes(int **fd);
+void	fork_process(t_prg *prg, char **envp, int **fd, int i, int no_cmds);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp);
