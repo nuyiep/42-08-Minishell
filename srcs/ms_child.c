@@ -6,17 +6,11 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/14 19:36:44 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/14 19:45:39 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* Get input from stdin put into fd[0][1] - write end */
-/* Get input from fd[0][1] to fd[0][0] */
-/* STDIN -> fd[0][1] -> fd[0][0] */
-/* close fd[0][1] */
-
 
 /* Finds the PATH where the command is located */
 /* and executes it. Process ends when execve is successful */
@@ -48,7 +42,7 @@ void	run_process(int i, t_prg *prg, char **env)
 /* Do child will be divided into 3 processes */
 /* 1. first_process- read from std out */
 
-void	fork_process(t_prg *prg, char **envp, int **fd, int i, int no_cmds)
+void	fork_process(t_prg *prg, char **envp, int **fd, int i)
 {
 	int	pid;
 
@@ -65,10 +59,9 @@ void	fork_process(t_prg *prg, char **envp, int **fd, int i, int no_cmds)
 	}
 	else
 		waitpid(pid, NULL, 0);
-	(void)no_cmds;
 }
 
-void	fork_last_process(t_prg *prg, char **envp, int **fd, int i, int no_cmds)
+void	fork_last_process(t_prg *prg, char **envp, int i)
 {
 	int	pid;
 
@@ -81,6 +74,4 @@ void	fork_last_process(t_prg *prg, char **envp, int **fd, int i, int no_cmds)
 	}
 	else
 		waitpid(pid, NULL, 0);
-	(void)no_cmds;
-	(void)fd;
 }
