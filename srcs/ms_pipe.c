@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/14 16:24:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/14 18:47:15 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,7 @@ void	do_pipex(t_prg *prg, char **envp)
 	i = 0;
 	while (i <= no_cmds)
 	{
-		// if (i == 0)
-		// {
-		// 	fork_process(prg, envp, fd, i, no_cmds);
-		// 	i++;
-		// 	continue ;
-		// }
 		fork_process(prg, envp, fd, i, no_cmds);
 		i++;
 	}
-	// printf("i = %d\n", i);
-	// fork_process(prg, envp, fd, i, no_cmds);
 }
