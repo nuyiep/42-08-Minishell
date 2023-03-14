@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/14 15:28:44 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/14 16:32:37 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 /* close fd[0][1] */
 void	dup_first_process(int **fd)
 {
-	dup2(fd[0][1], STDIN);
-	dup2(fd[0][0], fd[0][1]);
+	// make output go to pipe 
+	close(fd[0][0]);
+	dup2(fd[0][1], STDIN_FILENO);
+	dup2(fd[1][0], fd[0][1]);
 	printf("first process\n");
 	close(fd[0][1]);
 }
@@ -27,8 +29,9 @@ void	dup_first_process(int **fd)
 /* For second pipe */
 void	dup_middle_process(int **fd, int i)
 {
+	// get input from pipe
 	dup2(fd[i][1], fd[i - 1][0]);
-	dup2(fd[i][0], fd[i][1]);
+	dup2(fd[i][0], fd[i-1][1]);
 	printf("middle proces\n");
 	close(fd[i - 1][0]);
 	close(fd[i][1]);
