@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 16:31:48 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/15 16:43:54 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_execute_redirection(int infile, char **envp, t_prg *prg)
 	}
 	char *arguments = "ls ";
 	char **split = ft_split(arguments, ' ');
-	printf("token 0= %s\n", prg->all_token[0]);
 	execve(prg->all_token[0], split, envp);
 	error_nl(prg, prg->all_token[0]);
 	return (1);
@@ -47,7 +46,7 @@ void	execute_single_command(t_prg *prg, char **envp, int infile)
 }
 
 /* ls > ls.txt */
-void	redirect_input(t_prg *prg, int i, char **envp)
+void	redirect_append(t_prg *prg, int i, char **envp)
 {
 	int	infile;
 
@@ -63,17 +62,17 @@ void	redirect_input(t_prg *prg, int i, char **envp)
 // }
 
 /* Main function for redirections */
-void	redirections(t_prg *prg, char **envp)
+int	redirections(t_prg *prg, char **envp)
 {
 	int	i;
 
 	i = 0;
 	while (prg->all_token[i] != NULL && (prg->all_token[i + 1] != NULL))
 	{
-		if (ft_strcmp(prg->all_token[i], ">") == 0)
+		if (ft_strcmp(prg->all_token[i], ">>") == 0)
 		{
-			redirect_input(prg, i + 1, envp);
-			return ;
+			redirect_append(prg, i + 1, envp);
+			return (1);
 		}
 		// else if (ft_strcmp(prg->all_token[i], "<"))
 		// {
@@ -85,6 +84,7 @@ void	redirections(t_prg *prg, char **envp)
 		// }
 		i++;	
 	}
+	return (0);
 }
 
 /* Examples */
