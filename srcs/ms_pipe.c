@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/14 19:45:50 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/15 11:55:55 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,6 @@ int	**make_pipes(t_prg *prg, int no_pipes)
 	(void)prg;
 }
 
-void	close_pipes(int **fd)
-{
-	int	i;
-
-	i = 0;
-	while (fd[i])
-	{
-		close(fd[i][0]);
-		close(fd[i][1]);
-		free(fd[i]);
-		i++;
-	}
-}
-
 /* Create pipes for each pair of commands */
 /* then calls fork for each command given */
 void	do_pipex(t_prg *prg, char **envp)
@@ -92,4 +78,11 @@ void	do_pipex(t_prg *prg, char **envp)
 		i++;
 	}
 	fork_last_process(prg, envp, i);
+	i = 0;
+	while (i < (no_pipes + 2))
+	{
+		free(fd[i]);
+		i++;
+	}
+	free(fd);
 }
