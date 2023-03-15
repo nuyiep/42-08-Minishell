@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 17:18:55 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/15 17:28:50 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	redirections(t_prg *prg, char **envp)
 		}
 		else if (ft_strcmp(prg->all_token[i], "<") == 0)
 		{
-			redirect_output(prg, i, envp);
+			redirect_output(prg, i + 1, envp);
 			return (1);
 		}
 		i++;	

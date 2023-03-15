@@ -6,28 +6,44 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 17:21:59 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/15 17:40:33 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_execute_redirection_output(int outfile, char **envp, t_prg *prg)
+int	ft_execute_redirection_output(int outfile, char **envp, t_prg *prg, int i)
 {
-	dup2(outfile, STDIN_FILENO);
-	close(outfile);
 	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
 	{
 		get_path(prg, envp);
 		find_npath(prg);
 		cmd_access(prg);
 	}
-	char *arguments = "ls ";
+	char *arguments = "cat Makefile";
 	char **split = ft_split(arguments, ' ');
 	execve(prg->all_token[0], split, envp);
-	error_nl(prg, prg->all_token[0]);
+	error_nl(prg, prg->all_token[2]);
 	return (1);
+	(void)outfile;
+	(void)i;
 	
+}
+
+void	execute_single_command_output(t_prg *prg, char **envp, int outfile, int i)
+{
+	if (fork() == 0)
+	{
+		if (ft_execute_redirection_output(outfile, envp, prg, i))
+			return ;
+	}
+	else
+	{
+		close(outfile);
+		while (waitpid(-1, NULL, 0) != -1)
+			;
+	}
+	return ;
 }
 
 /* cat < ls.txt */
@@ -38,5 +54,5 @@ void	redirect_output(t_prg *prg, int i, char **envp)
 	outfile = open(prg->all_token[i], O_RDONLY, 0644);
 	if (outfile == -1)
 		error_nl(prg, "unable to open file");
-	execute_single_command(prg, envp, outfile);
+	execute_single_command_output(prg, envp, outfile, i);
 }

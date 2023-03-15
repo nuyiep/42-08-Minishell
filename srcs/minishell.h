@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 17:22:48 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/15 17:30:54 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	fork_last_process(t_prg *prg, char **envp, int i);
 /* Redirection- >, >>, < */
 int		redirections(t_prg *prg, char **envp);
 void	redirect_output(t_prg *prg, int i, char **envp);
-void	execute_single_command(t_prg *prg, char **envp, int file);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp);
