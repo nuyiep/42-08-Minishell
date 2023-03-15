@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/15 16:40:27 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/15 20:00:05 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ static int find_new_size(t_prg *prg, char *old)
 	int new_size;
 	
 	size_old = ft_strlen(old);
-	ft_printf("old: %d\n", size_old);
+	// ft_printf("old: %d\n", size_old);
 	size_key = ft_strlen(prg->exp->key) + 1;
-	ft_printf("key: %d\n", size_key);
+	// ft_printf("key: %d\n", size_key);
 	size_value = ft_strlen(prg->exp->value);
-	ft_printf("value: %d\n", size_value);
+	// ft_printf("value: %d\n", size_value);
 	new_size = size_old - size_key + size_value + 1;
-	ft_printf("size: %d\n", new_size);
+	// ft_printf("size: %d\n", new_size);
 	return (new_size);
 }
 
@@ -93,11 +93,15 @@ static char *create_new_token(t_prg *prg, char *old)
 	i = 0;
 	j = 0;
 	k = 0;
+	var = 0;
 	key = prg->exp->key;
+	// ft_printf("key: %s\n", key);
 	value = prg->exp->value;
+	// ft_printf("value: %s\n", value);
 	size = find_new_size(prg, old);
 	new_token = malloc(sizeof(char) * (size));
-	var = find_var_in_token(old, key);
+	if (key)
+		var = find_var_in_token(old, key);
 	while (i < size)
 	{
 		while (i < var)
