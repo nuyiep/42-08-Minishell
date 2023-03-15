@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:44:45 by plau              #+#    #+#             */
-/*   Updated: 2023/03/09 15:05:57 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/15 12:04:22 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*get_str(t_prg *prg, char *delimiter)
 		each_line = readline("> ");
 		if (ft_strcmp(each_line, delimiter) == 0)
 		{
+			free(each_line);
 			// free(all_lines);
 			break ;
 		}
