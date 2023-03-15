@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 11:55:35 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/15 16:15:20 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@
 # include <termios.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-
-# define STDIN 0
-# define STDOUT 1
 
 /**
  * input = what user typed
@@ -57,6 +54,7 @@ void	cmd_access(t_prg *prg);
 void	cmd_access_two(t_prg *prg);
 void	fork_process(t_prg *prg, char **envp, int **fd, int i);
 void	fork_last_process(t_prg *prg, char **envp, int i);
+void	redirections(t_prg *prg, char **envp);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp);
