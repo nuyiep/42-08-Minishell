@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 16:43:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/15 17:18:55 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,23 @@ int	ft_execute_redirection(int infile, char **envp, t_prg *prg)
 	return (1);
 }
 
-void	execute_single_command(t_prg *prg, char **envp, int infile)
+void	execute_single_command(t_prg *prg, char **envp, int file)
 {
 	if (fork() == 0)
 	{
-		if (ft_execute_redirection(infile, envp, prg))
+		if (ft_execute_redirection(file, envp, prg))
 			return ;
 	}
 	else
 	{
-		close(infile);
+		close(file);
 		while (waitpid(-1, NULL, 0) != -1)
 			;
 	}
 	return ;
 }
 
-/* ls > ls.txt */
+/* pwd >> ls.txt */
 void	redirect_append(t_prg *prg, int i, char **envp)
 {
 	int	infile;
@@ -56,10 +56,16 @@ void	redirect_append(t_prg *prg, int i, char **envp)
 	execute_single_command(prg, envp, infile);
 }
 
-// void	redirect_output(t_prg *prg, int i, char **envp)
-// {
-	
-// }
+/* ls > ls.txt */
+void	redirect_input(t_prg *prg, int i, char **envp)
+{
+	int	infile;
+
+	infile = open(prg->all_token[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	if (infile == -1)
+		error_nl(prg, "unable to open file");
+	execute_single_command(prg, envp, infile);
+}
 
 /* Main function for redirections */
 int	redirections(t_prg *prg, char **envp)
@@ -74,20 +80,22 @@ int	redirections(t_prg *prg, char **envp)
 			redirect_append(prg, i + 1, envp);
 			return (1);
 		}
-		// else if (ft_strcmp(prg->all_token[i], "<"))
-		// {
-		// 	redirect_output(prg, i, envp);
-		// }
-		// else if (ft_strcmp(prg->all_token[i], ">>"))
-		// {
-		// 	redirect_output_append(prg, i, envp);
-		// }
+		else if (ft_strcmp(prg->all_token[i], ">") == 0)
+		{
+			redirect_input(prg, i + 1, envp);
+			return (1);
+		}
+		else if (ft_strcmp(prg->all_token[i], "<") == 0)
+		{
+			redirect_output(prg, i, envp);
+			return (1);
+		}
 		i++;	
 	}
 	return (0);
 }
 
 /* Examples */
+/* pwd >> ls.txt */
 /* ls > ls.txt */
 /* cat < ls.txt */
-/* pwd >> ls.txt */
