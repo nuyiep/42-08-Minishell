@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/13 21:10:46 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/15 16:40:27 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,13 @@ static int find_new_size(t_prg *prg, char *old)
 	int new_size;
 	
 	size_old = ft_strlen(old);
+	ft_printf("old: %d\n", size_old);
 	size_key = ft_strlen(prg->exp->key) + 1;
+	ft_printf("key: %d\n", size_key);
 	size_value = ft_strlen(prg->exp->value);
+	ft_printf("value: %d\n", size_value);
 	new_size = size_old - size_key + size_value + 1;
+	ft_printf("size: %d\n", new_size);
 	return (new_size);
 }
 
@@ -100,9 +104,14 @@ static char *create_new_token(t_prg *prg, char *old)
 			new_token[i++] = old[k++];
 		while (value[j])
 			new_token[i++] = value[j++];
-		if (old[k])
-			new_token[i++] = old[j + k++];
+		if (new_token[i])
+		{
+			if (old[k + ft_strlen(key) + 1])
+				new_token[i] = old[ft_strlen(key) + 1 + k++];
+		}
+		i++;
 	}
+	new_token[i - 1] = '\0';
 	return (new_token);
 }
 
