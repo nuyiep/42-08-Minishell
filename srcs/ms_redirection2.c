@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 17:40:33 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/15 17:43:29 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_execute_redirection_output(int outfile, char **envp, t_prg *prg, int i)
 		find_npath(prg);
 		cmd_access(prg);
 	}
-	char *arguments = "cat Makefile";
+	char *arguments = "cat ls.txt";
 	char **split = ft_split(arguments, ' ');
 	execve(prg->all_token[0], split, envp);
 	error_nl(prg, prg->all_token[2]);
@@ -46,7 +46,7 @@ void	execute_single_command_output(t_prg *prg, char **envp, int outfile, int i)
 	return ;
 }
 
-/* cat < ls.txt */
+/* cat < Makefile */
 void	redirect_output(t_prg *prg, int i, char **envp)
 {
 	int	outfile;
