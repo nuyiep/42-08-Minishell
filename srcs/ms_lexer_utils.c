@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_lexer_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 19:25:35 by plau             ###   ########.fr       */
+/*   Created: 2023/03/11 00:50:42 by nchoo             #+#    #+#             */
+/*   Updated: 2023/03/11 00:51:30 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+int has_pair(char *s)
 {
-	t_prg	prg;
+	char *temp;
+	char pair;
+	int i;
 
-	init_struct(&prg, av, ac, envp);
-	setup_signal();
-	shell_loop(&prg, envp, av);
-	// system("leaks -q minishell");
+	i = 1;
+	temp = s;
+	temp++;
+	pair = *temp;
+	temp++;
+
+	while (*temp)
+	{
+		if (*temp == pair)
+		{
+			// ft_printf("i: %d\n", i);
+			return (i + 1);
+		}
+		i++;
+		temp++;
+	}
+	return (0);
 }

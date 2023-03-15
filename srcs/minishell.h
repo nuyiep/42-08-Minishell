@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 17:30:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/15 19:19:54 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
+typedef struct s_exp
+{
+	char	**pair;
+	char	*key;
+	char	*value;
+	int		quote;
+}	t_exp;
+
 /**
  * input = what user typed
  * ls_envp = a copy of envp
@@ -32,6 +40,7 @@ typedef struct s_prg
 	char	*input;
 	char	**ls_envp;
 	char	**all_token;
+	t_exp	*exp;
 	int		npath;
 	char	**path;
 }	t_prg;
@@ -79,6 +88,18 @@ void	ms_exit(t_prg *prg);
 void	error_nl(t_prg *prg, char *str);
 
 /* Nicholas */
-char *expand(t_prg *prg, char *key);
+
+/* lexer_utils */
+int has_pair(char *s);
+
+/* lexer */
+char **split_token(t_prg *prg);
+
+/* expand */
+char **expand_tokens(t_prg *prg);
+char *get_var(char *token, int i);
+
+/* free */
+void free_exp(t_prg *prg, int value);
 
 #endif

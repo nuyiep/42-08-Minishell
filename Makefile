@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/15 17:40:21 by plau             ###   ########.fr        #
+#    Updated: 2023/03/15 19:32:54 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,10 @@ SRCS_FILES    	=   	ms_main \
 						ms_shell_loop \
 						ms_exporthelper \
 						ms_expand \
+						ms_expand_utils \
+						ms_lexer \
+						ms_lexer_utils \
+						ms_free \
 						ms_executor \
 						ms_heredoc \
 						ms_pipe \
@@ -73,3 +77,5 @@ fclean:         clean
 re:             fclean all
 
 .PHONY:         all libft clean fclean re
+
+.SILENT:
