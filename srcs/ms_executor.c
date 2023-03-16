@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/16 10:18:30 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/16 14:43:24 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	cmd_access(t_prg *prg)
 		if (access(temp, X_OK) == 0)
 		{
 			prg->all_token[0] = temp;
-			// free(temp);
 			return ;
 		}
 		j++;
@@ -78,7 +77,6 @@ void	cmd_access_two(t_prg *prg)
 		if (access(temp, X_OK) == 0)
 		{
 			prg->all_token[2] = temp;
-			// free(temp);
 			return ;
 		}
 		j++;
@@ -103,8 +101,6 @@ int	ft_execute(int temp_fd, char **envp, t_prg *prg)
 		find_npath(prg);
 		cmd_access(prg);
 	}
-	printf("all token: %s\n", prg->all_token[0]);
-	printf("all token: %s\n", prg->all_token[1]);
 	execve(prg->all_token[0], prg->all_token, envp);
 	error_nl(prg, prg->all_token[0]);
 	return (1);
