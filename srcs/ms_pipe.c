@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 11:55:55 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/16 10:17:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,22 @@ void	check_access(t_prg *prg, char *token_path)
 		error_nl(prg, "Command is invalid");
 }
 
-int	count_pipe(t_prg *prg)
-{
-	int	i;
-	int	no_pipe;
-
-	i = 0;
-	no_pipe = 0;
-	while (prg->all_token[i] != NULL)
-	{
-		if (ft_strcmp(prg->all_token[i], "|") == 0)
-			no_pipe++;
-		i++;
-	}
-	return (no_pipe);
-}
-
 /* Creates a pipe for each pair of commands */
-int	**make_pipes(t_prg *prg, int no_pipes)
+int	**make_pipes(t_prg *prg)
 {
 	int	i;
 	int	**fd;
 
 	i = 0;
-	fd = malloc((no_pipes + 2) * sizeof(int *));
-	while (i <= no_pipes)
+	fd = malloc((prg->no_pipes + 2) * sizeof(int *));
+	while (i <= prg->no_pipes)
 	{
 		fd[i] = malloc(2 * sizeof(int));
 		pipe(fd[i]);
 		i++;
 	}
-	fd[no_pipes + 1] = NULL;
+	fd[prg->no_pipes + 1] = NULL;
 	return (fd);
-	(void)prg;
 }
 
 /* Create pipes for each pair of commands */
@@ -60,17 +43,15 @@ int	**make_pipes(t_prg *prg, int no_pipes)
 void	do_pipex(t_prg *prg, char **envp)
 {
 	int	no_tokens;
-	int	no_pipes;
 	int	no_cmds;
 	int	**fd;
 	int	i;
 
 	no_tokens = 0;
-	no_pipes = count_pipe(prg);
-	fd = make_pipes(prg, no_pipes);
+	fd = make_pipes(prg);
 	while (prg->all_token[no_tokens] != NULL)
 		no_tokens++;
-	no_cmds = no_tokens - no_pipes;
+	no_cmds = no_tokens - prg->no_pipes;
 	i = 0;
 	while (i < no_cmds)
 	{
@@ -79,7 +60,7 @@ void	do_pipex(t_prg *prg, char **envp)
 	}
 	fork_last_process(prg, envp, i);
 	i = 0;
-	while (i < (no_pipes + 2))
+	while (i < (prg->no_pipes + 2))
 	{
 		free(fd[i]);
 		i++;

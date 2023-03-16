@@ -6,13 +6,14 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:44:45 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 12:04:22 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/16 11:36:09 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_str(t_prg *prg, char *delimiter)
+/* Printing out heredoc- until the delimiter is found */
+void	get_str(char *delimiter)
 {
 	char	*each_line;
 	char	*all_lines;
@@ -24,44 +25,26 @@ char	*get_str(t_prg *prg, char *delimiter)
 		if (ft_strcmp(each_line, delimiter) == 0)
 		{
 			free(each_line);
-			// free(all_lines);
 			break ;
 		}
 		each_line = ft_strjoin_free(each_line, "\n");
-		//process_str(prg, each_line);- for expansion
 		all_lines = ft_strjoin_free(all_lines, each_line);
 		free(each_line);
 	}
-	return (all_lines);
-	(void)prg;
+	printf("%s", all_lines);
+	free(all_lines);
 }
 
 /* Main function for heredoc */
-/* if << is not found at 2nd token then return 1 */
-/* if not heredoc then return 0 */
-/* codes written based on the structure: */
-/* cat << eof */
-/* $heredoc> hello */
-/* read end = f[0] */
-/* write end = fd[1] */
-int	ms_heredoc(t_prg *prg, char **av, char **envp)
+/* if << is not found then return 1 */
+/* E.g. cat << eof */
+int	ms_heredoc(t_prg *prg)
 {
-	char	*heredoc;
 	char	*delimiter;
-	int		fd[2];
 
-	if (ft_strcmp("<<", prg->all_token[1]) != 0)
+	if (prg->heredoc == 0)
 		return (1);
-	delimiter = prg->all_token[2];
-	heredoc = NULL;
-	if (pipe(fd) == -1)
-		error_nl(prg, "Pipe");
-	heredoc = get_str(prg, delimiter);
-	//write(fd[1], heredoc, ft_strlen(heredoc));
-	printf("%s", heredoc);
-	close(fd[1]);
-	free(heredoc);
-	return (fd[0]);
-	(void)av;
-	(void)envp;
+	delimiter = prg->all_token[prg->heredoc_postion + 1];
+	get_str(delimiter);
+	return (0);
 }

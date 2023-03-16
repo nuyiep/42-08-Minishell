@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 19:19:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/16 10:41:32 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,12 @@ typedef struct s_prg
 	t_exp	*exp;
 	int		npath;
 	char	**path;
+	int		no_pipes;
+	int		heredoc;
+	int		heredoc_postion;
 }	t_prg;
+
+
 
 /* Initialization */
 void	init_struct(t_prg *prg, char **av, int ac, char **envp);
@@ -55,7 +60,7 @@ int		read_command(t_prg *prg);
 
 /* Executor */
 int		executor(t_prg *prg, char **av, char **envp);
-int		ms_heredoc(t_prg *prg, char **av, char **envp);
+int		ms_heredoc(t_prg *prg);
 void	do_pipex(t_prg *prg, char **envp);
 void	get_path(t_prg *prg, char **envp);
 void	find_npath(t_prg *prg);
@@ -90,16 +95,16 @@ void	error_nl(t_prg *prg, char *str);
 /* Nicholas */
 
 /* lexer_utils */
-int has_pair(char *s);
+int		has_pair(char *s);
 
 /* lexer */
-char **split_token(t_prg *prg);
+char	**split_token(t_prg *prg);
 
 /* expand */
-char **expand_tokens(t_prg *prg);
-char *get_var(char *token, int i);
+char	**expand_tokens(t_prg *prg);
+char	*get_var(char *token, int i);
 
 /* free */
-void free_exp(t_prg *prg, int value);
+void	free_exp(t_prg *prg, int value);
 
 #endif

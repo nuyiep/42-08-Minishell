@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 16:13:52 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/16 10:18:30 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int	ft_execute(int temp_fd, char **envp, t_prg *prg)
 		find_npath(prg);
 		cmd_access(prg);
 	}
+	printf("all token: %s\n", prg->all_token[0]);
+	printf("all token: %s\n", prg->all_token[1]);
 	execve(prg->all_token[0], prg->all_token, envp);
 	error_nl(prg, prg->all_token[0]);
 	return (1);
@@ -113,7 +115,7 @@ int	single_command(t_prg *prg, char **envp)
 {
 	int	temp_fd;
 	
-	if (prg->all_token[1] == NULL)
+	if (prg->no_pipes == 0)
 	{
 		temp_fd = dup(0);
 		if (fork() == 0)

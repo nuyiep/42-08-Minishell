@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 19:26:26 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/16 11:48:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 /* TEST FUNCTION */
 
-static void print_tokens(t_prg *prg)
-{
-	char **tokens;
-	int i = 1;
-	
-	tokens = prg->all_token;
-	if (!*tokens)
-		ft_printf("error");
-	while (*tokens)
-	{
-		ft_printf("token #%d: %s\n", i++, *tokens);
-		tokens++;
-	}
-}
+// static void print_tokens(t_prg *prg)
+// {
+// 	char **tokens;
+// 	int i = 1;
+
+// 	tokens = prg->all_token;
+// 	if (!*tokens)
+// 		ft_printf("error");
+// 	while (*tokens)
+// 	{
+// 		ft_printf("token #%d: %s\n", i++, *tokens);
+// 		tokens++;
+// 	}
+// }
 
 /* Main function to read command */
 int	read_command(t_prg *prg)
@@ -41,19 +41,45 @@ int	read_command(t_prg *prg)
 	return (0);
 }
 
+/* Check whether there is pipe or heredoc */
+void	count_pipe_n_heredoc(t_prg *prg)
+{
+	int	i;
+
+	i = 0;
+	while (prg->all_token[i] != NULL)
+	{
+		if (ft_strcmp(prg->all_token[i], "|") == 0)
+			prg->no_pipes++;
+		else if (ft_strcmp(prg->all_token[i], "<<") == 0)
+		{
+			prg->heredoc++;
+			prg->heredoc_postion = i;
+		}
+		i++;
+	}
+}
+
 /* Main function to parse command */
 int	parsing(t_prg *prg)
 {
 	if (prg->all_token)
 		ft_freesplit(prg->all_token);
 	prg->all_token = split_token(prg);
+	if (prg->all_token == NULL)
+		return (1) ;
 	prg->all_token = expand_tokens(prg);
-	print_tokens(prg);
+	//print_tokens(prg);
 	// prg->all_token = ft_split(prg->input, ' ');
+	count_pipe_n_heredoc(prg);
 	return (0);
 }
 
 /* Main function for shell loop */
+/* 		< 		redirect input */
+/* 		<< 		heredoc */
+/* 		> 		redirect output */
+/* 		>> 		redirect output append */
 void	shell_loop(t_prg *prg, char **envp, char **av)
 {
 	while (1)
@@ -62,11 +88,12 @@ void	shell_loop(t_prg *prg, char **envp, char **av)
 			break ;
 		//lexer(prg, av);
 		parsing(prg);
+		if (prg->all_token == NULL)
+			continue ;
+		if (ms_heredoc(prg) == 0)
+			continue ;
 		if (redirections(prg, envp) == 1)
 			continue ;
-		if (prg->all_token[0] == NULL)
-			continue ;
-		if (ms_heredoc(prg, av, envp) != 1)
 			continue ;
 		if (builtins(prg, envp))
 			continue ;

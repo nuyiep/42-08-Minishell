@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/13 20:29:43 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/16 10:37:06 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ void	init_struct(t_prg *prg, char **av, int ac, char **envp)
 	init_exp(prg);
 	prg->input = 0;
 	prg->all_token = NULL;
+	prg->no_pipes = 0;
+	prg->heredoc = 0;
+	prg->heredoc_postion = 0;
 	(void)ac;
 	(void)av;
 }
