@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/16 14:41:18 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 14:24:24 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	read_command(t_prg *prg)
 	if (prg->input)
 		free(prg->input);
 	prg->input = readline("$> ");
-	if (prg->input == NULL)
+	if (prg->input == 0)
+	{
 		return (-1);
+	}
 	add_history(prg->input);
 	return (0);
 }
@@ -84,11 +86,11 @@ void	shell_loop(t_prg *prg, char **envp, char **av)
 {
 	while (1)
 	{
+		init_struct(prg, envp);
 		if (read_command(prg) == -1)
 			break ;
-		parsing(prg);
-		if (prg->all_token == NULL)
-			continue ;
+		if (parsing(prg) == 1)
+			break ;
 		if (ms_heredoc(prg) == 0)
 			continue ;
 		if (redirections(prg, envp) == 1)

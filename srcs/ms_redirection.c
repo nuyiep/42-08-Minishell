@@ -6,12 +6,16 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/15 17:28:50 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 14:23:24 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Examples of >> append */
+/* pwd >> file.txt */
+/* date >> file.txt */
+/* echo "Hello World" >> file.txt */
 int	ft_execute_redirection(int infile, char **envp, t_prg *prg)
 {
 	dup2(infile, STDOUT_FILENO);
@@ -22,9 +26,7 @@ int	ft_execute_redirection(int infile, char **envp, t_prg *prg)
 		find_npath(prg);
 		cmd_access(prg);
 	}
-	char *arguments = "ls ";
-	char **split = ft_split(arguments, ' ');
-	execve(prg->all_token[0], split, envp);
+	execve(prg->all_token[0], prg->av_execve, envp);
 	error_nl(prg, prg->all_token[0]);
 	return (1);
 }
@@ -45,7 +47,6 @@ void	execute_single_command(t_prg *prg, char **envp, int file)
 	return ;
 }
 
-/* pwd >> ls.txt */
 void	redirect_append(t_prg *prg, int i, char **envp)
 {
 	int	infile;
@@ -53,6 +54,8 @@ void	redirect_append(t_prg *prg, int i, char **envp)
 	infile = open(prg->all_token[i], O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (infile == -1)
 		error_nl(prg, "unable to open file");
+	prg->av_execve = prg->all_token;
+	prg->av_execve[i - 1] = NULL;
 	execute_single_command(prg, envp, infile);
 }
 
@@ -64,10 +67,16 @@ void	redirect_input(t_prg *prg, int i, char **envp)
 	infile = open(prg->all_token[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (infile == -1)
 		error_nl(prg, "unable to open file");
+	prg->av_execve = prg->all_token;
+	prg->av_execve[i - 1] = NULL;
 	execute_single_command(prg, envp, infile);
 }
 
 /* Main function for redirections */
+/* Examples */
+/* pwd >> file.txt */
+/* ls > file.txt */
+/* cat < file.txt */
 int	redirections(t_prg *prg, char **envp)
 {
 	int	i;
@@ -90,12 +99,7 @@ int	redirections(t_prg *prg, char **envp)
 			redirect_output(prg, i + 1, envp);
 			return (1);
 		}
-		i++;	
+		i++;
 	}
 	return (0);
 }
-
-/* Examples */
-/* pwd >> ls.txt */
-/* ls > ls.txt */
-/* cat < ls.txt */

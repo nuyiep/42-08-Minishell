@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/16 10:41:32 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 12:56:21 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,11 @@ typedef struct s_prg
 	int		no_pipes;
 	int		heredoc;
 	int		heredoc_postion;
+	char	**av_execve;
 }	t_prg;
 
-
-
 /* Initialization */
-void	init_struct(t_prg *prg, char **av, int ac, char **envp);
+void	init_struct(t_prg *prg, char **envp);
 void	shell_loop(t_prg *prg, char **envp, char **av);
 void	setup_signal(void);
 int		read_command(t_prg *prg);
@@ -65,7 +64,6 @@ void	do_pipex(t_prg *prg, char **envp);
 void	get_path(t_prg *prg, char **envp);
 void	find_npath(t_prg *prg);
 void	cmd_access(t_prg *prg);
-void	cmd_access_two(t_prg *prg);
 void	fork_process(t_prg *prg, char **envp, int **fd, int i);
 void	fork_last_process(t_prg *prg, char **envp, int i);
 

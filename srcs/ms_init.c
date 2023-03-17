@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/16 10:37:06 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 12:56:38 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	init_exp(t_prg *prg)
 }
 
 /* Initialize struct */
-void	init_struct(t_prg *prg, char **av, int ac, char **envp)
+void	init_struct(t_prg *prg, char **envp)
 {
 	init_envp(prg, envp);
 	init_exp(prg);
@@ -46,6 +46,5 @@ void	init_struct(t_prg *prg, char **av, int ac, char **envp)
 	prg->no_pipes = 0;
 	prg->heredoc = 0;
 	prg->heredoc_postion = 0;
-	(void)ac;
-	(void)av;
+	prg->av_execve = NULL;
 }

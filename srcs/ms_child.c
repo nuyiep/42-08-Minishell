@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/14 19:45:39 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 12:22:53 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /* Finds the PATH where the command is located */
 /* and executes it. Process ends when execve is successful */
+/* Example: ls | ls | ls or  */
 void	run_process(int i, t_prg *prg, char **env)
 {
 	// to open later on and replace token
