@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/16 15:22:16 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 16:10:29 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,22 +90,18 @@ int	single_command(t_prg *prg, char **envp)
 {
 	int	temp_fd;
 	
-	if (prg->no_pipes == 0)
+	temp_fd = dup(0);
+	if (fork() == 0)
 	{
+		if (ft_execute(temp_fd, envp, prg))
+			return (2);
+	}
+	else
+	{
+		close(temp_fd);
+		while (waitpid(-1, NULL, 0) != -1)
+			;
 		temp_fd = dup(0);
-		if (fork() == 0)
-		{
-			if (ft_execute(temp_fd, envp, prg))
-				return (2);
-		}
-		else
-		{
-			close(temp_fd);
-			while (waitpid(-1, NULL, 0) != -1)
-				;
-			temp_fd = dup(0);
-		}
-		return (1);
 	}
 	return (0);
 }
@@ -117,8 +113,11 @@ int	single_command(t_prg *prg, char **envp)
 /* fd[2] - create an empty fd[0] and fd[1] */
 int	executor(t_prg *prg, char **av, char **envp)
 {
-	if (single_command(prg, envp) == 1)
+	if (prg->no_pipes == 0)
+	{
+		single_command(prg, envp);
 		return (1);
+	}
 	do_pipex(prg, envp);
 	(void)av;
 	return (0);

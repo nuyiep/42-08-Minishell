@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/16 10:17:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 16:29:49 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,18 @@ int	**make_pipes(t_prg *prg)
 	return (fd);
 }
 
+void	handle_each_pipe(t_prg *prg, int i)
+{
+	int	temp_fd;
+	
+	prg->av_execve = prg->all_token;
+	prg->av_execve[i] = NULL;
+	temp_fd = dup(0);
+}
+
 /* Create pipes for each pair of commands */
 /* then calls fork for each command given */
+/* ls | ls | ls  */
 void	do_pipex(t_prg *prg, char **envp)
 {
 	int	no_tokens;
@@ -49,6 +59,16 @@ void	do_pipex(t_prg *prg, char **envp)
 
 	no_tokens = 0;
 	fd = make_pipes(prg);
+	i = 0;
+	while (prg->all_token[i] != NULL)
+	{
+		if (ft_strcmp(prg->all_token[i], "|") == 0)
+		{
+			handle_each_pipe(prg, i);
+		}
+		i++;
+	}
+	
 	while (prg->all_token[no_tokens] != NULL)
 		no_tokens++;
 	no_cmds = no_tokens - prg->no_pipes;

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/17 12:22:53 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 16:09:30 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@
 /* Example: ls | ls | ls or  */
 void	run_process(int i, t_prg *prg, char **env)
 {
-	// to open later on and replace token
-	// if ((ft_strncmp(prg->all_token[i], "/", 1) != 0))
-	// {
-	// 	get_path(prg, env);
-	// 	find_npath(prg);
-	// 	cmd_access(prg);
-	// }
+	if ((ft_strncmp(prg->all_token[i], "/", 1) != 0))
+	{
+		get_path(prg, env);
+		find_npath(prg);
+		cmd_access(prg);
+	}
 	char	*path = "/bin/ls";
 	char	**split;
 	char	*hard_code = "ls";
