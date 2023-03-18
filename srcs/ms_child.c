@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 18:00:30 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 19:27:51 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@ void	execute_first_cmd(t_prg *prg, int *fd1, char **envp, int start, char **av_o
 		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
-		dup2(fd1[1], STDOUT_FILENO);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		close(fd1[0]);
+		dup2(fd1[1], STDOUT_FILENO);
 		run_process(prg, envp, start, av_one);
 	}
 	else
 	{
-		while (waitpid(-1, NULL, 0) != -1)
-			;
+		close(fd1[1]);
 	}
 }
 
@@ -90,10 +91,12 @@ void	execute_last_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start, ch
 		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (prg->no_pipes == 1)
 		{
+			dprintf(2, "close write: %d\n", close(fd1[1]));
 			dup2(fd1[0], STDIN_FILENO);
-			close(fd1[1]);
 			run_process(prg, envp, start, av_two);
 		}
 		// else
@@ -105,8 +108,7 @@ void	execute_last_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start, ch
 	}
 	else
 	{
-		while (waitpid(-1, NULL, 0) != -1)
-			;
+		close(fd1[0]);
 	}
 	(void)fd2;
 }
