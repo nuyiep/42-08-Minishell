@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/17 15:28:56 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 19:00:33 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	shell_loop(t_prg *prg, char **envp, char **av)
 			continue ;
 		if (builtins(prg, envp))
 			continue ;
-		if (executor(prg, av, envp) == 0)
+		if (executor(prg, envp) == 0)
 			continue ;
 	}
 

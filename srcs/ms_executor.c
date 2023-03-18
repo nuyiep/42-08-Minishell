@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/17 16:10:29 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 19:03:28 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	find_npath(t_prg *prg)
 }
 
 /* Check cmd access */
-void	cmd_access(t_prg *prg)
+void	cmd_access(t_prg *prg, int start)
 {
 	int		j;
 	char	*temp;
@@ -52,16 +52,25 @@ void	cmd_access(t_prg *prg)
 	while (j < prg->npath)
 	{
 		temp = ft_strjoin(prg->path[j], "/");
-		temp = ft_strjoin(temp, prg->all_token[0]);
+		if (prg->no_pipes == 0)
+			temp = ft_strjoin(temp, prg->all_token[0]);
+		else
+			temp = ft_strjoin(temp, prg->av_execve[start]);
 		if (access(temp, X_OK) == 0)
 		{
-			prg->all_token[0] = temp;
+			if (prg->no_pipes == 0)
+				prg->all_token[0] = temp;
+			else
+				prg->av_execve[start] = temp;
 			return ;
 		}
 		j++;
 		free(temp);
 	}
-	error_nl(prg, prg->all_token[0]);
+	if (prg->no_pipes == 0)
+		error_nl(prg, prg->all_token[0]);
+	else
+		error_nl(prg, prg->av_execve[start]);
 }
 
 /* dup2(temp_fd, 0) - redirects the stdin of the current process */
@@ -72,13 +81,16 @@ void	cmd_access(t_prg *prg)
 /* If it is not, change to address */
 int	ft_execute(int temp_fd, char **envp, t_prg *prg)
 {
+	int	start;
+
+	start = 0;
 	dup2(temp_fd, 0);
 	close(temp_fd);
 	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
 	{
 		get_path(prg, envp);
 		find_npath(prg);
-		cmd_access(prg);
+		cmd_access(prg, start);
 	}
 	execve(prg->all_token[0], prg->all_token, envp);
 	error_nl(prg, prg->all_token[0]);
@@ -111,7 +123,7 @@ int	single_command(t_prg *prg, char **envp)
 /* Else, do_pipex */
 /* temp_fd = dup(0) - Save stdin 0 to temp_fd */
 /* fd[2] - create an empty fd[0] and fd[1] */
-int	executor(t_prg *prg, char **av, char **envp)
+int	executor(t_prg *prg, char **envp)
 {
 	if (prg->no_pipes == 0)
 	{
@@ -119,6 +131,5 @@ int	executor(t_prg *prg, char **av, char **envp)
 		return (1);
 	}
 	do_pipex(prg, envp);
-	(void)av;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/17 16:09:30 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/17 19:26:02 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,16 @@
 /* Finds the PATH where the command is located */
 /* and executes it. Process ends when execve is successful */
 /* Example: ls | ls | ls or  */
-void	run_process(int i, t_prg *prg, char **env)
+void	run_process(t_prg *prg, char **env, int start)
 {
-	if ((ft_strncmp(prg->all_token[i], "/", 1) != 0))
+	if ((ft_strncmp(prg->av_execve[start], "/", 1) != 0))
 	{
 		get_path(prg, env);
 		find_npath(prg);
-		cmd_access(prg);
+		cmd_access(prg, start);
 	}
-	char	*path = "/bin/ls";
-	char	**split;
-	char	*hard_code = "ls";
-
-	split = ft_split(hard_code, ' ');
-	execve(path, split, env);
-	error_nl(prg, prg->all_token[0]);
-	(void)i;
+	execve(prg->av_execve[start], prg->av_execve, env);
+	error_nl(prg, prg->av_execve[start]);
 }
 
 /* SIGINT - CONTROL C */
@@ -41,8 +35,9 @@ void	run_process(int i, t_prg *prg, char **env)
 /* forking is necessary */
 /* Do child will be divided into 3 processes */
 /* 1. first_process- read from std out */
+/* dprintf(2, "first process\n") */
 
-void	fork_process(t_prg *prg, char **envp, int **fd, int i)
+void	fork_process(t_prg *prg, char **envp, int *fd, int start, int count_pipes)
 {
 	int	pid;
 
@@ -51,27 +46,24 @@ void	fork_process(t_prg *prg, char **envp, int **fd, int i)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
-		dup2(fd[i][0], STDIN_FILENO);
-		dup2(fd[i + 1][1], STDOUT_FILENO);
-		close(fd[i][0]);
-		close(fd[i][1]);
-		run_process(i, prg, envp);
+		if (count_pipes == 0)
+		{
+			dup2(fd[1], STDOUT_FILENO);
+		}
+		else if (count_pipes == prg->no_pipes - 1)
+		{
+			dup2(fd[0], STDIN_FILENO);
+		}
+		else
+		{
+			dup2(fd[1], STDOUT_FILENO);
+			dup2(fd[0], STDIN_FILENO);
+		}
+		close(fd[0]);
+		close(fd[1]);
+		run_process(prg, envp, start);
 	}
 	else
 		waitpid(pid, NULL, 0);
-}
-
-void	fork_last_process(t_prg *prg, char **envp, int i)
-{
-	int	pid;
-
-	pid = fork();
-	if (pid < 0)
-		error_nl(prg, "Fork last process");
-	if (pid == 0)
-	{
-		run_process(i, prg, envp);
-	}
-	else
-		waitpid(pid, NULL, 0);
+	(void)count_pipes;
 }
