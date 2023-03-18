@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 13:49:38 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 13:50:51 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	fork_process(t_prg *prg, char **envp, int start, int count_pipes)
 	{
 		if (count_pipes == 0)
 		{
-			close(fd1[0]);
 			dup2(fd1[1], STDOUT_FILENO);
 			dup2(fd1[0], STDIN_FILENO);
 		}
