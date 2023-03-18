@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 14:02:03 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 17:16:15 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	find_npath(t_prg *prg)
 }
 
 /* Check cmd access */
-void	cmd_access(t_prg *prg, int start)
+char	*cmd_access(t_prg *prg, char *cmd_zero)
 {
 	int		j;
 	char	*temp;
@@ -55,14 +55,14 @@ void	cmd_access(t_prg *prg, int start)
 		if (prg->no_pipes == 0)
 			temp = ft_strjoin(temp, prg->all_token[0]);
 		else
-			temp = ft_strjoin(temp, prg->av_execve[start]);
+			temp = ft_strjoin(temp, cmd_zero);
 		if (access(temp, X_OK) == 0)
 		{
 			if (prg->no_pipes == 0)
 				prg->all_token[0] = temp;
 			else
-				prg->av_execve[start] = temp;
-			return ;
+				cmd_zero = temp;
+			return (cmd_zero);
 		}
 		j++;
 		free(temp);
@@ -70,7 +70,8 @@ void	cmd_access(t_prg *prg, int start)
 	if (prg->no_pipes == 0)
 		error_nl(prg, prg->all_token[0]);
 	else
-		error_nl(prg, prg->av_execve[start]);
+		error_nl(prg, cmd_zero);
+	return (NULL);
 }
 
 /* dup2(temp_fd, 0) - redirects the stdin of the current process */
@@ -81,17 +82,20 @@ void	cmd_access(t_prg *prg, int start)
 /* If it is not, change to address */
 int	ft_execute(int temp_fd, char **envp, t_prg *prg)
 {
-	int	start;
+	int		start;
+	char	*empty_str;
 
 	start = 0;
+	empty_str = ft_strdup("");
 	dup2(temp_fd, 0);
 	close(temp_fd);
 	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
 	{
 		get_path(prg, envp);
 		find_npath(prg);
-		cmd_access(prg, start);
+		cmd_access(prg, empty_str);
 	}
+	free(empty_str);
 	execve(prg->all_token[0], prg->all_token, envp);
 	error_nl(prg, prg->all_token[0]);
 	return (1);
