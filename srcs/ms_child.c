@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 17:27:22 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 18:00:30 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	execute_first_cmd(t_prg *prg, int *fd1, char **envp, int start, char **av_o
 	if (pid == 0)
 	{
 		dup2(fd1[1], STDOUT_FILENO);
-		close(fd1[1]);
+		close(fd1[0]);
 		run_process(prg, envp, start, av_one);
 	}
 	else
@@ -93,20 +93,20 @@ void	execute_last_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start, ch
 		if (prg->no_pipes == 1)
 		{
 			dup2(fd1[0], STDIN_FILENO);
-			close(fd1[0]);
+			close(fd1[1]);
 			run_process(prg, envp, start, av_two);
 		}
-		else
-		{
-			dup2(fd2[0], STDIN_FILENO);
-			close(fd2[0]);
-			run_process(prg, envp, start, av_two);
-		}
+		// else
+		// {
+		// 	dup2(fd2[0], STDIN_FILENO);
+		// 	close(fd2[0]);
+		// 	run_process(prg, envp, start, av_two);
+		// }
 	}
 	else
 	{
 		while (waitpid(-1, NULL, 0) != -1)
 			;
 	}
-	
+	(void)fd2;
 }

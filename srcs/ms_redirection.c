@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 12:59:08 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 18:07:28 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,18 @@
 /* echo "Hello World" >> file.txt */
 int	ft_execute_redirection(int infile, char **envp, t_prg *prg)
 {
-	int	start;
-
-	start = 0;
+	char	*empty_str;
+	
+	empty_str = ft_strdup("");
 	dup2(infile, STDOUT_FILENO);
 	close(infile);
 	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
 	{
 		get_path(prg, envp);
 		find_npath(prg);
-		cmd_access(prg, start);
+		cmd_access(prg, empty_str);
 	}
+	free(empty_str);
 	execve(prg->all_token[0], prg->av_execve, envp);
 	error_nl(prg, prg->all_token[0]);
 	return (1);

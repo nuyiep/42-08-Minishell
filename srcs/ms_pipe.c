@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 17:27:17 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 18:00:26 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	do_pipex(t_prg *prg, char **envp)
 	start = 0;
 	count_pipes = 0;
 	pipe(fd1);
-	pipe(fd2);
+	// pipe(fd2);
 	i = 0;
 	
 	split = ft_split(prg->input, '|');
@@ -74,4 +74,5 @@ void	do_pipex(t_prg *prg, char **envp)
 		av_two = ft_split(split[1], ' ');
 		execute_last_cmd(prg, fd1, fd2, envp, start, av_two);
 	}
+	(void)fd2;
 }
