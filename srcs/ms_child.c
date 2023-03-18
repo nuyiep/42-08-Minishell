@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 19:27:51 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 19:30:15 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ void	execute_first_cmd(t_prg *prg, int *fd1, char **envp, int start, char **av_o
 		run_process(prg, envp, start, av_one);
 	}
 	else
-	{
 		close(fd1[1]);
-	}
 }
 
 // void	execute_middle_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start)
@@ -107,8 +105,6 @@ void	execute_last_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start, ch
 		// }
 	}
 	else
-	{
 		close(fd1[0]);
-	}
 	(void)fd2;
 }

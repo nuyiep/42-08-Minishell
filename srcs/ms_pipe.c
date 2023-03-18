@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 19:27:44 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 19:36:40 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,6 @@ void	check_access(t_prg *prg, char *token_path)
 		return ;
 	else
 		error_nl(prg, "Command is invalid");
-}
-
-/* Creates a pipe for each pair of commands */
-int	**make_pipes(t_prg *prg)
-{
-	int	i;
-	int	**fd;
-
-	i = 0;
-	fd = malloc((prg->no_pipes + 2) * sizeof(int *));
-	while (i <= prg->no_pipes)
-	{
-		fd[i] = malloc(2 * sizeof(int));
-		pipe(fd[i]);
-		i++;
-	}
-	fd[prg->no_pipes + 1] = NULL;
-	return (fd);
 }
 
 /* Create pipes for each pair of commands */
