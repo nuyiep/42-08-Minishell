@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/17 14:18:31 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 13:08:18 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ int	ft_execute_redirection_output(char **envp, t_prg *prg, int i)
 {
 	int	j;
 	int	k;
+	int	start;
 
 	j = 0;
 	k = 0;
+	start = 0;
 	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
 	{
 		get_path(prg, envp);
 		find_npath(prg);
-		cmd_access(prg);
+		cmd_access(prg, start);
 	}
 	prg->av_execve = prg->all_token;
 	while (prg->all_token[k] != NULL)

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/17 18:52:22 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 13:03:39 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,4 @@ void	init_struct(t_prg *prg, char **envp)
 	prg->heredoc = 0;
 	prg->heredoc_postion = 0;
 	prg->av_execve = NULL;
-	prg->single_command = 0;
 }
