@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/17 19:24:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 13:15:29 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	do_pipex(t_prg *prg, char **envp)
 	int	count_pipes;
 
 	// fd = make_pipes(prg);
+	pipe(fd);
 	end = 0;
 	start = 0;
 	count_pipes = 0;
