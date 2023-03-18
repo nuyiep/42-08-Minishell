@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 13:15:26 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 13:49:38 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,14 @@ void	run_process(t_prg *prg, char **env, int start)
 /* 1. first_process- read from std out */
 /* dprintf(2, "first process\n") */
 
-void	fork_process(t_prg *prg, char **envp, int *fd, int start, int count_pipes)
+void	fork_process(t_prg *prg, char **envp, int start, int count_pipes)
 {
 	int	pid;
+	int	fd1[2];
+	int	fd2[2];
 
+	pipe(fd1);
+	pipe(fd2);
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
@@ -48,22 +52,25 @@ void	fork_process(t_prg *prg, char **envp, int *fd, int start, int count_pipes)
 	{
 		if (count_pipes == 0)
 		{
-			dup2(fd[1], STDOUT_FILENO);
+			close(fd1[0]);
+			dup2(fd1[1], STDOUT_FILENO);
+			dup2(fd1[0], STDIN_FILENO);
 		}
 		else if (count_pipes == prg->no_pipes - 1)
 		{
-			dup2(fd[0], STDIN_FILENO);
+			dup2(fd2[0], STDIN_FILENO);
 		}
 		else
 		{
-			dup2(fd[1], STDOUT_FILENO);
-			dup2(fd[0], STDIN_FILENO);
+			dup2(fd1[0], STDIN_FILENO);
+			dup2(fd2[1], STDOUT_FILENO);
 		}
-		close(fd[0]);
-		close(fd[1]);
+		close(fd1[0]);
+		close(fd1[1]);
+		close(fd2[0]);
+		close(fd2[1]);
 		run_process(prg, envp, start);
 	}
 	else
 		waitpid(pid, NULL, 0);
-	(void)count_pipes;
 }

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 13:15:29 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 13:29:45 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ int	**make_pipes(t_prg *prg)
 /* cat | cat | ls */
 void	do_pipex(t_prg *prg, char **envp)
 {
-	int	fd[2];
 	int	end;
 	int	start;
 	int	count_pipes;
 
 	// fd = make_pipes(prg);
-	pipe(fd);
 	end = 0;
 	start = 0;
 	count_pipes = 0;
@@ -64,7 +62,7 @@ void	do_pipex(t_prg *prg, char **envp)
 		if (ft_strcmp(prg->all_token[end], "|") == 0)
 		{
 			prg->av_execve[end] = NULL;
-			fork_process(prg, envp, fd, start, count_pipes);
+			fork_process(prg, envp, start, count_pipes);
 			count_pipes++;
 			start = end + 1;
 		}
@@ -72,7 +70,7 @@ void	do_pipex(t_prg *prg, char **envp)
 			break ;
 		end++;
 	}
-	fork_process(prg, envp, fd, start, count_pipes);
+	fork_process(prg, envp, start, count_pipes);
 	// end = 0;
 	// while (end < (prg->no_pipes + 2))
 	// {

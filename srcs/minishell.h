@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/17 19:16:40 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 13:30:38 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ void	do_pipex(t_prg *prg, char **envp);
 void	get_path(t_prg *prg, char **envp);
 void	find_npath(t_prg *prg);
 void	cmd_access(t_prg *prg, int start);
-void	fork_process(t_prg *prg, char **envp, int *fd, int start, int count_pipes);
-void	fork_last_process(t_prg *prg, char **envp, int start, int *fd);
+void	fork_process(t_prg *prg, char **envp, int start, int count_pipes);
 
 /* Redirection */
 int		redirections(t_prg *prg, char **envp);
