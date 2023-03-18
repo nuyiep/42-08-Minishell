@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 13:29:45 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/18 15:23:01 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,36 @@ int	**make_pipes(t_prg *prg)
 /* cat file.txt | wc -l */
 /* cat file.txt | grep "world" | wc -l */
 /* cat | cat | ls */
+/* If have 2 commands, need 2 child processes, but only 1 pipe */
 void	do_pipex(t_prg *prg, char **envp)
 {
 	int	end;
 	int	start;
 	int	count_pipes;
+	int	fd1[2];
+	int	fd2[2];
 
-	// fd = make_pipes(prg);
 	end = 0;
 	start = 0;
 	count_pipes = 0;
 	prg->av_execve = prg->all_token;
+	pipe(fd1);
+	pipe(fd2);
+	
+	if (prg->no_pipes == 1)
+	{
+		execute_first_cmd(prg, fd1, envp, start);
+		execute_last_cmd(prg, fd1, fd2, envp, start);
+		return ;
+	}
 	while (prg->all_token[end] != NULL)
 	{
 		if (ft_strcmp(prg->all_token[end], "|") == 0)
 		{
 			prg->av_execve[end] = NULL;
-			fork_process(prg, envp, start, count_pipes);
+			execute_first_cmd(prg, fd1, envp, start);
+			execute_middle_cmd(prg, fd1, fd2, envp, start);
+			execute_last_cmd(prg, fd1, fd2, envp, start);
 			count_pipes++;
 			start = end + 1;
 		}
@@ -70,12 +83,4 @@ void	do_pipex(t_prg *prg, char **envp)
 			break ;
 		end++;
 	}
-	fork_process(prg, envp, start, count_pipes);
-	// end = 0;
-	// while (end < (prg->no_pipes + 2))
-	// {
-	// 	free(fd[end]);
-	// 	end++;
-	// }
-	// free(fd);
 }
