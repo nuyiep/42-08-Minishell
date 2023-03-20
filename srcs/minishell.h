@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 17:15:31 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/20 14:27:53 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ void	get_path(t_prg *prg, char **envp);
 void	find_npath(t_prg *prg);
 char	*cmd_access(t_prg *prg, char *cmd_zero);
 void	execute_first_cmd(t_prg *prg, int *fd1, char **envp, int start, char **av_one);
-void	execute_middle_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start);
+void	execute_middle_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start, char **av_middle);
 void	execute_last_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start, char **av_two);
+// void	execute_middle_cmd_even(t_prg *prg, int *fd1, int *fd2, char **envp, int start, char **av_middle);
 
 /* Redirection */
 int		redirections(t_prg *prg, char **envp);
