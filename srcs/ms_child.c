@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/20 18:49:39 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/20 19:17:47 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_la
 	else
 	{
 		close(fd[i - 1][0]);
+		prg->last_pid = pid;
 	}
 }

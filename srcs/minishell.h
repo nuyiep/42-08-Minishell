@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/20 17:44:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/20 19:17:13 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_prg
 	int		heredoc;
 	int		heredoc_postion;
 	char	**av_execve;
+	int		last_pid;
 }	t_prg;
 
 /* Initialization */

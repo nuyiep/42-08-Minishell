@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/20 18:54:47 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/20 19:19:36 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	do_pipex(t_prg *prg, char **envp)
 	char	**av_middle;
 	int		i;
 	int		**fd;
+	int		status;
 
 	end = 0;
 	start = 0;
@@ -93,16 +94,20 @@ void	do_pipex(t_prg *prg, char **envp)
 		av_last = ft_split(split[no_cmds - 1], ' ');
 		execute_last_cmd(prg, fd, envp, start, av_last, i);
 	}
-	
 	ft_freesplit(av_one);
 	ft_freesplit(av_last);
 	ft_freesplit(split);
-	waitpid(-1, NULL, 0);
-	waitpid(-1, NULL, 0);
-	i = 0;
-	while (i < no_cmds - 2 && no_cmds > 2)
-	{
-		waitpid(-1, NULL, 0);
-		i++;
-	}	
+	if (prg->last_pid != 0)
+		waitpid(prg->last_pid, &status, 0);
+	// waitpid(-1, NULL, 0);
+	// waitpid(-1, NULL, 0);
+	// if (no_cmds > 2)
+	// {
+	// 	i = 0;
+	// 	while (i < no_cmds - 2)
+	// 	{
+	// 		waitpid(-1, NULL, 0);
+	// 		i++;
+	// 	}	
+	// }
 }
