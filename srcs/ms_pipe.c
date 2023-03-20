@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/20 14:27:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/20 15:45:59 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,31 @@ void	do_pipex(t_prg *prg, char **envp)
 	av_one = NULL;
 	av_last = NULL;
 	av_middle = NULL;
+	i = 1;
 	while (split[no_cmds] != NULL)
 		no_cmds++;
 	if (prg->no_pipes == 1)
 	{
 		av_one = ft_split(split[0], ' ');
 		execute_first_cmd(prg, fd1, envp, start, av_one);
-		av_last = ft_split(split[1], ' ');
-		execute_last_cmd(prg, fd1, fd2, envp, start, av_last);
 	}
 	else
 	{
 		av_one = ft_split(split[0], ' ');
 		execute_first_cmd(prg, fd1, envp, start, av_one);
-		i = 1;
-		// ls | ls | ls | ls = no_cmds 4
-		while (i < no_cmds)
+		while (i < no_cmds - 1)
 		{
 			av_middle = ft_split(split[i], ' ');
-			execute_middle_cmd(prg, fd1, fd2, envp, start, av_middle);
+			if (i % 2 != 0)
+				execute_middle_cmd_odd(prg, fd1, fd2, envp, start, av_middle);
+			else
+				execute_middle_cmd_even(prg, fd1, fd2, envp, start, av_middle);
 			free(av_middle);
 			i++;
 		}
-		av_last = ft_split(split[no_cmds - 1], ' ');
-		execute_last_cmd(prg, fd1, fd2, envp, start, av_last);
 	}
+	av_last = ft_split(split[no_cmds - 1], ' ');
+	execute_last_cmd(prg, fd1, fd2, envp, start, av_last);
 	ft_freesplit(av_one);
 	ft_freesplit(av_last);
 	ft_freesplit(split);
