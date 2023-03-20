@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/20 16:01:50 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/20 18:49:39 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	run_process(t_prg *prg, char **env, int start, char **av)
 /* 			 - child read end need to close */
 /* 			 - parent write end need to close */
 /*			 - [unclosed] parent read end - remain unclosed - for the next cmd to read from */
-void	execute_first_cmd(t_prg *prg, int *fd1, char **envp, int start, char **av_one)
+void	execute_first_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_one, int i)
 {
 	int	pid;
 
@@ -55,15 +55,15 @@ void	execute_first_cmd(t_prg *prg, int *fd1, char **envp, int start, char **av_o
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		close(fd1[0]);
-		dup2(fd1[1], STDOUT_FILENO);
+		close(fd[i][0]);
+		dup2(fd[i][1], STDOUT_FILENO);
 		run_process(prg, envp, start, av_one);
 	}
 	else
-		close(fd1[1]);
+		close(fd[i][1]);
 }
 
-void	execute_middle_cmd_odd(t_prg *prg, int *fd1, int *fd2, char **envp, int start, char **av_middle)
+void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_middle, int i)
 {
 	int	pid;
 
@@ -74,42 +74,20 @@ void	execute_middle_cmd_odd(t_prg *prg, int *fd1, int *fd2, char **envp, int sta
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		close(fd2[0]);
-		dup2(fd1[0], STDIN_FILENO);
-		dup2(fd2[1], STDOUT_FILENO);
+		close(fd[i][0]);
+		close(fd[i - 1][1]);
+		dup2(fd[i - 1][0], STDIN_FILENO);
+		dup2(fd[i][1], STDOUT_FILENO);
 		run_process(prg, envp, start, av_middle);
 	}
 	else
 	{
-		close(fd1[0]);
-		close(fd2[1]);
+		close(fd[i][1]);
+		close(fd[i - 1][0]);
 	}
 }
 
-void	execute_middle_cmd_even(t_prg *prg, int *fd1, int *fd2, char **envp, int start, char **av_middle)
-{
-	int	pid;
-
-	pid = fork();
-	if (pid < 0)
-		error_nl(prg, "Fork process");
-	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		close(fd1[0]);
-		dup2(fd2[0], STDIN_FILENO);
-		dup2(fd1[1], STDOUT_FILENO);
-		run_process(prg, envp, start, av_middle);
-	}
-	else
-	{
-		close(fd2[0]);
-		close(fd1[1]);
-	}
-}
-
-void	execute_last_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start, char **av_two)
+void	execute_last_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_last, int i)
 {
 	int		pid;
 
@@ -120,22 +98,12 @@ void	execute_last_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start, ch
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (prg->no_pipes % 2 != 0)
-		{
-			dup2(fd1[0], STDIN_FILENO);
-			run_process(prg, envp, start, av_two);
-		}
-		else
-		{
-			dup2(fd2[0], STDIN_FILENO);
-			run_process(prg, envp, start, av_two);
-		}
+		close(fd[i - 1][1]);
+		dup2(fd[i - 1][0], STDIN_FILENO);
+		run_process(prg, envp, start, av_last);
 	}
 	else
 	{
-		if (prg->no_pipes % 2 != 0)
-			close(fd1[0]);
-		else
-			close(fd2[0]);
+		close(fd[i - 1][0]);
 	}
 }
