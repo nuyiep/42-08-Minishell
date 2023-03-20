@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/20 15:42:00 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/20 16:01:50 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,11 @@ void	execute_last_cmd(t_prg *prg, int *fd1, int *fd2, char **envp, int start, ch
 			run_process(prg, envp, start, av_two);
 		}
 	}
-	// else
-	// {
-	// 	if (prg->no_pipes % 2 != 0)
-	// 		close(fd1[0]);
-	// 	else
-	// 		close(fd2[0]);
-	// }
+	else
+	{
+		if (prg->no_pipes % 2 != 0)
+			close(fd1[0]);
+		else
+			close(fd2[0]);
+	}
 }
