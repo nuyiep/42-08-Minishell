@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/20 12:19:40 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/21 11:28:13 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int	executor(t_prg *prg, char **envp)
 {
 	if (prg->no_pipes == 0)
 	{
+	
 		single_command(prg, envp);
 		return (1);
 	}

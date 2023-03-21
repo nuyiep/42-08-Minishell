@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/20 19:19:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/21 12:18:46 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,14 @@ int	**make_pipes(t_prg *prg)
 /* If have 2 commands, need 2 child processes, but only 1 pipe */
 void	do_pipex(t_prg *prg, char **envp)
 {
-	int		end;
-	int		start;
-	int		count_pipes;
 	char	**split;
 	int		no_cmds;
 	char	**av_one;
-	char	**av_last;
 	char	**av_middle;
+	char	**av_last;
 	int		i;
 	int		**fd;
-	int		status;
 
-	end = 0;
-	start = 0;
-	count_pipes = 0;
 	no_cmds = 0;
 	fd = make_pipes(prg);
 	split = ft_split(prg->input, '|');
@@ -69,45 +62,37 @@ void	do_pipex(t_prg *prg, char **envp)
 	av_last = NULL;
 	av_middle = NULL;
 	i = 0;
-	make_pipes(prg);
 	while (split[no_cmds] != NULL)
 		no_cmds++;
 	if (prg->no_pipes == 1)
 	{
 		av_one = ft_split(split[0], ' ');
-		execute_first_cmd(prg, fd, envp, start, av_one, i);
+		execute_first_cmd(prg, fd, envp, av_one, i);
 		av_last = ft_split(split[no_cmds - 1], ' ');
-		execute_last_cmd(prg, fd, envp, start, av_last, i + 1);
+		execute_last_cmd(prg, fd, envp, av_last, i + 1);
 	}
 	else
 	{
 		av_one = ft_split(split[0], ' ');
-		execute_first_cmd(prg, fd, envp, start, av_one, i);
-		i++; // i = 1 // i < 2
+		execute_first_cmd(prg, fd, envp, av_one, i);
+		i++;
 		while (i < no_cmds - 1)
 		{
 			av_middle = ft_split(split[i], ' ');
-			execute_middle_cmd(prg, fd, envp, start, av_middle, i);
+			execute_middle_cmd(prg, fd, envp, av_middle, i);
 			free(av_middle);
 			i++;
 		}
 		av_last = ft_split(split[no_cmds - 1], ' ');
-		execute_last_cmd(prg, fd, envp, start, av_last, i);
+		execute_last_cmd(prg, fd, envp, av_last, i);
+	}
+	i = 0;
+	while (i < no_cmds)
+	{
+		waitpid(-1, NULL, 0);
+		i++;
 	}
 	ft_freesplit(av_one);
 	ft_freesplit(av_last);
 	ft_freesplit(split);
-	if (prg->last_pid != 0)
-		waitpid(prg->last_pid, &status, 0);
-	// waitpid(-1, NULL, 0);
-	// waitpid(-1, NULL, 0);
-	// if (no_cmds > 2)
-	// {
-	// 	i = 0;
-	// 	while (i < no_cmds - 2)
-	// 	{
-	// 		waitpid(-1, NULL, 0);
-	// 		i++;
-	// 	}	
-	// }
 }

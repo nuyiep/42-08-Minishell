@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/20 19:17:47 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/21 11:59:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* Finds the PATH where the command is located */
 /* and executes it. Process ends when execve is successful */
 /* Example: ls | ls | ls or  */
-void	run_process(t_prg *prg, char **env, int start, char **av)
+void	run_process(t_prg *prg, char **env, char **av)
 {
 	char	*first_arg;
 
@@ -28,7 +28,6 @@ void	run_process(t_prg *prg, char **env, int start, char **av)
 	}
 	execve(first_arg, av, env);
 	error_nl(prg, first_arg);
-	(void)start;
 }
 
 /* SIGINT - CONTROL C */
@@ -44,7 +43,7 @@ void	run_process(t_prg *prg, char **env, int start, char **av)
 /* 			 - child read end need to close */
 /* 			 - parent write end need to close */
 /*			 - [unclosed] parent read end - remain unclosed - for the next cmd to read from */
-void	execute_first_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_one, int i)
+void	execute_first_cmd(t_prg *prg, int **fd, char **envp, char **av_one, int i)
 {
 	int	pid;
 
@@ -57,13 +56,13 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_o
 		signal(SIGQUIT, SIG_DFL);
 		close(fd[i][0]);
 		dup2(fd[i][1], STDOUT_FILENO);
-		run_process(prg, envp, start, av_one);
+		run_process(prg, envp, av_one);
 	}
 	else
 		close(fd[i][1]);
 }
 
-void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_middle, int i)
+void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, char **av_middle, int i)
 {
 	int	pid;
 
@@ -78,7 +77,7 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_
 		close(fd[i - 1][1]);
 		dup2(fd[i - 1][0], STDIN_FILENO);
 		dup2(fd[i][1], STDOUT_FILENO);
-		run_process(prg, envp, start, av_middle);
+		run_process(prg, envp, av_middle);
 	}
 	else
 	{
@@ -87,7 +86,7 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_
 	}
 }
 
-void	execute_last_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_last, int i)
+void	execute_last_cmd(t_prg *prg, int **fd, char **envp, char **av_last, int i)
 {
 	int		pid;
 
@@ -100,11 +99,8 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **envp, int start, char **av_la
 		signal(SIGQUIT, SIG_DFL);
 		close(fd[i - 1][1]);
 		dup2(fd[i - 1][0], STDIN_FILENO);
-		run_process(prg, envp, start, av_last);
+		run_process(prg, envp, av_last);
 	}
 	else
-	{
 		close(fd[i - 1][0]);
-		prg->last_pid = pid;
-	}
 }

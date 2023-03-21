@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/18 18:15:25 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/21 10:55:51 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ int	ft_execute_redirection_output(char **envp, t_prg *prg, int i)
 {
 	int		j;
 	int		k;
-	int		start;
 	char	*empty_str;
 
 	j = 0;
 	k = 0;
-	start = 0;
 	empty_str = ft_strdup("");
 	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
 	{
