@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/21 18:15:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/21 23:17:44 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void	shell_loop(t_prg *prg, char **envp, char **av)
 			break ;
 		if (parsing(prg) == 1)
 			continue ;
-		if (prg->no_pipes == 1)
+		if (prg->no_pipes == 0)
 		{
-			if (ms_heredoc(prg) == 0)
+			if (ms_heredoc(prg, prg->all_token) == 0)
 				continue ;
 			if (redirections(prg, envp) == 1)
 				continue ;
