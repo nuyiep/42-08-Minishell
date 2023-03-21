@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 13:45:41 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 14:20:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/21 18:05:15 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 /* rl_redisplay- displays the current line of input in terminal	*/				
 void	sigint_handler(int sig)
 {
+	if (sig != SIGINT)
+		return ;
 	ft_printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();

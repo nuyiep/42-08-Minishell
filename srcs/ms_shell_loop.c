@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/21 12:12:32 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/21 18:15:24 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,25 @@ void	shell_loop(t_prg *prg, char **envp, char **av)
 	{
 		init_struct(prg, envp);
 		if (read_command(prg) == -1)
-			continue ;
-		if (parsing(prg) == 1)
 			break ;
-		if (ms_heredoc(prg) == 0)
+		if (parsing(prg) == 1)
 			continue ;
-		if (redirections(prg, envp) == 1)
-			continue ;
-		if (builtins(prg, envp))
-			continue ;
-		if (executor(prg, envp) == 0)
-			continue ;
+		if (prg->no_pipes == 1)
+		{
+			if (ms_heredoc(prg) == 0)
+				continue ;
+			if (redirections(prg, envp) == 1)
+				continue ;
+			if (builtins(prg, envp))
+				continue ;
+			if (executor(prg, envp) == 0)
+				continue ;
+		}
+		else
+		{
+			if (executor(prg, envp) == 0)
+					continue ;
+		}
 	}
 
 	/* temporary free */

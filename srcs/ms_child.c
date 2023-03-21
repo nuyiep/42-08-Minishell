@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/21 11:59:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/21 18:35:45 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,18 @@ void	run_process(t_prg *prg, char **env, char **av)
 void	execute_first_cmd(t_prg *prg, int **fd, char **envp, char **av_one, int i)
 {
 	int	pid;
+	int	*return_val;
 
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
+		check_redirection_builtins(prg, av_one);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		close(fd[i][0]);
 		dup2(fd[i][1], STDOUT_FILENO);
+		close(fd[i][0]);
 		run_process(prg, envp, av_one);
 	}
 	else
@@ -73,10 +75,10 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, char **av_middle, int
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		close(fd[i][0]);
-		close(fd[i - 1][1]);
 		dup2(fd[i - 1][0], STDIN_FILENO);
 		dup2(fd[i][1], STDOUT_FILENO);
+		close(fd[i][0]);
+		close(fd[i - 1][1]);
 		run_process(prg, envp, av_middle);
 	}
 	else
@@ -97,8 +99,8 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **envp, char **av_last, int i)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		close(fd[i - 1][1]);
 		dup2(fd[i - 1][0], STDIN_FILENO);
+		close(fd[i - 1][1]);
 		run_process(prg, envp, av_last);
 	}
 	else

@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/21 17:51:18 by plau             ###   ########.fr       */
+/*   Created: 2023/03/21 18:26:40 by plau              #+#    #+#             */
+/*   Updated: 2023/03/21 18:36:03 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	check_redirection_builtins(t_prg *prg, char **av_one)
 {
-	t_prg	prg;
+	int	i;
+	int	j;
 
-	setup_signal();
-	shell_loop(&prg, envp, av);
-	// system("leaks -q minishell");
-	(void)ac;
+	i = 0;
+	j = 0;
+	while (av_one[i] != NULL)
+	{
+		while (av_one[i][j] != NULL)
+		{
+			if (av_one[i][j] == '<<')
+			{
+				ms_heredoc(prg);
+			}
+			j++;
+		}
+		i++;
+	}
 }
