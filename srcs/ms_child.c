@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 12:26:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 13:49:59 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,17 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **envp, char **av_one, int i)
 {
 	int	pid;
 
+	if (check_redirection_builtins(prg, av_one, envp) == 1)
+		return ;
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
+		close(fd[i][0]);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i][1], STDOUT_FILENO);
-		close(fd[i][0]);
 		run_process(prg, envp, av_one);
 	}
 	else
@@ -66,6 +68,8 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, char **av_middle, int
 {
 	int	pid;
 
+	if (check_redirection_builtins(prg, av_middle, envp) == 1)
+		return ;
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
@@ -90,14 +94,14 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **envp, char **av_last, int i)
 {
 	int		pid;
 
+	if (check_redirection_builtins(prg, av_last, envp) == 1)
+		return ;
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
 		close(fd[i - 1][1]);
-		if (check_redirection_builtins(prg, av_last, envp) == 1)
-			return ;
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i - 1][0], STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/21 10:55:51 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 14:02:23 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,41 @@
 /* cat < file.txt */
 /* sort < file.txt */
 /* grep 'error' < $(ls *.log) */
-int	ft_execute_redirection_output(char **envp, t_prg *prg, int i)
+int	ft_execute_redirection_output(char **envp, t_prg *prg, int i, char **av)
 {
 	int		j;
 	int		k;
-	char	*empty_str;
+	char	*av_zero;
 
 	j = 0;
 	k = 0;
-	empty_str = ft_strdup("");
-	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
+	av_zero = NULL;
+	if ((ft_strncmp(av[0], "/", 1) != 0))
 	{
 		get_path(prg, envp);
 		find_npath(prg);
-		cmd_access(prg, empty_str);
-		free(empty_str);
+		av_zero = cmd_access(prg, av[0]);
 	}
-	prg->av_execve = prg->all_token;
-	while (prg->all_token[k] != NULL)
+	prg->av_execve = av;
+	while (av[k] != NULL)
 	{
 		if (k == i - 1)
 			k++;
-		prg->av_execve[j] = prg->all_token[k];
+		prg->av_execve[j] = av[k];
 		j++;
 		k++;
 	}
 	prg->av_execve[j] = NULL;
-	execve(prg->all_token[0], prg->av_execve, envp);
+	execve(av_zero, prg->av_execve, envp);
 	error_nl(prg, "Redirection_output");
 	return (1);
 }
 
-void	execute_command_output(t_prg *prg, char **envp, int outfile, int i)
+void	execute_command_output(t_prg *prg, char **envp, int outfile, int i, char **av)
 {
 	if (fork() == 0)
 	{
-		if (ft_execute_redirection_output(envp, prg, i))
+		if (ft_execute_redirection_output(envp, prg, i, av))
 			return ;
 	}
 	else
@@ -64,12 +63,12 @@ void	execute_command_output(t_prg *prg, char **envp, int outfile, int i)
 }
 
 /* cat < Makefile */
-void	redirect_output(t_prg *prg, int i, char **envp)
+void	redirect_output(t_prg *prg, int i, char **envp, char **av)
 {
 	int	outfile;
 
 	outfile = open(prg->all_token[i], O_RDONLY, 0644);
 	if (outfile == -1)
 		error_nl(prg, "unable to open file");
-	execute_command_output(prg, envp, outfile, i);
+	execute_command_output(prg, envp, outfile, i, av);
 }

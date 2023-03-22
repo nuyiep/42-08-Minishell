@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 11:45:46 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 14:01:43 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ int		check_redirection_builtins(t_prg *prg, char **av, char **envp);
 
 /* Redirection */
 int		redirections(t_prg *prg, char **envp);
-void	redirect_output(t_prg *prg, int i, char **envp);
+void	redirect_output(t_prg *prg, int i, char **envp, char **av);
 void	redirect_append(t_prg *prg, int i, char **envp, char **av);
+void	redirect_input(t_prg *prg, int i, char **envp, char **av);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp, char **av);

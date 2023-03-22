@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 12:24:09 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 13:58:23 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	ft_execute_redirection(int infile, char **envp, t_prg *prg, char **av)
 	close(infile);
 	if ((ft_strncmp(av[0], "/", 1) != 0))
 	{
-		printf("here\n");
 		get_path(prg, envp);
 		find_npath(prg);
 		av_zero = cmd_access(prg, av[0]);
@@ -65,16 +64,17 @@ void	redirect_append(t_prg *prg, int i, char **envp, char **av)
 }
 
 /* ls > ls.txt */
-void	redirect_input(t_prg *prg, int i, char **envp)
+void	redirect_input(t_prg *prg, int i, char **envp, char **av)
 {
 	int	infile;
 
 	infile = open(prg->all_token[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (infile == -1)
 		error_nl(prg, "unable to open file");
-	prg->av_execve = prg->all_token;
+	prg->av_execve = av;
+	prg->av_execve[i] = NULL;
 	prg->av_execve[i - 1] = NULL;
-	execute_single_command(prg, envp, infile, prg->all_token);
+	execute_single_command(prg, envp, infile, av);
 }
 
 /* Main function for redirections */
@@ -96,12 +96,12 @@ int	redirections(t_prg *prg, char **envp)
 		}
 		else if (ft_strcmp(prg->all_token[i], ">") == 0)
 		{
-			redirect_input(prg, i + 1, envp);
+			redirect_input(prg, i + 1, envp, prg->all_token);
 			return (1);
 		}
 		else if (ft_strcmp(prg->all_token[i], "<") == 0)
 		{
-			redirect_output(prg, i + 1, envp);
+			redirect_output(prg, i + 1, envp, prg->all_token);
 			return (1);
 		}
 		i++;
