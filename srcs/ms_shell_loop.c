@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/21 23:17:44 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 11:45:35 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	shell_loop(t_prg *prg, char **envp, char **av)
 				continue ;
 			if (redirections(prg, envp) == 1)
 				continue ;
-			if (builtins(prg, envp))
+			if (builtins(prg, envp, prg->all_token))
 				continue ;
 			if (executor(prg, envp) == 0)
 				continue ;
@@ -102,7 +102,7 @@ void	shell_loop(t_prg *prg, char **envp, char **av)
 		else
 		{
 			if (executor(prg, envp) == 0)
-					continue ;
+				continue ;
 		}
 	}
 

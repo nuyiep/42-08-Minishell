@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/21 23:10:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 12:21:08 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	find_npath(t_prg *prg)
 }
 
 /* Check cmd access */
-char	*cmd_access(t_prg *prg, char *cmd_zero)
+char	*cmd_access(t_prg *prg, char *av_zero)
 {
 	int		j;
 	char	*temp;
@@ -55,14 +55,19 @@ char	*cmd_access(t_prg *prg, char *cmd_zero)
 		if (prg->no_pipes == 0)
 			temp = ft_strjoin(temp, prg->all_token[0]);
 		else
-			temp = ft_strjoin(temp, cmd_zero);
+			temp = ft_strjoin(temp, av_zero);
 		if (access(temp, X_OK) == 0)
 		{
 			if (prg->no_pipes == 0)
+			{
 				prg->all_token[0] = temp;
+				return (prg->all_token[0]);
+			}
 			else
-				cmd_zero = temp;
-			return (cmd_zero);
+			{
+				av_zero = temp;
+				return (av_zero);
+			}
 		}
 		j++;
 		free(temp);
@@ -70,7 +75,7 @@ char	*cmd_access(t_prg *prg, char *cmd_zero)
 	if (prg->no_pipes == 0)
 		error_nl(prg, prg->all_token[0]);
 	else
-		error_nl(prg, cmd_zero);
+		error_nl(prg, av_zero);
 	return (NULL);
 }
 

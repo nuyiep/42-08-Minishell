@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/21 12:18:46 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 11:34:20 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	do_pipex(t_prg *prg, char **envp)
 	{
 		av_one = ft_split(split[0], ' ');
 		execute_first_cmd(prg, fd, envp, av_one, i);
+		prg->av_execve = NULL;
 		av_last = ft_split(split[no_cmds - 1], ' ');
 		execute_last_cmd(prg, fd, envp, av_last, i + 1);
 	}
@@ -75,11 +76,13 @@ void	do_pipex(t_prg *prg, char **envp)
 	{
 		av_one = ft_split(split[0], ' ');
 		execute_first_cmd(prg, fd, envp, av_one, i);
+		prg->av_execve = NULL;
 		i++;
 		while (i < no_cmds - 1)
 		{
 			av_middle = ft_split(split[i], ' ');
 			execute_middle_cmd(prg, fd, envp, av_middle, i);
+			prg->av_execve = NULL;
 			free(av_middle);
 			i++;
 		}
