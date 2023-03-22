@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 17:16:29 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 18:29:24 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	redirect_append(t_prg *prg, int i, char **envp, char **av)
 		error_nl(prg, "unable to open file");
 	prg->av_execve = NULL;
 	prg->av_execve = av;
-	prg->av_execve[i] = NULL;
+	free(prg->av_execve[i]);
+	free(prg->av_execve[i - 1]);
 	prg->av_execve[i - 1] = NULL;
 	execute_single_command(prg, envp, infile, av);
 }
