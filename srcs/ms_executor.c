@@ -6,41 +6,11 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 12:21:08 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 15:52:35 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* To get the "PATH=" line from env */
-void	get_path(t_prg *prg, char **envp)
-{
-	int		i;
-	char	*path;
-
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			path = ft_substr(envp[i], 5, (ft_strlen(envp[i]) - 5));
-			prg->path = ft_split(path, ':');
-			free (path);
-		}
-		i++;
-	}
-}
-
-/* Find number of path */
-void	find_npath(t_prg *prg)
-{
-	int	k;
-
-	k = 0;
-	while (prg->path[k] != NULL)
-		k++;
-	prg->npath = k;
-}
 
 /* Check cmd access */
 char	*cmd_access(t_prg *prg, char *av_zero)
@@ -93,11 +63,7 @@ int	ft_execute(int temp_fd, char **envp, t_prg *prg)
 	dup2(temp_fd, 0);
 	close(temp_fd);
 	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
-	{
-		get_path(prg, envp);
-		find_npath(prg);
 		cmd_access(prg, empty_str);
-	}
 	free(empty_str);
 	execve(prg->all_token[0], prg->all_token, envp);
 	error_nl(prg, prg->all_token[0]);

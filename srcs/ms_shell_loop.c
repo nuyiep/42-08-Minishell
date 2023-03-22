@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 11:45:35 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 15:39:33 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,27 @@ int	parsing(t_prg *prg)
 	return (0);
 }
 
+void	free_all(t_prg *prg)
+{
+	if (prg->all_token)
+		ft_freesplit(prg->all_token);
+	if (prg->path)
+		ft_freesplit(prg->path);
+	if (prg->input)
+		free(prg->input);
+	if (prg->av_execve)
+		ft_freesplit(prg->av_execve);
+	free_exp(prg, 0);
+}
+
 /* Main function for shell loop */
 /* 		< 		redirect input */
 /* 		<< 		heredoc */
 /* 		> 		redirect output */
 /* 		>> 		redirect output append */
-void	shell_loop(t_prg *prg, char **envp, char **av)
+void	shell_loop(t_prg *prg, char **envp)
 {
+	init_envp(prg, envp);
 	while (1)
 	{
 		init_struct(prg, envp);
@@ -92,28 +106,18 @@ void	shell_loop(t_prg *prg, char **envp, char **av)
 		{
 			if (ms_heredoc(prg, prg->all_token) == 0)
 				continue ;
-			if (redirections(prg, envp) == 1)
+			else if (redirections(prg, envp) == 1)
 				continue ;
-			if (builtins(prg, envp, prg->all_token))
+			else if (builtins(prg, envp, prg->all_token))
 				continue ;
-			if (executor(prg, envp) == 0)
+			else if (executor(prg, envp) == 0)
 				continue ;
 		}
 		else
-		{
-			if (executor(prg, envp) == 0)
-				continue ;
-		}
+			executor(prg, envp);
+		free_all(prg);
 	}
-
-	/* temporary free */
-	if (prg->all_token)
-		ft_freesplit(prg->all_token);
 	if (prg->ls_envp)
 		ft_freesplit(prg->ls_envp);
-	if (prg->path)
-		ft_freesplit(prg->path);
-	free_exp(prg, 0);
-	ft_printf("bye\n");
-	(void)av;
+	ft_printf("BYE\n");
 }

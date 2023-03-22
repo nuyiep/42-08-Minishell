@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 13:49:59 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 15:54:50 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,10 @@
 /* Example: ls | ls | ls or  */
 void	run_process(t_prg *prg, char **env, char **av)
 {
-	char	*first_arg;
-
-	first_arg = av[0];
-	if ((ft_strncmp(first_arg, "/", 1) != 0))
-	{
-		get_path(prg, env);
-		find_npath(prg);
-		first_arg = cmd_access(prg, first_arg);
-	}
-	execve(first_arg, av, env);
-	error_nl(prg, first_arg);
+	if ((ft_strncmp(av[0], "/", 1) != 0))
+		av[0] = cmd_access(prg, av[0]);
+	execve(av[0], av, env);
+	error_nl(prg, av[0]);
 }
 
 /* SIGINT - CONTROL C */
