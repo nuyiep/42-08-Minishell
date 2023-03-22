@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 18:29:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 20:54:35 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	execute_single_command(t_prg *prg, char **envp, int file, char **av)
 	return ;
 }
 
-void	redirect_append(t_prg *prg, int i, char **envp, char **av)
+void	redirect_append(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
@@ -58,11 +58,11 @@ void	redirect_append(t_prg *prg, int i, char **envp, char **av)
 	free(prg->av_execve[i]);
 	free(prg->av_execve[i - 1]);
 	prg->av_execve[i - 1] = NULL;
-	execute_single_command(prg, envp, infile, av);
+	execute_single_command(prg, prg->ls_envp, infile, av);
 }
 
 /* ls > ls.txt */
-void	redirect_input(t_prg *prg, int i, char **envp, char **av)
+void	redirect_input(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
@@ -70,9 +70,10 @@ void	redirect_input(t_prg *prg, int i, char **envp, char **av)
 	if (infile == -1)
 		error_nl(prg, "unable to open file");
 	prg->av_execve = av;
-	prg->av_execve[i] = NULL;
+	free(prg->av_execve[i]);
+	free(prg->av_execve[i - 1]);
 	prg->av_execve[i - 1] = NULL;
-	execute_single_command(prg, envp, infile, av);
+	execute_single_command(prg, prg->ls_envp, infile, av);
 }
 
 /* Main function for redirections */
@@ -80,7 +81,7 @@ void	redirect_input(t_prg *prg, int i, char **envp, char **av)
 /* pwd >> file.txt */
 /* ls > file.txt */
 /* cat < file.txt */
-int	redirections(t_prg *prg, char **envp)
+int	redirections(t_prg *prg)
 {
 	int	i;
 
@@ -89,17 +90,17 @@ int	redirections(t_prg *prg, char **envp)
 	{
 		if (ft_strcmp(prg->all_token[i], ">>") == 0)
 		{
-			redirect_append(prg, i + 1, envp, prg->all_token);
+			redirect_append(prg, i + 1, prg->all_token);
 			return (1);
 		}
 		else if (ft_strcmp(prg->all_token[i], ">") == 0)
 		{
-			redirect_input(prg, i + 1, envp, prg->all_token);
+			redirect_input(prg, i + 1, prg->all_token);
 			return (1);
 		}
 		else if (ft_strcmp(prg->all_token[i], "<") == 0)
 		{
-			redirect_output(prg, i + 1, envp, prg->all_token);
+			redirect_output(prg, i + 1, prg->all_token);
 			return (1);
 		}
 		i++;

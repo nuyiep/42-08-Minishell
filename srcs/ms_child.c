@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 17:38:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 21:07:55 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 /* Finds the PATH where the command is located */
 /* and executes it. Process ends when execve is successful */
 /* Example: ls | ls | ls or  */
-void	run_process(t_prg *prg, char **env, char **av)
+void	run_process(t_prg *prg, char **av)
 {
 	if ((ft_strncmp(av[0], "/", 1) != 0))
 		av[0] = cmd_access(prg, av[0]);
-	execve(av[0], av, env);
+	execve(av[0], av, prg->ls_envp);
 	error_nl(prg, av[0]);
 }
 
@@ -35,12 +35,13 @@ void	run_process(t_prg *prg, char **env, char **av)
 /* first cmd - [unclosed] child will write */
 /* 			 - child read end need to close */
 /* 			 - parent write end need to close */
-/*			 - [unclosed] parent read end - remain unclosed - for the next cmd to read from */
-void	execute_first_cmd(t_prg *prg, int **fd, char **envp, char **av_one, int i)
+/*			 - [unclosed] parent read end - remain unclosed - for the next */
+/*				cmd to read from */
+void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 {
 	int	pid;
 
-	if (check_redirection_builtins(prg, av_one, envp) == 1)
+	if (check_redirection_builtins(prg, av_one) == 1)
 		return ;
 	pid = fork();
 	if (pid < 0)
@@ -51,17 +52,17 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **envp, char **av_one, int i)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i][1], STDOUT_FILENO);
-		run_process(prg, envp, av_one);
+		run_process(prg, av_one);
 	}
 	else
 		close(fd[i][1]);
 }
 
-void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, char **av_middle, int i)
+void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 {
 	int	pid;
 
-	if (check_redirection_builtins(prg, av_middle, envp) == 1)
+	if (check_redirection_builtins(prg, av_middle) == 1)
 		return ;
 	pid = fork();
 	if (pid < 0)
@@ -74,7 +75,7 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, char **av_middle, int
 		dup2(fd[i][1], STDOUT_FILENO);
 		close(fd[i][0]);
 		close(fd[i - 1][1]);
-		run_process(prg, envp, av_middle);
+		run_process(prg, av_middle);
 	}
 	else
 	{
@@ -83,11 +84,11 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, char **av_middle, int
 	}
 }
 
-void	execute_last_cmd(t_prg *prg, int **fd, char **envp, char **av_last, int i)
+void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 {
 	int		pid;
 
-	if (check_redirection_builtins(prg, av_last, envp) == 1)
+	if (check_redirection_builtins(prg, av_last) == 1)
 		return ;
 	pid = fork();
 	if (pid < 0)
@@ -98,7 +99,7 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **envp, char **av_last, int i)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i - 1][0], STDIN_FILENO);
-		run_process(prg, envp, av_last);
+		run_process(prg, av_last);
 	}
 	else
 		close(fd[i - 1][0]);

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 18:41:33 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 20:59:07 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	parsing(t_prg *prg)
 {
 	prg->all_token = split_token(prg);
 	if (prg->all_token == NULL)
-		return (1) ;
+		return (1);
 	prg->all_token = expand_tokens(prg);
 	//print_tokens(prg);
 	count_pipe_n_heredoc(prg);
@@ -90,7 +90,6 @@ void	free_all(t_prg *prg)
 /* 		>> 		redirect output append */
 void	shell_loop(t_prg *prg, char **envp)
 {
-	init_envp(prg, envp);
 	while (1)
 	{
 		init_struct(prg, envp);
@@ -101,31 +100,18 @@ void	shell_loop(t_prg *prg, char **envp)
 		if (prg->no_pipes == 0)
 		{
 			if (ms_heredoc(prg, prg->all_token) == 0)
-			{
-				free_all(prg);
-				continue ;
-			}
-			else if (redirections(prg, envp) == 1)
-			{
-				free_all(prg);
-				continue ;
-			}
+				;
+			else if (redirections(prg) == 1)
+				;
 			else if (builtins(prg, envp, prg->all_token))
-			{
-				free_all(prg);
-				continue ;
-			}
-			else if (executor(prg, envp) == 0)
-			{
-				free_all(prg);
-				continue ;
-			}
+				;
+			else if (executor(prg) == 0)
+				;
+			free_all(prg);
+			continue ;
 		}
 		else
-			executor(prg, envp);
+			executor(prg);
 		free_all(prg);
 	}
-	if (prg->ls_envp)
-		ft_freesplit(prg->ls_envp);
-	ft_printf("BYE BYE\n");
 }

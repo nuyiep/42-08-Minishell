@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 14:55:07 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 21:05:16 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,20 @@ void	init_envp(t_prg *prg, char **envp);
 /* Parsing */
 
 /* Executor */
-int		executor(t_prg *prg, char **envp);
+int		executor(t_prg *prg);
 int		ms_heredoc(t_prg *prg, char **av);
-void	do_pipex(t_prg *prg, char **envp);
+void	do_pipex(t_prg *prg);
 char	*cmd_access(t_prg *prg, char *cmd_zero);
-void	execute_first_cmd(t_prg *prg, int **fd, char **envp, char **av_one, int i);
-void	execute_middle_cmd(t_prg *prg, int **fd, char **envp, char **av_middle, int i);
-void	execute_last_cmd(t_prg *prg, int **fd, char **envp, char **av_last, int i);
-int		check_redirection_builtins(t_prg *prg, char **av, char **envp);
+void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i);
+void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i);
+void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i);
+int		check_redirection_builtins(t_prg *prg, char **av);
 
 /* Redirection */
-int		redirections(t_prg *prg, char **envp);
-void	redirect_output(t_prg *prg, int i, char **envp, char **av);
-void	redirect_append(t_prg *prg, int i, char **envp, char **av);
-void	redirect_input(t_prg *prg, int i, char **envp, char **av);
+int		redirections(t_prg *prg);
+int		redirect_output(t_prg *prg, int i, char **av);
+void	redirect_append(t_prg *prg, int i, char **av);
+void	redirect_input(t_prg *prg, int i, char **av);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp, char **av);
