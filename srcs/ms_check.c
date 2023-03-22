@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 18:26:40 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 13:58:12 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 17:16:15 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	check_redirection_builtins(t_prg *prg, char **av, char **envp)
 	int	i;
 
 	i = 0;
+
 	while (av[i] != NULL)
 	{
 		if (ft_strcmp(av[i], "<<") == 0)
@@ -30,12 +31,12 @@ int	check_redirection_builtins(t_prg *prg, char **av, char **envp)
 			redirect_append(prg, i + 1, envp, av);
 			return (1);
 		}
-		else if (ft_strcmp(prg->all_token[i], ">") == 0)
+		else if (ft_strcmp(av[i], ">") == 0)
 		{
 			redirect_input(prg, i + 1, envp, av);
 			return (1);
 		}
-		else if (ft_strcmp(prg->all_token[i], "<") == 0)
+		else if (ft_strcmp(av[i], "<") == 0)
 		{
 			redirect_output(prg, i + 1, envp, av);
 			return (1);

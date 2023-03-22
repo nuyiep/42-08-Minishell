@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:25 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 16:19:52 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,6 @@ void	add_key(t_prg *prg, char *str)
 	new_envp[j] = ft_strdup(str);
 	j++;
 	new_envp[j] = 0;
-	ft_freesplit(prg->ls_envp);
+	//ft_freesplit(prg->ls_envp);
 	prg->ls_envp = new_envp;
 }

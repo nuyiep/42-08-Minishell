@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 15:39:33 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 17:44:39 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	count_pipe_n_heredoc(t_prg *prg)
 /* Main function to parse command */
 int	parsing(t_prg *prg)
 {
-	if (prg->all_token)
-		ft_freesplit(prg->all_token);
 	prg->all_token = split_token(prg);
 	if (prg->all_token == NULL)
 		return (1) ;
@@ -82,8 +80,6 @@ void	free_all(t_prg *prg)
 		ft_freesplit(prg->path);
 	if (prg->input)
 		free(prg->input);
-	if (prg->av_execve)
-		ft_freesplit(prg->av_execve);
 	free_exp(prg, 0);
 }
 
@@ -105,13 +101,25 @@ void	shell_loop(t_prg *prg, char **envp)
 		if (prg->no_pipes == 0)
 		{
 			if (ms_heredoc(prg, prg->all_token) == 0)
+			{
+				free_all(prg);
 				continue ;
+			}
 			else if (redirections(prg, envp) == 1)
+			{
+				free_all(prg);
 				continue ;
+			}
 			else if (builtins(prg, envp, prg->all_token))
+			{
+				free_all(prg);
 				continue ;
+			}
 			else if (executor(prg, envp) == 0)
+			{
+				free_all(prg);
 				continue ;
+			}
 		}
 		else
 			executor(prg, envp);
@@ -119,5 +127,5 @@ void	shell_loop(t_prg *prg, char **envp)
 	}
 	if (prg->ls_envp)
 		ft_freesplit(prg->ls_envp);
-	ft_printf("BYE\n");
+	ft_printf("BYE BYE\n");
 }

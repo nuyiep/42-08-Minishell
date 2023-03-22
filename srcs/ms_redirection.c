@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 14:21:55 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 17:16:29 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	redirect_append(t_prg *prg, int i, char **envp, char **av)
 	infile = open(av[i], O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (infile == -1)
 		error_nl(prg, "unable to open file");
+	prg->av_execve = NULL;
 	prg->av_execve = av;
 	prg->av_execve[i] = NULL;
 	prg->av_execve[i - 1] = NULL;

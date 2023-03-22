@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/22 10:48:21 by plau             ###   ########.fr        #
+#    Updated: 2023/03/22 17:04:00 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,5 +78,3 @@ fclean:         clean
 re:             fclean all
 
 .PHONY:         all libft clean fclean re
-
-.SILENT:
