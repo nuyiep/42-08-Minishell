@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/23 15:58:47 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 19:07:14 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	count_tab(char *s, char c, t_prg *prg)
 				{
 					count++;
 					s += has_pair(s, prg);
+					check = 0;
 				}
 			}
 		}
@@ -103,10 +104,10 @@ char **split_token(t_prg *prg)
 			if (i != 0)
 			{
 				*tab++ = ft_strndup(s, i);
-				ft_printf("i:%d\n", i);
+				// ft_printf("i:%d\n", i);
 				s += i;
 				check = 0;
-				ft_printf("first: %s\n",s );
+				// ft_printf("first: %s\n",s );
 			}
 		}		
 	}
@@ -114,25 +115,25 @@ char **split_token(t_prg *prg)
 	{
 		if (check && !(*s == c))
 		{
-			*tab = copy_token(s, 32);
+			*tab++ = copy_token(s, 32);
 			check = 0;
-			tab++;
 		}
 		else if (!check && (*s == c))
 		{
 			check = 1;
-			if ((*(s + 1) == '\'') | (*(s + 1) == '\"'))
+			if ((*(s + 1) == '\'') || (*(s + 1) == '\"'))
 			{
 				i = has_pair(s, prg);
 				if (i != 0)
 				{
 					*tab++ = ft_strndup(s + 1, i);
 					s += i;
-					ft_printf("%s\n",s );
+					check = 0;
 				}
 			}
 		}
 		s++;
+		// ft_printf("%s\n",s );
 	}
 	*tab = 0;
 	return (tab - count);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 21:52:17 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/23 18:50:41 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,11 @@ void	do_pipex(t_prg *prg)
 {
 	char	**split;
 	int		no_cmds;
-	int		i;
 	int		**fd;
 
 	no_cmds = 0;
 	fd = make_pipes(prg);
 	split = ft_split(prg->input, '|');
-	i = 0;
 	while (split[no_cmds] != NULL)
 		no_cmds++;
 	if (prg->no_pipes == 1)
