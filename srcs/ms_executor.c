@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 12:30:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/23 22:31:23 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	*cmd_access(t_prg *prg, char *av_zero)
 		if (results != NULL)
 			return (results);
 		j++;
+		printf("%s\n", temp);
 		free(temp);
 	}
 	if (prg->no_pipes == 0)
@@ -73,7 +74,11 @@ int	ft_execute(int temp_fd, t_prg *prg)
 	dup2(temp_fd, 0);
 	close(temp_fd);
 	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
+	{
+		get_path(prg, prg->ls_envp);
+		find_npath(prg);
 		cmd_access(prg, empty_str);
+	}
 	free(empty_str);
 	execve(prg->all_token[0], prg->all_token, prg->ls_envp);
 	error_nl(prg, prg->all_token[0]);
@@ -88,11 +93,14 @@ int	single_command(t_prg *prg)
 	temp_fd = dup(0);
 	if (fork() == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (ft_execute(temp_fd, prg))
 			return (2);
 	}
 	else
 	{
+		signal(SIGINT, SIG_IGN);
 		close(temp_fd);
 		while (waitpid(-1, NULL, 0) != -1)
 			;

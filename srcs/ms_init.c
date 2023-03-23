@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 16:14:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/23 22:34:47 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	find_npath(t_prg *prg)
 	int	k;
 
 	k = 0;
+	if (prg->path == NULL)
+		return ;
 	while (prg->path[k] != NULL)
 		k++;
 	prg->npath = k;
@@ -76,6 +78,8 @@ void	init_struct(t_prg *prg, char **envp)
 	prg->heredoc = 0;
 	prg->heredoc_postion = 0;
 	prg->av_execve = NULL;
-	get_path(prg, envp);
-	find_npath(prg);
+	prg->npath = 0;
+	(void)envp;
+	printf("envp: %p\n", prg->ls_envp);
+
 }

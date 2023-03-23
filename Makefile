@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/23 14:07:50 by plau             ###   ########.fr        #
+#    Updated: 2023/03/23 22:11:24 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ RM            	=    	rm -f
 CFLAGS       	=    	-Wall -Wextra -Werror
 CFLAGS		    +=		-I/usr/local/opt/readline/include
 # CFLAGS			+=		-I/opt/homebrew/opt/readline/include
-# CFLAGS       	+=    	-fsanitize=address -g3
+CFLAGS       	+=    	-fsanitize=address -g3
 READLINE		=		-lreadline
 READLINE		+=		-L/usr/local/opt/readline/lib
 # READLINE		+=		-L/opt/homebrew/opt/readline/lib
@@ -46,7 +46,8 @@ SRCS_FILES    	=   	ms_main \
 						ms_child \
 						ms_redirection \
 						ms_redirection2 \
-						ms_parser
+						ms_parser \
+						ms_check
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJS        	=     	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS_FILES)))
 SRCS_DIR    	=    	srcs/

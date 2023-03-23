@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:15:00 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/23 22:22:29 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	remove_update_envp(t_prg *prg, char **output)
 	j = 0;
 	j = copy_envp(prg, k, output, new_envp);
 	new_envp[j] = 0;
-	ft_freesplit(prg->ls_envp);
+	// ft_freesplit(prg->ls_envp);
 	i = 0;
 	prg->ls_envp = malloc(sizeof(char *) * (j + 1));
 	while (new_envp[i] != 0)
