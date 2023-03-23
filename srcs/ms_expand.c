@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/23 10:04:27 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 10:40:44 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static char *create_new_token(t_prg *prg, char *old)
 	k = 0;
 	var = 0;
 	key = prg->exp->key;
-	ft_printf("key: %s\n", key);
+	// ft_printf("key: %s\n", key);
 	value = prg->exp->value;
 	// ft_printf("value: %s\n", value);
 	size = find_new_size(prg, old);
