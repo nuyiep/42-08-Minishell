@@ -6,14 +6,13 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/16 14:04:13 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 10:33:41 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* TEST FUNCTION */
-/*
 static void print_tokens(t_prg *prg)
 {
 	char **tokens;
@@ -28,7 +27,6 @@ static void print_tokens(t_prg *prg)
 		tokens++;
 	}
 }
-*/
 
 /* Main function to read command */
 int	read_command(t_prg *prg)
@@ -48,8 +46,10 @@ int	parsing(t_prg *prg)
 	if (prg->all_token)
 		ft_freesplit(prg->all_token);
 	prg->all_token = split_token(prg);
-	prg->all_token = expand_tokens(prg);
-	// print_tokens(prg);
+	if (prg->exp->quote != 1)
+		prg->all_token = expand_tokens(prg);
+	prg->all_token = remove_quotes(prg);
+	print_tokens(prg);
 	// prg->all_token = ft_split(prg->input, ' ');
 	return (0);
 }

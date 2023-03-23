@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/13 20:29:29 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 10:33:18 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
+/**
+ * quote:
+ * 1 - single
+ * 2 - double
+ */
 typedef struct s_exp
 {
 	char	**pair;
@@ -75,7 +80,7 @@ void	error_nl(t_prg *prg, char *str);
 /* Nicholas */
 
 /* lexer_utils */
-int has_pair(char *s);
+int has_pair(char *s, t_prg *prg);
 
 /* lexer */
 char **split_token(t_prg *prg);
@@ -86,5 +91,8 @@ char *get_var(char *token, int i);
 
 /* free */
 void free_exp(t_prg *prg, int value);
+
+/* parser */
+char **remove_quotes(t_prg *prg);
 
 #endif

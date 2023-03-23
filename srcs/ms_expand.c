@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/15 20:00:05 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 10:04:27 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void find_pair(t_prg *prg, char *key)
 			}
 			prg->exp->pair = save_state;
 		}
+		else
+			prg->exp->key = ft_strdup(key);
 	}
 }
 
@@ -65,7 +67,7 @@ static int find_var_in_token(char *token, char *var)
 	int j;
 
 	i = -1;
-	if (var[0] == 0)
+	if (!var || var[0] == 0)
 		return(0);
 	while (token[++i])
 	{
@@ -95,13 +97,12 @@ static char *create_new_token(t_prg *prg, char *old)
 	k = 0;
 	var = 0;
 	key = prg->exp->key;
-	// ft_printf("key: %s\n", key);
+	ft_printf("key: %s\n", key);
 	value = prg->exp->value;
 	// ft_printf("value: %s\n", value);
 	size = find_new_size(prg, old);
 	new_token = malloc(sizeof(char) * (size));
-	if (key)
-		var = find_var_in_token(old, key);
+	var = find_var_in_token(old, key);
 	while (i < size)
 	{
 		while (i < var)
@@ -141,8 +142,6 @@ char **expand_tokens(t_prg *prg)
 				find_pair(prg, var);
 				free(var);
 				*prg->all_token = create_new_token(prg, token);
-				// *prg->all_token = ft_strdup(prg->exp->value);
-				// ft_printf("%s\n", input);
 			}
 			i++;
 		}

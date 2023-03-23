@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/13 17:37:29 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 10:30:24 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // echo "hi    hello" | grep -n 'el' > outfile
 
 
-int	count_tab(char *s, char c)
+static int	count_tab(char *s, char c, t_prg *prg)
 {
 	int check;
 	int count;
@@ -37,10 +37,10 @@ int	count_tab(char *s, char c)
 			if ((*(s + 1) == '\'') | (*(s + 1) == '\"')) 
 			{
 				// ft_printf("found \' or \"\n");
-				if (has_pair(s) != 0)
+				if (has_pair(s, prg) != 0)
 				{
 					count++;
-					s += has_pair(s);
+					s += has_pair(s, prg);
 				}
 			}
 		}
@@ -61,11 +61,6 @@ static char *copy_token(const char *s, char c)
 	return (p);
 }
 
-// static char *copy_quoted(const char *s)
-// {
-	
-// }
-
 char **split_token(t_prg *prg)
 {
 	char	**tab;
@@ -80,7 +75,7 @@ char **split_token(t_prg *prg)
 	if (!s)
 		return (NULL);
 	check = 1;
-	count = count_tab((char *)s, 32);
+	count = count_tab((char *)s, 32, prg);
 	ft_printf("# of tabs: %d\n", count);
 	tab = malloc(sizeof(char *) * (count + 1));
 	if (!tab)
@@ -98,7 +93,7 @@ char **split_token(t_prg *prg)
 			check = 1;
 			if ((*(s + 1) == '\'') | (*(s + 1) == '\"'))
 			{
-				i = has_pair(s);
+				i = has_pair(s, prg);
 				if (i)
 				{
 					*tab++ = ft_strndup(s + 1, i);
