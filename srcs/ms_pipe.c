@@ -6,64 +6,125 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/16 10:17:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 21:52:17 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_access(t_prg *prg, char *token_path)
-{
-	if (access(token_path, X_OK) == 0)
-		return ;
-	else
-		error_nl(prg, "Command is invalid");
-}
-
-/* Creates a pipe for each pair of commands */
 int	**make_pipes(t_prg *prg)
 {
 	int	i;
 	int	**fd;
 
 	i = 0;
-	fd = malloc((prg->no_pipes + 2) * sizeof(int *));
-	while (i <= prg->no_pipes)
+	fd = malloc((prg->no_pipes) * sizeof(int *));
+	while (i < prg->no_pipes)
 	{
 		fd[i] = malloc(2 * sizeof(int));
 		pipe(fd[i]);
 		i++;
 	}
-	fd[prg->no_pipes + 1] = NULL;
 	return (fd);
 }
 
-/* Create pipes for each pair of commands */
-/* then calls fork for each command given */
-void	do_pipex(t_prg *prg, char **envp)
+void	one_pipe(t_prg *prg, char **split, int **fd, int no_cmds)
 {
-	int	no_tokens;
-	int	no_cmds;
-	int	**fd;
+	char	**av_one;
+	char	**av_last;
+	int		i;
+
+	av_one = NULL;
+	av_last = NULL;
+	i = 0;
+	av_one = ft_split(split[0], ' ');
+	execute_first_cmd(prg, fd, av_one, i);
+	prg->av_execve = NULL;
+	av_last = ft_split(split[no_cmds - 1], ' ');
+	execute_last_cmd(prg, fd, av_last, i + 1);
+	waitpid(-1, NULL, 0);
+	waitpid(-1, NULL, 0);
+	ft_freesplit(av_one);
+	ft_freesplit(av_last);
+	ft_freesplit(split);
+	free(fd[0]);
+	free(fd);
+}
+
+void	multiple_pipes(t_prg *prg, int **fd, int no_cmds, char **split)
+{
+	char	**av_one;
+	char	**av_middle;
+	char	**av_last;
+	int		i;
+
+	i = 0;
+	av_one = ft_split(split[0], ' ');
+	execute_first_cmd(prg, fd, av_one, i);
+	prg->av_execve = NULL;
+	i++;
+	while (i < no_cmds - 1)
+	{
+		av_middle = ft_split(split[i], ' ');
+		execute_middle_cmd(prg, fd, av_middle, i);
+		prg->av_execve = NULL;
+		ft_freesplit(av_middle);
+		i++;
+	}
+	av_last = ft_split(split[no_cmds - 1], ' ');
+	execute_last_cmd(prg, fd, av_last, i);
+	ft_freesplit(av_one);
+	ft_freesplit(av_last);
+}
+
+void	wait_free(int no_cmds, t_prg *prg, int **fd)
+{
 	int	i;
 
-	no_tokens = 0;
-	fd = make_pipes(prg);
-	while (prg->all_token[no_tokens] != NULL)
-		no_tokens++;
-	no_cmds = no_tokens - prg->no_pipes;
 	i = 0;
 	while (i < no_cmds)
 	{
-		fork_process(prg, envp, fd, i);
+		waitpid(-1, NULL, 0);
 		i++;
 	}
-	fork_last_process(prg, envp, i);
 	i = 0;
-	while (i < (prg->no_pipes + 2))
+	while (i < prg->no_pipes)
 	{
 		free(fd[i]);
 		i++;
 	}
 	free(fd);
+}
+
+/* Create pipes for each pair of commands */
+/* then calls fork for each command given */
+/* Examples */
+/* ls | ls | ls  */
+/* ls | wc -l */
+/* cat file.txt | wc -l */
+/* cat file.txt | grep "world" | wc -l */
+/* cat | cat | ls */
+/* If have 2 commands, need 2 child processes, but only 1 pipe */
+void	do_pipex(t_prg *prg)
+{
+	char	**split;
+	int		no_cmds;
+	int		i;
+	int		**fd;
+
+	no_cmds = 0;
+	fd = make_pipes(prg);
+	split = ft_split(prg->input, '|');
+	i = 0;
+	while (split[no_cmds] != NULL)
+		no_cmds++;
+	if (prg->no_pipes == 1)
+	{
+		one_pipe(prg, split, fd, no_cmds);
+		return ;
+	}
+	else
+		multiple_pipes(prg, fd, no_cmds, split);
+	ft_freesplit(split);
+	wait_free(no_cmds, prg, fd);
 }

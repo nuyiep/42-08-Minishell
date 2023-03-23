@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+         #
+#    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
 #    Updated: 2023/03/23 15:54:43 by nchoo            ###   ########.fr        #
@@ -78,5 +78,3 @@ fclean:         clean
 re:             fclean all
 
 .PHONY:         all libft clean fclean re
-
-.SILENT:
