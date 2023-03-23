@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/23 14:07:15 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/23 15:46:54 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,8 @@ static char *create_new_token(t_prg *prg, char *old)
 			new_token[i++] = old[k++];
 		while (value[j])
 			new_token[i++] = value[j++];
-		if (new_token[i])
-		{
-			if (old[k + ft_strlen(key) + 1])
-				new_token[i] = old[ft_strlen(key) + 1 + k++];
-		}
+		if (old[k + ft_strlen(key) + 1])
+			new_token[i] = old[ft_strlen(key) + 1 + k++];
 		i++;
 	}
 	new_token[i - 1] = '\0';
