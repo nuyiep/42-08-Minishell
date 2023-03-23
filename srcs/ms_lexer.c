@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/23 14:08:11 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/23 15:58:47 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int	count_tab(char *s, char c, t_prg *prg)
 			if (i != 0)
 			{
 				count++;
+				check = 0;
 				s += i;
 			}
 		}		
@@ -91,7 +92,7 @@ char **split_token(t_prg *prg)
 	count = count_tab((char *)s, 32, prg);
 	count = count_tab((char *)s, 32, prg);
 	tab = malloc(sizeof(char *) * (count + 1));
-	// ft_printf("tab: %d\n", count);
+	ft_printf("tab: %d\n", count);
 	if (!tab)
 		return (NULL);
 	if (*s)
@@ -99,10 +100,13 @@ char **split_token(t_prg *prg)
 		if ((*s == '\'') || (*s == '\"'))
 		{
 			i = has_pair_first(s, prg);
-				if (i != 0)
+			if (i != 0)
 			{
 				*tab++ = ft_strndup(s, i);
+				ft_printf("i:%d\n", i);
 				s += i;
+				check = 0;
+				ft_printf("first: %s\n",s );
 			}
 		}		
 	}
@@ -124,6 +128,7 @@ char **split_token(t_prg *prg)
 				{
 					*tab++ = ft_strndup(s + 1, i);
 					s += i;
+					ft_printf("%s\n",s );
 				}
 			}
 		}
