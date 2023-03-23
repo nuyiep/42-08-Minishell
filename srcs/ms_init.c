@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 22:34:47 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/23 22:50:23 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	find_npath(t_prg *prg)
 /* Initialize struct */
 void	init_struct(t_prg *prg, char **envp)
 {
+	(void)envp;
 	init_exp(prg);
 	prg->input = NULL;
 	prg->all_token = NULL;
@@ -79,7 +80,4 @@ void	init_struct(t_prg *prg, char **envp)
 	prg->heredoc_postion = 0;
 	prg->av_execve = NULL;
 	prg->npath = 0;
-	(void)envp;
-	printf("envp: %p\n", prg->ls_envp);
-
 }
