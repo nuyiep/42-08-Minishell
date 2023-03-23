@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/22 17:04:00 by plau             ###   ########.fr        #
+#    Updated: 2023/03/23 11:42:07 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS_FILES    	=   	ms_main \
 						ms_lexer \
 						ms_lexer_utils \
 						ms_free \
+<<<<<<< HEAD
 						ms_executor \
 						ms_heredoc \
 						ms_pipe \
@@ -47,6 +48,9 @@ SRCS_FILES    	=   	ms_main \
 						ms_redirection \
 						ms_redirection2 \
 						ms_check
+=======
+						ms_parser
+>>>>>>> 749d37b8f93129265fb307b984493dbd125fd232
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJS        	=     	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS_FILES)))
 SRCS_DIR    	=    	srcs/

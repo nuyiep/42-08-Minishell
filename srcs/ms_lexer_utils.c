@@ -6,13 +6,13 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 00:50:42 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/11 00:51:30 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 10:12:19 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int has_pair(char *s)
+int has_pair(char *s, t_prg *prg)
 {
 	char *temp;
 	char pair;
@@ -28,7 +28,10 @@ int has_pair(char *s)
 	{
 		if (*temp == pair)
 		{
-			// ft_printf("i: %d\n", i);
+			if (*temp == '\'')
+				prg->exp->quote = 1;
+			if (*temp == '\"')
+				prg->exp->quote = 2;
 			return (i + 1);
 		}
 		i++;
