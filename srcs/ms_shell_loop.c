@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 12:23:23 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 12:47:29 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,67 @@ int	read_command(t_prg *prg)
 	return (0);
 }
 
+/* Check whether there is pipe or heredoc */
+void	count_pipe_n_heredoc(t_prg *prg)
+{
+	int	i;
+
+	i = 0;
+	while (prg->all_token[i] != NULL)
+	{
+		if (ft_strcmp(prg->all_token[i], "|") == 0)
+			prg->no_pipes++;
+		else if (ft_strcmp(prg->all_token[i], "<<") == 0)
+		{
+			prg->heredoc++;
+			prg->heredoc_postion = i;
+		}
+		i++;
+	}
+}
+
 /* Main function to parse command */
 int	parsing(t_prg *prg)
 {
 	if (prg->all_token)
 		ft_freesplit(prg->all_token);
 	prg->all_token = split_token(prg);
+
+	if (prg->all_token == NULL)
+		return (1) ;
+	prg->all_token = expand_tokens(prg);
+	// print_tokens(prg);
+	//print_tokens(prg);
 	if (prg->exp->quote != 1)
 		prg->all_token = expand_tokens(prg);
 	prg->all_token = remove_quotes(prg);
 	print_tokens(prg);
 	// prg->all_token = ft_split(prg->input, ' ');
+	count_pipe_n_heredoc(prg);
 	return (0);
 }
 
 /* Main function for shell loop */
-void	shell_loop(t_prg *prg, char **envp)
+/* 		< 		redirect input */
+/* 		<< 		heredoc */
+/* 		> 		redirect output */
+/* 		>> 		redirect output append */
+void	shell_loop(t_prg *prg, char **envp, char **av)
 {
 	while (1)
 	{
 		if (read_command(prg) == -1)
 			break ;
 		parsing(prg);
+		if (prg->all_token == NULL)
+			continue ;
+		if (ms_heredoc(prg) == 0)
+			continue ;
+		if (redirections(prg, envp) == 1)
+			continue ;
 		if (builtins(prg, envp))
+			continue ;
+		if (executor(prg, av, envp) == 0)
 			continue ;
 	}
 
@@ -74,4 +112,5 @@ void	shell_loop(t_prg *prg, char **envp)
 	free_exp(prg, 0);
 	
 	ft_printf("bye\n");
+	(void)av;
 }

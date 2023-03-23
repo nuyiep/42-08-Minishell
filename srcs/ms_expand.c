@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/23 10:40:44 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 12:48:21 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ static char *create_new_token(t_prg *prg, char *old)
 	// ft_printf("value: %s\n", value);
 	size = find_new_size(prg, old);
 	new_token = malloc(sizeof(char) * (size));
-	var = find_var_in_token(old, key);
+	if (key)
+		var = find_var_in_token(old, key);
 	while (i < size)
 	{
 		while (i < var)
