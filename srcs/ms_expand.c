@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
 /*   Updated: 2023/03/23 15:46:54 by nchoo            ###   ########.fr       */

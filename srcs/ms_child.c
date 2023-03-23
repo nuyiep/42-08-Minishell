@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/14 19:45:39 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 21:07:55 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,13 @@
 
 /* Finds the PATH where the command is located */
 /* and executes it. Process ends when execve is successful */
-void	run_process(int i, t_prg *prg, char **env)
+/* Example: ls | ls | ls or  */
+void	run_process(t_prg *prg, char **av)
 {
-	// to open later on and replace token
-	// if ((ft_strncmp(prg->all_token[i], "/", 1) != 0))
-	// {
-	// 	get_path(prg, env);
-	// 	find_npath(prg);
-	// 	cmd_access(prg);
-	// }
-	char	*path = "/bin/ls";
-	char	**split;
-	char	*hard_code = "ls";
-
-	split = ft_split(hard_code, ' ');
-	execve(path, split, env);
-	error_nl(prg, prg->all_token[0]);
-	(void)i;
+	if ((ft_strncmp(av[0], "/", 1) != 0))
+		av[0] = cmd_access(prg, av[0]);
+	execve(av[0], av, prg->ls_envp);
+	error_nl(prg, av[0]);
 }
 
 /* SIGINT - CONTROL C */
@@ -41,37 +31,76 @@ void	run_process(int i, t_prg *prg, char **env)
 /* forking is necessary */
 /* Do child will be divided into 3 processes */
 /* 1. first_process- read from std out */
-
-void	fork_process(t_prg *prg, char **envp, int **fd, int i)
+/* dprintf(2, "first process\n") */
+/* first cmd - [unclosed] child will write */
+/* 			 - child read end need to close */
+/* 			 - parent write end need to close */
+/*			 - [unclosed] parent read end - remain unclosed - for the next */
+/*				cmd to read from */
+void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 {
 	int	pid;
 
+	if (check_redirection_builtins(prg, av_one) == 1)
+		return ;
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
-		dup2(fd[i][0], STDIN_FILENO);
-		dup2(fd[i + 1][1], STDOUT_FILENO);
 		close(fd[i][0]);
-		close(fd[i][1]);
-		run_process(i, prg, envp);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		dup2(fd[i][1], STDOUT_FILENO);
+		run_process(prg, av_one);
 	}
 	else
-		waitpid(pid, NULL, 0);
+		close(fd[i][1]);
 }
 
-void	fork_last_process(t_prg *prg, char **envp, int i)
+void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 {
 	int	pid;
 
+	if (check_redirection_builtins(prg, av_middle) == 1)
+		return ;
 	pid = fork();
 	if (pid < 0)
-		error_nl(prg, "Fork last process");
+		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
-		run_process(i, prg, envp);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		dup2(fd[i - 1][0], STDIN_FILENO);
+		dup2(fd[i][1], STDOUT_FILENO);
+		close(fd[i][0]);
+		close(fd[i - 1][1]);
+		run_process(prg, av_middle);
 	}
 	else
-		waitpid(pid, NULL, 0);
+	{
+		close(fd[i][1]);
+		close(fd[i - 1][0]);
+	}
+}
+
+void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
+{
+	int		pid;
+
+	if (check_redirection_builtins(prg, av_last) == 1)
+		return ;
+	pid = fork();
+	if (pid < 0)
+		error_nl(prg, "Fork process");
+	if (pid == 0)
+	{
+		close(fd[i - 1][1]);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		dup2(fd[i - 1][0], STDIN_FILENO);
+		run_process(prg, av_last);
+	}
+	else
+		close(fd[i - 1][0]);
 }

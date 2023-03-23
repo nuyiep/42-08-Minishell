@@ -6,17 +6,11 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:49:20 by plau              #+#    #+#             */
-/*   Updated: 2023/01/10 16:30:29 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/21 12:11:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* Go to new line- invalid command */
-// void	new_line(t_prg *prg)
-// {
-// 	read_command(prg);
-// }
 
 /* Prints error and go to new line */
 void	error_nl(t_prg *prg, char *str)

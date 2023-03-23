@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 12:45:45 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 14:07:05 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,35 +51,36 @@ typedef struct s_prg
 	int		no_pipes;
 	int		heredoc;
 	int		heredoc_postion;
+	char	**av_execve;
 }	t_prg;
 
-
-
 /* Initialization */
-void	init_struct(t_prg *prg, char **av, int ac, char **envp);
-void	shell_loop(t_prg *prg, char **envp, char **av);
+void	init_struct(t_prg *prg, char **envp);
+void	shell_loop(t_prg *prg, char **envp);
 void	setup_signal(void);
 int		read_command(t_prg *prg);
+void	init_envp(t_prg *prg, char **envp);
 
 /* Parsing */
 
 /* Executor */
-int		executor(t_prg *prg, char **av, char **envp);
-int		ms_heredoc(t_prg *prg);
-void	do_pipex(t_prg *prg, char **envp);
-void	get_path(t_prg *prg, char **envp);
-void	find_npath(t_prg *prg);
-void	cmd_access(t_prg *prg);
-void	cmd_access_two(t_prg *prg);
-void	fork_process(t_prg *prg, char **envp, int **fd, int i);
-void	fork_last_process(t_prg *prg, char **envp, int i);
+int		executor(t_prg *prg);
+int		ms_heredoc(t_prg *prg, char **av);
+void	do_pipex(t_prg *prg);
+char	*cmd_access(t_prg *prg, char *cmd_zero);
+void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i);
+void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i);
+void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i);
+int		check_redirection_builtins(t_prg *prg, char **av);
 
-/* Redirection- >, >>, < */
-int		redirections(t_prg *prg, char **envp);
-void	redirect_output(t_prg *prg, int i, char **envp);
+/* Redirection */
+int		redirections(t_prg *prg);
+int		redirect_output(t_prg *prg, int i, char **av);
+void	redirect_append(t_prg *prg, int i, char **av);
+void	redirect_input(t_prg *prg, int i, char **av);
 
 /* Builtins */
-int		builtins(t_prg *prg, char **envp);
+int		builtins(t_prg *prg, char **envp, char **av);
 void	pwd(t_prg *prg);
 void	env(t_prg *prg);
 void	echo(t_prg *prg, char **av);
@@ -114,6 +115,6 @@ char	*get_var(char *token, int i);
 void	free_exp(t_prg *prg, int value);
 
 /* parser */
-char **remove_quotes(t_prg *prg);
+char	**remove_quotes(t_prg *prg);
 
 #endif

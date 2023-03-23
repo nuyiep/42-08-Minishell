@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 18:47:42 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 18:48:56 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	read_command(t_prg *prg)
 	if (prg->input)
 		free(prg->input);
 	prg->input = readline("$> ");
-	if (prg->input == NULL)
+	if (prg->input == 0)
 		return (-1);
 	add_history(prg->input);
 	return (0);
@@ -62,8 +62,6 @@ void	count_pipe_n_heredoc(t_prg *prg)
 /* Main function to parse command */
 int	parsing(t_prg *prg)
 {
-	if (prg->all_token)
-		ft_freesplit(prg->all_token);
 	prg->all_token = split_token(prg);
 
 	if (prg->all_token == NULL)
@@ -77,37 +75,46 @@ int	parsing(t_prg *prg)
 	return (0);
 }
 
+void	free_all(t_prg *prg)
+{
+	if (prg->all_token)
+		ft_freesplit(prg->all_token);
+	if (prg->path)
+		ft_freesplit(prg->path);
+	if (prg->input)
+		free(prg->input);
+	free_exp(prg, 0);
+}
+
 /* Main function for shell loop */
 /* 		< 		redirect input */
 /* 		<< 		heredoc */
 /* 		> 		redirect output */
 /* 		>> 		redirect output append */
-void	shell_loop(t_prg *prg, char **envp, char **av)
+void	shell_loop(t_prg *prg, char **envp)
 {
 	while (1)
 	{
+		init_struct(prg, envp);
 		if (read_command(prg) == -1)
 			break ;
-		parsing(prg);
-		if (prg->all_token == NULL)
+		if (parsing(prg) == 1)
 			continue ;
-		if (ms_heredoc(prg) == 0)
+		if (prg->no_pipes == 0)
+		{
+			if (ms_heredoc(prg, prg->all_token) == 0)
+				;
+			else if (redirections(prg) == 1)
+				;
+			else if (builtins(prg, envp, prg->all_token))
+				;
+			else if (executor(prg) == 0)
+				;
+			free_all(prg);
 			continue ;
-		if (redirections(prg, envp) == 1)
-			continue ;
-		if (builtins(prg, envp))
-			continue ;
-		if (executor(prg, av, envp) == 0)
-			continue ;
+		}
+		else
+			executor(prg);
+		free_all(prg);
 	}
-
-	/* temporary free */
-	if (prg->all_token)
-		ft_freesplit(prg->all_token);
-	if (prg->ls_envp)
-		ft_freesplit(prg->ls_envp);
-	free_exp(prg, 0);
-	
-	ft_printf("bye\n");
-	(void)av;
 }

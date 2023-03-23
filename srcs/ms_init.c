@@ -6,14 +6,14 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/16 10:37:06 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/22 16:14:24 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Make a copy of env and save into struct */
-static void	init_envp(t_prg *prg, char **envp)
+void	init_envp(t_prg *prg, char **envp)
 {
 	int	i;
 
@@ -36,16 +36,46 @@ static void	init_exp(t_prg *prg)
 	prg->exp->quote = 0;
 }
 
-/* Initialize struct */
-void	init_struct(t_prg *prg, char **av, int ac, char **envp)
+/* To get the "PATH=" line from env */
+void	get_path(t_prg *prg, char **envp)
 {
-	init_envp(prg, envp);
+	int		i;
+	char	*path;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			path = ft_substr(envp[i], 5, (ft_strlen(envp[i]) - 5));
+			prg->path = ft_split(path, ':');
+			free (path);
+		}
+		i++;
+	}
+}
+
+/* Find number of path */
+void	find_npath(t_prg *prg)
+{
+	int	k;
+
+	k = 0;
+	while (prg->path[k] != NULL)
+		k++;
+	prg->npath = k;
+}
+
+/* Initialize struct */
+void	init_struct(t_prg *prg, char **envp)
+{
 	init_exp(prg);
-	prg->input = 0;
+	prg->input = NULL;
 	prg->all_token = NULL;
 	prg->no_pipes = 0;
 	prg->heredoc = 0;
 	prg->heredoc_postion = 0;
-	(void)ac;
-	(void)av;
+	prg->av_execve = NULL;
+	get_path(prg, envp);
+	find_npath(prg);
 }
