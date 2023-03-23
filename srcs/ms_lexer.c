@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/23 11:54:18 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/23 14:08:11 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,22 @@ static int	count_tab(char *s, char c, t_prg *prg)
 {
 	int check;
 	int count;
+	int i = 0;
 	
 	count = 0;
 	check = 1;
+	if (*s)
+	{
+		if ((*s == '\'') || (*s == '\"'))
+		{
+			i = has_pair_first(s, prg);
+			if (i != 0)
+			{
+				count++;
+				s += i;
+			}
+		}		
+	}
 	while (*s)
 	{
 		if (check && !(*s == c))
@@ -76,10 +89,23 @@ char **split_token(t_prg *prg)
 		return (NULL);
 	check = 1;
 	count = count_tab((char *)s, 32, prg);
-	// ft_printf("# of tabs: %d\n", count);
+	count = count_tab((char *)s, 32, prg);
 	tab = malloc(sizeof(char *) * (count + 1));
+	// ft_printf("tab: %d\n", count);
 	if (!tab)
 		return (NULL);
+	if (*s)
+	{
+		if ((*s == '\'') || (*s == '\"'))
+		{
+			i = has_pair_first(s, prg);
+				if (i != 0)
+			{
+				*tab++ = ft_strndup(s, i);
+				s += i;
+			}
+		}		
+	}
 	while (*s)
 	{
 		if (check && !(*s == c))
@@ -94,7 +120,7 @@ char **split_token(t_prg *prg)
 			if ((*(s + 1) == '\'') | (*(s + 1) == '\"'))
 			{
 				i = has_pair(s, prg);
-				if (i)
+				if (i != 0)
 				{
 					*tab++ = ft_strndup(s + 1, i);
 					s += i;
