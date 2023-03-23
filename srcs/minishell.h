@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 11:41:15 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/23 11:51:31 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,7 @@ void	error_nl(t_prg *prg, char *str);
 /* Nicholas */
 
 /* lexer_utils */
-<<<<<<< HEAD
-int		has_pair(char *s);
-=======
-int has_pair(char *s, t_prg *prg);
->>>>>>> 749d37b8f93129265fb307b984493dbd125fd232
+int		has_pair(char *s, t_prg *prg);
 
 /* lexer */
 char	**split_token(t_prg *prg);
@@ -118,6 +114,6 @@ char	*get_var(char *token, int i);
 void	free_exp(t_prg *prg, int value);
 
 /* parser */
-char **remove_quotes(t_prg *prg);
+char	**remove_quotes(t_prg *prg);
 
 #endif

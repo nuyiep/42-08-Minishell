@@ -6,31 +6,13 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 11:40:25 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/23 11:54:53 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* TEST FUNCTION */
-<<<<<<< HEAD
-/*
-static void print_tokens(t_prg *prg)
-{
-	char **tokens;
-	int i = 1;
-	
-	tokens = prg->all_token;
-	if (!*tokens)
-		ft_printf("error");
-	while (*tokens)
-	{
-		ft_printf("token #%d: %s\n", i++, *tokens);
-		tokens++;
-	}
-}
-*/
-=======
 // static void print_tokens(t_prg *prg)
 // {
 // 	char **tokens;
@@ -45,7 +27,6 @@ static void print_tokens(t_prg *prg)
 // 		tokens++;
 // 	}
 // }
->>>>>>> 749d37b8f93129265fb307b984493dbd125fd232
 
 /* Main function to read command */
 int	read_command(t_prg *prg)
@@ -82,18 +63,10 @@ void	count_pipe_n_heredoc(t_prg *prg)
 int	parsing(t_prg *prg)
 {
 	prg->all_token = split_token(prg);
-<<<<<<< HEAD
-	if (prg->all_token == NULL)
-		return (1);
-	prg->all_token = expand_tokens(prg);
-	// print_tokens(prg);
-	//print_tokens(prg);
-=======
 	if (prg->exp->quote != 1)
 		prg->all_token = expand_tokens(prg);
 	prg->all_token = remove_quotes(prg);
 	// print_tokens(prg);
->>>>>>> 749d37b8f93129265fb307b984493dbd125fd232
 	// prg->all_token = ft_split(prg->input, ' ');
 	count_pipe_n_heredoc(prg);
 	return (0);
