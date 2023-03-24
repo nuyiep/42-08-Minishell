@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:09:05 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/13 17:35:35 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/24 11:18:49 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_exp(t_prg *prg, int value)
+void	free_exp(t_prg *prg, int value)
 {
 	if (prg->exp->pair)
 		ft_freesplit(prg->exp->pair);

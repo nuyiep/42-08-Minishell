@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 10:41:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 11:16:07 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_execute_redirection_output(t_prg *prg, int i, char **av)
 	if ((ft_strncmp(av[0], "/", 1) != 0))
 	{
 		get_path(prg, prg->ls_envp);
-		find_npath(prg);	
+		find_npath(prg);
 		av_zero = cmd_access(prg, av[0]);
 	}
 	prg->av_execve = av;
@@ -42,7 +42,6 @@ int	ft_execute_redirection_output(t_prg *prg, int i, char **av)
 	}
 	prg->av_execve[j] = NULL;
 	execve(av_zero, prg->av_execve, prg->ls_envp);
-	error_nl(prg, "Redirection_output");
 	return (1);
 }
 
@@ -51,7 +50,7 @@ void	execute_command_output(t_prg *prg, int outfile, int i, char **av)
 	if (fork() == 0)
 	{
 		if (ft_execute_redirection_output(prg, i, av))
-			return ;
+			error_nl(prg, "Redirection_output");
 	}
 	else
 	{

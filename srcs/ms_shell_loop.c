@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 10:26:47 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 11:20:24 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ void	count_pipe_n_heredoc(t_prg *prg)
 int	parsing(t_prg *prg)
 {
 	prg->all_token = split_token(prg);
-
 	if (prg->all_token == NULL)
-		return (1) ;
+		return (1);
 	prg->all_token = expand_tokens(prg);
 	prg->all_token = remove_quotes(prg);
 	// print_tokens(prg);
@@ -108,9 +107,7 @@ void	shell_loop(t_prg *prg, char **envp)
 			else if (builtins(prg, envp, prg->all_token))
 				;
 			else if (executor(prg) == 0)
-			{
 				;
-			}
 			free_all(prg);
 			continue ;
 		}
