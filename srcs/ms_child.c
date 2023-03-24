@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 21:07:55 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 10:42:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@
 void	run_process(t_prg *prg, char **av)
 {
 	if ((ft_strncmp(av[0], "/", 1) != 0))
+	{
+		get_path(prg, prg->ls_envp);
+		find_npath(prg);
 		av[0] = cmd_access(prg, av[0]);
+	}
 	execve(av[0], av, prg->ls_envp);
 	error_nl(prg, av[0]);
 }

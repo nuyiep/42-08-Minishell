@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:44:45 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 21:54:52 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 10:40:17 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	execute_heredoc(t_prg *prg)
 	if (pid == 0)
 	{
 		if (ft_strncmp(prg->all_token[0], "/", 1) != 0)
+		{
+			get_path(prg, prg->ls_envp);
+			find_npath(prg);
 			cmd_access(prg, empty_str);
+		}
 		free(empty_str);
 		execve(prg->all_token[0], prg->all_token, prg->ls_envp);
 		error_nl(prg, prg->all_token[0]);

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 21:04:32 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 10:41:54 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int	ft_execute_redirection_output(t_prg *prg, int i, char **av)
 	k = 0;
 	av_zero = NULL;
 	if ((ft_strncmp(av[0], "/", 1) != 0))
+	{
+		get_path(prg, prg->ls_envp);
+		find_npath(prg);	
 		av_zero = cmd_access(prg, av[0]);
+	}
 	prg->av_execve = av;
 	while (av[k] != NULL)
 	{
