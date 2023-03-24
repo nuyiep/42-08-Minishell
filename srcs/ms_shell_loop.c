@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 11:20:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 11:28:23 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	shell_loop(t_prg *prg, char **envp)
 	while (1)
 	{
 		setup_signal();
-		init_struct(prg, envp);
+		init_struct(prg);
 		if (read_command(prg) == -1)
 			break ;
 		if (parsing(prg) == 1)

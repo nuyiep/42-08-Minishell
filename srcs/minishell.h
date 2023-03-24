@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 11:19:28 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 16:14:50 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_prg
 int		g_status;
 
 /* Initialization */
-void	init_struct(t_prg *prg, char **envp);
+void	init_struct(t_prg *prg);
 void	shell_loop(t_prg *prg, char **envp);
 void	setup_signal(void);
 int		read_command(t_prg *prg);
@@ -73,7 +73,7 @@ void	do_pipex(t_prg *prg);
 char	*cmd_access(t_prg *prg, char *cmd_zero);
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i);
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i);
-void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i);
+int		execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i);
 int		check_redirection_builtins(t_prg *prg, char **av);
 void	get_path(t_prg *prg, char **envp);
 void	find_npath(t_prg *prg);

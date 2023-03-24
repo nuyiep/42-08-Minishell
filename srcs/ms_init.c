@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 22:50:23 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 11:28:35 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ void	find_npath(t_prg *prg)
 }
 
 /* Initialize struct */
-void	init_struct(t_prg *prg, char **envp)
+void	init_struct(t_prg *prg)
 {
-	(void)envp;
 	init_exp(prg);
 	prg->input = NULL;
 	prg->all_token = NULL;

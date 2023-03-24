@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/24 10:22:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 13:52:05 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ static void find_pair(t_prg *prg, char *key)
 	while (prg->ls_envp[++i])
 	{
 		if (!ft_strncmp(prg->ls_envp[i], key, ft_strlen(key)) \
-		&& ft_strncmp(prg->ls_envp[ft_strlen(key)], "=", 1))
+		&& (prg->ls_envp[i][ft_strlen(key)] == '='))
 		{
 			save_state = prg->exp->pair;
 			pair = &prg->exp->pair;
 			pair[0] = ft_split(prg->ls_envp[i],'=');
-
 			if (prg->exp->key)
 				free(prg->exp->key);
 			prg->exp->key = ft_strdup(key);
