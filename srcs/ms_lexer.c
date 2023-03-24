@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/23 19:07:14 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/23 19:09:23 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ char **split_token(t_prg *prg)
 	if (!s)
 		return (NULL);
 	check = 1;
-	count = count_tab((char *)s, 32, prg);
 	count = count_tab((char *)s, 32, prg);
 	tab = malloc(sizeof(char *) * (count + 1));
 	ft_printf("tab: %d\n", count);

@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 18:49:48 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/24 03:35:53 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int	parsing(t_prg *prg)
 	if (prg->all_token == NULL)
 		return (1) ;
 	prg->all_token = expand_tokens(prg);
-	if (prg->exp->quote != 1)
-		prg->all_token = expand_tokens(prg);
 	prg->all_token = remove_quotes(prg);
 	print_tokens(prg);
 	count_pipe_n_heredoc(prg);
