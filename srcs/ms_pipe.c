@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 16:31:32 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 22:17:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ void	wait_free(int no_cmds, t_prg *prg, int **fd)
 	int	i;
 
 	i = 0;
-	// while (i < no_cmds)
-	// {
-		//waitpid(-1, NULL, 0);
-		//i++;
-	// }
+	while (i < no_cmds)
+	{
+		waitpid(-1, NULL, WUNTRACED);
+		i++;
+	}
 	i = 0;
 	while (i < prg->no_pipes)
 	{
@@ -123,7 +123,9 @@ void	do_pipex(t_prg *prg)
 		return ;
 	}
 	else
+	{
 		multiple_pipes(prg, fd, no_cmds, split);
+	}
 	ft_freesplit(split);
 	wait_free(no_cmds, prg, fd);
 }

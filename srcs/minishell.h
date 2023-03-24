@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 16:14:50 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 19:49:36 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ typedef struct s_prg
 	int		heredoc;
 	int		heredoc_postion;
 	char	**av_execve;
+	int		testing_pid1;
+	int		testing_pid2;
+	int		testing_pid3;
 }	t_prg;
 
 /* Global errno is defined here */
@@ -73,7 +76,7 @@ void	do_pipex(t_prg *prg);
 char	*cmd_access(t_prg *prg, char *cmd_zero);
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i);
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i);
-int		execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i);
+void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i);
 int		check_redirection_builtins(t_prg *prg, char **av);
 void	get_path(t_prg *prg, char **envp);
 void	find_npath(t_prg *prg);
