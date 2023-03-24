@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 10:23:02 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 10:26:47 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	parsing(t_prg *prg)
 		return (1) ;
 	prg->all_token = expand_tokens(prg);
 	prg->all_token = remove_quotes(prg);
-	print_tokens(prg);
+	// print_tokens(prg);
 	count_pipe_n_heredoc(prg);
 	return (0);
 }
