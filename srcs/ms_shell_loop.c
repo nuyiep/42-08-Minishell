@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 11:28:23 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 18:18:49 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,26 @@
 /* Main function to read command */
 int	read_command(t_prg *prg)
 {	
+	int	i;
+	int	space_tab_count;
+
 	if (prg->input)
 		free(prg->input);
 	prg->input = readline("$> ");
 	if (prg->input == 0)
 		return (-1);
+	if (prg->input[0] == '\0')
+		return (2);
+	i = 0;
+	space_tab_count = 0;
+	while (prg->input[i] != '\0')
+	{
+		if (prg->input[i] == 32 || prg->input[i] == 9)
+			space_tab_count++;
+		i++;
+	}
+	if (i == space_tab_count)
+		return (3);
 	add_history(prg->input);
 	return (0);
 }
@@ -90,12 +105,20 @@ void	free_all(t_prg *prg)
 /* 		>> 		redirect output append */
 void	shell_loop(t_prg *prg, char **envp)
 {
+	int	value;
+
+	value = 0;
 	while (1)
 	{
 		setup_signal();
 		init_struct(prg);
-		if (read_command(prg) == -1)
+		value = read_command(prg);
+		if (value == -1)
 			break ;
+		else if (value == 2)
+			continue ;
+		else if (value == 3)
+			continue ;
 		if (parsing(prg) == 1)
 			continue ;
 		if (prg->no_pipes == 0)

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 11:28:35 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 17:49:31 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,12 @@ void	find_npath(t_prg *prg)
 void	init_struct(t_prg *prg)
 {
 	init_exp(prg);
-	prg->input = NULL;
+	prg->input = 0;
 	prg->all_token = NULL;
 	prg->no_pipes = 0;
 	prg->heredoc = 0;
 	prg->heredoc_postion = 0;
 	prg->av_execve = NULL;
 	prg->npath = 0;
+	prg->path = NULL;
 }

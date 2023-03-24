@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 16:32:01 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 17:10:26 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 	}
 	else
 	{
-		// close(fd[i][1]);
-		// close(fd[i][0]);
+		close(fd[i][1]);
+		close(fd[i][0]);
 		// waitpid(pid, NULL, 1);
 	}
 }
