@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/23 15:46:54 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/24 10:22:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,11 @@ char **expand_tokens(t_prg *prg)
 		i = 0;
 		while (token[i])
 		{
+			if (token[i] == '\'')
+			{
+				if (has_pair_first(token, prg))
+					break ;
+			}
 			if (token[i] == '$')
 			{
 				var = get_var(token, i + 1);

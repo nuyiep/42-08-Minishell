@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/24 10:08:09 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 10:22:54 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	count_tab(char *s, char c, t_prg *prg)
 				{
 					count++;
 					s += has_pair(s, prg);
+					check = 0;
 				}
 			}
 		}
@@ -90,9 +91,8 @@ char **split_token(t_prg *prg)
 		return (NULL);
 	check = 1;
 	count = count_tab((char *)s, 32, prg);
-	count = count_tab((char *)s, 32, prg);
 	tab = malloc(sizeof(char *) * (count + 1));
-	//ft_printf("tab: %d\n", count);
+	ft_printf("tab: %d\n", count);
 	if (!tab)
 		return (NULL);
 	if (*s)
@@ -103,10 +103,10 @@ char **split_token(t_prg *prg)
 			if (i != 0)
 			{
 				*tab++ = ft_strndup(s, i);
-				//ft_printf("i:%d\n", i);
+				// ft_printf("i:%d\n", i);
 				s += i;
 				check = 0;
-				//ft_printf("first: %s\n",s );
+				// ft_printf("first: %s\n",s );
 			}
 		}		
 	}
@@ -114,25 +114,25 @@ char **split_token(t_prg *prg)
 	{
 		if (check && !(*s == c))
 		{
-			*tab = copy_token(s, 32);
+			*tab++ = copy_token(s, 32);
 			check = 0;
-			tab++;
 		}
 		else if (!check && (*s == c))
 		{
 			check = 1;
-			if ((*(s + 1) == '\'') | (*(s + 1) == '\"'))
+			if ((*(s + 1) == '\'') || (*(s + 1) == '\"'))
 			{
 				i = has_pair(s, prg);
 				if (i != 0)
 				{
 					*tab++ = ft_strndup(s + 1, i);
 					s += i;
-					//ft_printf("%s\n",s );
+					check = 0;
 				}
 			}
 		}
 		s++;
+		// ft_printf("%s\n",s );
 	}
 	*tab = 0;
 	return (tab - count);
