@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:44:45 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 11:13:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/24 11:24:22 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	execute_heredoc(t_prg *prg)
 			find_npath(prg);
 			cmd_access(prg, empty_str);
 		}
-		free(empty_str);
 		execve(prg->all_token[0], prg->all_token, prg->ls_envp);
 		error_nl(prg, prg->all_token[0]);
 	}
 	else
 		while (waitpid(-1, NULL, 0) != -1)
 			;
+	free(empty_str);
 }
 
 /* Printing out heredoc- until the delimiter is found */
@@ -77,6 +77,5 @@ int	ms_heredoc(t_prg *prg, char **av)
 		return (1);
 	delimiter = av[prg->heredoc_postion + 1];
 	get_str(delimiter, prg);
-	system("leaks -q minishell");
 	return (0);
 }
