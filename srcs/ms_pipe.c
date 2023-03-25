@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 18:50:41 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/24 22:17:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	wait_free(int no_cmds, t_prg *prg, int **fd)
 	i = 0;
 	while (i < no_cmds)
 	{
-		waitpid(-1, NULL, 0);
+		waitpid(-1, NULL, WUNTRACED);
 		i++;
 	}
 	i = 0;
@@ -94,6 +94,7 @@ void	wait_free(int no_cmds, t_prg *prg, int **fd)
 		i++;
 	}
 	free(fd);
+	(void)no_cmds;
 }
 
 /* Create pipes for each pair of commands */
@@ -122,7 +123,9 @@ void	do_pipex(t_prg *prg)
 		return ;
 	}
 	else
+	{
 		multiple_pipes(prg, fd, no_cmds, split);
+	}
 	ft_freesplit(split);
 	wait_free(no_cmds, prg, fd);
 }

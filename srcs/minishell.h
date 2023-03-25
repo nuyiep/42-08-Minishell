@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 14:41:46 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/25 14:40:43 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,16 @@ typedef struct s_prg
 	int		heredoc;
 	int		heredoc_postion;
 	char	**av_execve;
+	int		testing_pid1;
+	int		testing_pid2;
+	int		testing_pid3;
 }	t_prg;
 
+/* Global errno is defined here */
+int		g_status;
+
 /* Initialization */
-void	init_struct(t_prg *prg, char **envp);
+void	init_struct(t_prg *prg);
 void	shell_loop(t_prg *prg, char **envp);
 void	setup_signal(void);
 int		read_command(t_prg *prg);
@@ -74,6 +80,8 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i);
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i);
 void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i);
 int		check_redirection_builtins(t_prg *prg, char **av);
+void	get_path(t_prg *prg, char **envp);
+void	find_npath(t_prg *prg);
 
 /* Redirection */
 int		redirections(t_prg *prg);
@@ -103,8 +111,8 @@ void	error_nl(t_prg *prg, char *str);
 /* Nicholas */
 
 /* lexer_utils */
-int has_pair_first(char *s, t_prg *prg);
-int has_pair(char *s, t_prg *prg);
+int		has_pair_first(char *s, t_prg *prg);
+int		has_pair(char *s, t_prg *prg);
 
 /* lexer */
 char	**split_token(t_prg *prg);

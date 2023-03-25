@@ -6,36 +6,51 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/25 13:42:30 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/25 14:41:09 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* TEST FUNCTION */
-static void print_tokens(t_prg *prg)
-{
-	char **tokens;
-	int i = 1;
-	
-	tokens = prg->all_token;
-	if (!*tokens)
-		ft_printf("error");
-	while (*tokens)
-	{
-		ft_printf("token #%d: %s\n", i++, *tokens);
-		tokens++;
-	}
-}
+// static void print_tokens(t_prg *prg)
+// {
+// 	char **tokens;
+// 	int i = 1;
+
+// 	tokens = prg->all_token;
+// 	if (!*tokens)
+// 		ft_printf("error");
+// 	while (*tokens)
+// 	{
+// 		ft_printf("token #%d: %s\n", i++, *tokens);
+// 		tokens++;
+// 	}
+// }
 
 /* Main function to read command */
 int	read_command(t_prg *prg)
 {	
+	int	i;
+	int	space_tab_count;
+
 	if (prg->input)
 		free(prg->input);
 	prg->input = readline("$> ");
 	if (prg->input == 0)
 		return (-1);
+	if (prg->input[0] == '\0')
+		return (2);
+	i = 0;
+	space_tab_count = 0;
+	while (prg->input[i] != '\0')
+	{
+		if (prg->input[i] == 32 || prg->input[i] == 9)
+			space_tab_count++;
+		i++;
+	}
+	if (i == space_tab_count)
+		return (3);
 	add_history(prg->input);
 	return (0);
 }
@@ -63,12 +78,11 @@ void	count_pipe_n_heredoc(t_prg *prg)
 int	parsing(t_prg *prg)
 {
 	prg->all_token = split_token(prg);
-
 	if (prg->all_token == NULL)
-		return (1) ;
+		return (1);
 	prg->all_token = expand_tokens(prg);
 	prg->all_token = remove_quotes(prg);
-	print_tokens(prg);
+	// print_tokens(prg);
 	count_pipe_n_heredoc(prg);
 	return (0);
 }
@@ -92,11 +106,20 @@ void	free_all(t_prg *prg)
 void	shell_loop(t_prg *prg, char **envp)
 {
 	exit_code = 0;
+	int	value;
+
+	value = 0;
 	while (1)
 	{
-		init_struct(prg, envp);
-		if (read_command(prg) == -1)
+		setup_signal();
+		init_struct(prg);
+		value = read_command(prg);
+		if (value == -1)
 			break ;
+		else if (value == 2)
+			continue ;
+		else if (value == 3)
+			continue ;
 		if (parsing(prg) == 1)
 			continue ;
 		if (prg->no_pipes == 0)

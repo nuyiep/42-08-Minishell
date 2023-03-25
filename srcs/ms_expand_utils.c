@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:29:40 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/25 13:33:00 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/25 14:45:08 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ char *get_var(char *token, int i)
 	&& token[i] != '\'' && token[i] != '\"')
 		var[j++] = token[i++];
 	var[j] = '\0';
-	// ft_printf("var: %s\n", var);
+	ft_printf("var: %s\n", var);
 	return (var);
 }

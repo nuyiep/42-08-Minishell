@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_child.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 21:07:55 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/25 15:22:55 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@
 void	run_process(t_prg *prg, char **av)
 {
 	if ((ft_strncmp(av[0], "/", 1) != 0))
+	{
+		get_path(prg, prg->ls_envp);
+		find_npath(prg);
 		av[0] = cmd_access(prg, av[0]);
+	}
 	execve(av[0], av, prg->ls_envp);
 	error_nl(prg, av[0]);
 }
@@ -44,18 +48,23 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 	if (check_redirection_builtins(prg, av_one) == 1)
 		return ;
 	pid = fork();
+	prg->testing_pid1 = pid;
 	if (pid < 0)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
-		close(fd[i][0]);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i][1], STDOUT_FILENO);
+		close(fd[i][0]);
+		close(fd[i][1]);
 		run_process(prg, av_one);
 	}
 	else
+	{
+		close(fd[i][0]);
 		close(fd[i][1]);
+	}
 }
 
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
@@ -65,6 +74,7 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 	if (check_redirection_builtins(prg, av_middle) == 1)
 		return ;
 	pid = fork();
+	prg->testing_pid2 = pid;
 	if (pid < 0)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
@@ -74,13 +84,13 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 		dup2(fd[i - 1][0], STDIN_FILENO);
 		dup2(fd[i][1], STDOUT_FILENO);
 		close(fd[i][0]);
-		close(fd[i - 1][1]);
+		close(fd[i][1]);	
 		run_process(prg, av_middle);
 	}
 	else
 	{
-		close(fd[i][1]);
-		close(fd[i - 1][0]);
+		close(fd[i][1]);	
+		close(fd[i][0]);	
 	}
 }
 
@@ -91,16 +101,25 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 	if (check_redirection_builtins(prg, av_last) == 1)
 		return ;
 	pid = fork();
+	prg->testing_pid3 = pid;
 	if (pid < 0)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
-		close(fd[i - 1][1]);
+		printf("last cmd\n");
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i - 1][0], STDIN_FILENO);
+		
+		// close(fd[i - 1][0]);
+		
+		// close(fd[i][0]);
+		// close(fd[i][1]);
 		run_process(prg, av_last);
 	}
 	else
-		close(fd[i - 1][0]);
+	{
+		// close(fd[i][0]);
+		// close(fd[i][1]);
+	}
 }

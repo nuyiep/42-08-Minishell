@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/25 13:32:45 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/25 15:07:53 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void find_pair(t_prg *prg, char *key)
 	{
 		prg->exp->key = ft_strdup("?");
 		prg->exp->value = ft_itoa(exit_code);
+		return ;
 	}
 	while (prg->ls_envp[++i])
 	{
@@ -31,7 +32,6 @@ static void find_pair(t_prg *prg, char *key)
 			save_state = prg->exp->pair;
 			pair = &prg->exp->pair;
 			pair[0] = ft_split(prg->ls_envp[i],'=');
-
 			if (prg->exp->key)
 				free(prg->exp->key);
 			prg->exp->key = ft_strdup(key);
@@ -42,9 +42,16 @@ static void find_pair(t_prg *prg, char *key)
 				prg->exp->value = ft_strdup(pair[0][1]);
 			}
 			prg->exp->pair = save_state;
+			break ;
 		}
 		else
+		{
 			prg->exp->key = ft_strdup(key);
+			if (prg->exp->value) {
+				free(prg->exp->value);
+				prg->exp->value = ft_strdup(" ");
+			}
+		}
 	}
 }
 
@@ -149,7 +156,8 @@ char **expand_tokens(t_prg *prg)
 				var = get_var(token, i + 1);
 				find_pair(prg, var);
 				free(var);
-				*prg->all_token = create_new_token(prg, token);
+				*prg->all_token = create_new_token(prg, *prg->all_token);
+				// ft_printf("%s\n", *prg->all_token);
 			}
 			i++;
 		}
