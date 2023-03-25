@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/25 15:43:17 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/25 15:48:23 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <termios.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+
+int exit_code;
 
 /**
  * quote:

@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:16:07 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/23 10:36:53 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/24 16:09:25 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 void remove_quote(char* str) 
 {
-    size_t len = strlen(str);
+    int len;
+
+	len = ft_strlen(str);
     if (len >= 2 && str[0] == '"' && str[len - 1] == '"') 
 	{
         str[len - 1] = '\0';
-        memmove(str, str + 1, len - 1);
+        ft_memmove(str, str + 1, len - 1);
     } 
 	else if (len >= 2 && str[0] == '\'' && str[len - 1] == '\'') 
 	{
         str[len - 1] = '\0';
-        memmove(str, str + 1, len - 1);
+        ft_memmove(str, str + 1, len - 1);
     }
 }
 

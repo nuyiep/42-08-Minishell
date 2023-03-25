@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 11:14:11 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/25 14:39:43 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ void	redirect_append(t_prg *prg, int i, char **av)
 
 	infile = open(av[i], O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (infile == -1)
+	{
+		exit_code = 2;
 		error_nl(prg, "unable to open file");
+	}
 	prg->av_execve = NULL;
 	prg->av_execve = av;
 	free(prg->av_execve[i]);
@@ -72,7 +75,10 @@ void	redirect_input(t_prg *prg, int i, char **av)
 
 	infile = open(prg->all_token[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (infile == -1)
+	{
+		exit_code = 2;
 		error_nl(prg, "unable to open file");
+	}
 	prg->av_execve = av;
 	free(prg->av_execve[i]);
 	free(prg->av_execve[i - 1]);

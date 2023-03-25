@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/25 15:42:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/25 15:49:28 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,9 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 	}
 	else
 	{
-		close(fd[i][1]);
-		close(fd[i - 1][0]);
+		// close(fd[i][0]);
+		close(fd[i][1]);	
+		close(fd[i][0]);	
 	}
 }
 
