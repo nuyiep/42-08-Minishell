@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 21:09:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/25 15:42:36 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 	if (check_redirection_builtins(prg, av_one) == 1)
 		return ;
 	pid = fork();
-	prg->testing_pid1 = pid;
 	if (pid < 0)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
@@ -57,12 +56,10 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i][1], STDOUT_FILENO);
 		close(fd[i][0]);
-		close(fd[i][1]);
 		run_process(prg, av_one);
 	}
 	else
 	{
-		close(fd[i][0]);
 		close(fd[i][1]);
 	}
 }
@@ -74,7 +71,6 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 	if (check_redirection_builtins(prg, av_middle) == 1)
 		return ;
 	pid = fork();
-	prg->testing_pid2 = pid;
 	if (pid < 0)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
@@ -84,16 +80,13 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 		dup2(fd[i - 1][0], STDIN_FILENO);
 		dup2(fd[i][1], STDOUT_FILENO);
 		close(fd[i][0]);
-		// close(fd[i - 1][0]);
 		close(fd[i][1]);
-		//close(fd[i][1]);		
 		run_process(prg, av_middle);
 	}
 	else
 	{
-		// close(fd[i][0]);
-		close(fd[i][1]);	
-		close(fd[i][0]);	
+		close(fd[i][1]);
+		close(fd[i - 1][0]);
 	}
 }
 
@@ -104,25 +97,17 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 	if (check_redirection_builtins(prg, av_last) == 1)
 		return ;
 	pid = fork();
-	prg->testing_pid3 = pid;
 	if (pid < 0)
 		error_nl(prg, "Fork process");
 	if (pid == 0)
 	{
-		printf("last cmd\n");
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i - 1][0], STDIN_FILENO);
-		
-		// close(fd[i - 1][0]);
-		
-		// close(fd[i][0]);
-		// close(fd[i][1]);
 		run_process(prg, av_last);
 	}
 	else
 	{
-		// close(fd[i][0]);
-		// close(fd[i][1]);
+		close(fd[i - 1][0]);
 	}
 }

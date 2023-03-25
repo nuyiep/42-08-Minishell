@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 22:28:51 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/25 15:43:36 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ char	*cmd_access(t_prg *prg, char *av_zero)
 		free(temp);
 	}
 	if (prg->no_pipes == 0)
+	{
 		error_nl(prg, prg->all_token[0]);
+	}
 	else
 		error_nl(prg, av_zero);
 	return (NULL);
@@ -65,13 +67,11 @@ char	*cmd_access(t_prg *prg, char *av_zero)
 /* fd[1]- write */
 /* Check if the input is a path address */
 /* If it is not, change to address */
-int	ft_execute(int temp_fd, t_prg *prg)
+int	ft_execute(t_prg *prg)
 {
 	char	*empty_str;
 
 	empty_str = ft_strdup("");
-	dup2(temp_fd, 0);
-	close(temp_fd);
 	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
 	{
 		get_path(prg, prg->ls_envp);
@@ -87,23 +87,19 @@ int	ft_execute(int temp_fd, t_prg *prg)
 /* Just to execute one command */
 int	single_command(t_prg *prg)
 {
-	int	temp_fd;
-
-	temp_fd = dup(0);
 	if (fork() == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (ft_execute(temp_fd, prg))
+		if (ft_execute(prg))
+		{
 			return (2);
+		}
 	}
 	else
 	{
 		signal(SIGINT, SIG_IGN);
-		close(temp_fd);
-		while (waitpid(-1, NULL, 0) != -1)
-			;
-		temp_fd = dup(0);
+		waitpid(-1, NULL, 0);
 	}
 	return (0);
 }

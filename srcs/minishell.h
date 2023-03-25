@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 19:49:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/25 15:43:17 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,6 @@ typedef struct s_prg
 	int		heredoc;
 	int		heredoc_postion;
 	char	**av_execve;
-	int		testing_pid1;
-	int		testing_pid2;
-	int		testing_pid3;
 }	t_prg;
 
 /* Global errno is defined here */
