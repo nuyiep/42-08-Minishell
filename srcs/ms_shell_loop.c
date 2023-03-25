@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 03:35:53 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/25 13:42:30 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	free_all(t_prg *prg)
 /* 		>> 		redirect output append */
 void	shell_loop(t_prg *prg, char **envp)
 {
+	exit_code = 0;
 	while (1)
 	{
 		init_struct(prg, envp);

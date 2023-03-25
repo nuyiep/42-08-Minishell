@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redirection2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 21:04:32 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/25 13:48:07 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ int	redirect_output(t_prg *prg, int i, char **av)
 
 	outfile = open(prg->all_token[i], O_RDONLY, 0644);
 	if (outfile == -1)
+	{
+		exit_code = 2;
 		error_nl(prg, "unable to open file");
+	}
 	execute_command_output(prg, outfile, i, av);
 	return (1);
 }

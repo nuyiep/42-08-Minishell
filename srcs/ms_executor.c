@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 12:30:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/25 14:02:31 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ char	*cmd_access(t_prg *prg, char *av_zero)
 		free(temp);
 	}
 	if (prg->no_pipes == 0)
+	{
+		exit_code = 1;
 		error_nl(prg, prg->all_token[0]);
+	}
 	else
 		error_nl(prg, av_zero);
 	return (NULL);
@@ -94,7 +97,7 @@ int	single_command(t_prg *prg)
 	else
 	{
 		close(temp_fd);
-		while (waitpid(-1, NULL, 0) != -1)
+		while (waitpid(0, NULL, 0) != -1)
 			;
 		temp_fd = dup(0);
 	}

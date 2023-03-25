@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:49:20 by plau              #+#    #+#             */
-/*   Updated: 2023/03/21 12:11:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/25 13:43:10 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /* Prints error and go to new line */
 void	error_nl(t_prg *prg, char *str)
 {
+	exit_code = 1;
 	perror(str);
 	read_command(prg);
 }
