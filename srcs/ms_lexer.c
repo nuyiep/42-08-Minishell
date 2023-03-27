@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/24 10:30:40 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/27 13:51:43 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// # DEFINE OPERATORS "\"\'"
-
-// echo "hi    hello" | grep -n 'el' > outfile
-
-
-static int	count_tab(char *s, char c, t_prg *prg)
+int	count_tab(char *s, char c)
 {
 	int check;
 	int count;
@@ -29,7 +24,7 @@ static int	count_tab(char *s, char c, t_prg *prg)
 	{
 		if ((*s == '\'') || (*s == '\"'))
 		{
-			i = has_pair_first(s, prg);
+			i = has_pair_first(s);
 			if (i != 0)
 			{
 				count++;
@@ -50,11 +45,10 @@ static int	count_tab(char *s, char c, t_prg *prg)
 			check = 1;
 			if ((*(s + 1) == '\'') | (*(s + 1) == '\"')) 
 			{
-				// ft_printf("found \' or \"\n");
-				if (has_pair(s, prg) != 0)
+				if (has_pair(s) != 0)
 				{
 					count++;
-					s += has_pair(s, prg);
+					s += has_pair(s);
 					check = 0;
 				}
 			}
@@ -64,7 +58,7 @@ static int	count_tab(char *s, char c, t_prg *prg)
 	return (count);	
 }
 
-static char *copy_token(const char *s, char c)
+char	*copy_token(const char *s, char c)
 {
 	char *p;
 	int i;
@@ -90,23 +84,20 @@ char **split_token(t_prg *prg)
 	if (!s)
 		return (NULL);
 	check = 1;
-	count = count_tab((char *)s, 32, prg);
+	count = count_tab((char *)s, 32);
 	tab = malloc(sizeof(char *) * (count + 1));
-	// ft_printf("tab: %d\n", count);
 	if (!tab)
 		return (NULL);
 	if (*s)
 	{
 		if ((*s == '\'') || (*s == '\"'))
 		{
-			i = has_pair_first(s, prg);
+			i = has_pair_first(s);
 			if (i != 0)
 			{
 				*tab++ = ft_strndup(s, i);
-				// ft_printf("i:%d\n", i);
 				s += i;
 				check = 0;
-				// ft_printf("first: %s\n",s );
 			}
 		}		
 	}
@@ -122,7 +113,7 @@ char **split_token(t_prg *prg)
 			check = 1;
 			if ((*(s + 1) == '\'') || (*(s + 1) == '\"'))
 			{
-				i = has_pair(s, prg);
+				i = has_pair(s);
 				if (i != 0)
 				{
 					*tab++ = ft_strndup(s + 1, i);
@@ -132,7 +123,6 @@ char **split_token(t_prg *prg)
 			}
 		}
 		s++;
-		// ft_printf("%s\n",s );
 	}
 	*tab = 0;
 	return (tab - count);

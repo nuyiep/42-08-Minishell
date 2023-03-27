@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/25 14:38:02 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:47:18 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	init_envp(t_prg *prg, char **envp)
 
 static void	init_exp(t_prg *prg)
 {
-	prg->exp = malloc(sizeof(t_prg));
+	prg->exp = malloc(sizeof(t_exp));
 	prg->exp->pair = NULL;
 	prg->exp->key = NULL;
 	prg->exp->value = ft_strdup(" ");
-	prg->exp->quote = 0;
+
 }
 
 /* To get the "PATH=" line from env */

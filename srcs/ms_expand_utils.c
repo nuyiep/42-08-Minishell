@@ -6,31 +6,36 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:29:40 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/25 14:45:08 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/26 18:00:29 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *get_var(char *token, int i)
+/*
+	Checks if the variable is "?"
+*/
+int is_question(t_prg *prg, char *key)
 {
-	char *var;
-	int j;
-	
-	j = 0;
-	while (token[i] && token[i] != ' ' \
-	&& token[i] != '\'' && token[i] != '\"')
+	if (!ft_strncmp(key, "?", 1))
 	{
-		j++;
-		i++;
+		prg->exp->key = ft_strdup("?");
+		prg->exp->value = ft_itoa(exit_code);
+		return (1);
 	}
-	var = malloc(sizeof(char) * (j + 1));
-	i -= j;
-	j = 0;
-	while (token[i] && token[i] != ' ' \
-	&& token[i] != '\'' && token[i] != '\"')
-		var[j++] = token[i++];
-	var[j] = '\0';
-	ft_printf("var: %s\n", var);
-	return (var);
+	return (0);
+}
+
+/*
+	Checks if the given key has an associated value
+*/
+int has_value(t_prg *prg, char *key, int i)
+{
+	int len;
+
+	len = ft_strlen(key);
+	if (!ft_strncmp(prg->ls_envp[i], key, len) \
+	&& prg->ls_envp[i][len] == '=')
+		return (1);
+	return (0);
 }
