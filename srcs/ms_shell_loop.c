@@ -5,28 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 14:42:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 15:13:21 by plau             ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/03/27 18:14:06 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* TEST FUNCTION */
-// static void print_tokens(t_prg *prg)
-// {
-// 	char **tokens;
-// 	int i = 1;
+static void print_tokens(t_prg *prg)
+{
+	char **tokens;
+	int i = 1;
 
-// 	tokens = prg->all_token;
-// 	if (!*tokens)
-// 		ft_printf("error");
-// 	while (*tokens)
-// 	{
-// 		ft_printf("token #%d: %s\n", i++, *tokens);
-// 		tokens++;
-// 	}
-// }
+	tokens = prg->all_token;
+	if (!*tokens)
+		ft_printf("error");
+	while (*tokens)
+	{
+		ft_printf("token #%d: %s\n", i++, *tokens);
+		tokens++;
+	}
+}
 
 /* Main function to read command */
 int	read_command(t_prg *prg)
@@ -82,7 +82,7 @@ int	parsing(t_prg *prg)
 		return (1);
 	prg->all_token = expand_tokens(prg);
 	prg->all_token = remove_quotes(prg);
-	// print_tokens(prg);
+	print_tokens(prg);
 	count_pipe_n_heredoc(prg);
 	return (0);
 }

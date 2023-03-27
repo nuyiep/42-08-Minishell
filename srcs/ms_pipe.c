@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/26 16:46:22 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/27 17:39:24 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@ int	**make_pipes(t_prg *prg)
 	int	**fd;
 
 	i = 0;
-	fd = malloc((prg->no_pipes) * sizeof(int *));
+	fd = malloc((prg->no_pipes + 1) * sizeof(int *));
 	while (i < prg->no_pipes)
 	{
 		fd[i] = malloc(2 * sizeof(int));
 		pipe(fd[i]);
 		i++;
 	}
+	fd[i] = NULL;
 	return (fd);
 }
 
