@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 18:12:38 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/27 20:31:30 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,11 @@ void	run_process(t_prg *prg, char **av)
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 {
 	int	pid;
-int status;
+	int status;
 
+	// for (int i = 0; av_one[i]; i++)
+	// 	ft_printf("%s", av_one[i]);
+	// ft_printf("\n");
 	if (check_redirection_builtins(prg, av_one) == 1)
 		return ;
 	pid = fork();

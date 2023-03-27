@@ -1,8 +1,0 @@
-LICENSE
-Makefile
-en.subject.pdf
-file.txt
-libft
-minishell
-objs
-srcs

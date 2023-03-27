@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/27 17:05:16 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/27 20:02:59 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,19 @@ int	count_tab(char *s)
 				check = 0;
 				s += i;
 			}
-		}		
+		}	
 	}
+	// ft_printf("start: %s\n", s);
 	while (*s)
 	{
+		if (has_operators(*s, ">|<")) 
+		{
+			count++;
+			check = 0;
+			if (*(s + 1) && ((*s == '>' && *(s + 1) == '>')\
+			||(*s == '<' && *(s + 1) == '<')))
+				s++;
+		}
 		if (check && !(has_operators(*s, ">|< ")))
 		{
 			count++;
@@ -54,12 +63,9 @@ int	count_tab(char *s)
 				}
 			}
 		}
-		if (has_operators(*s, ">|<")) {
-			count++;
-			check = 1;
-		}
 		s++;
 	}
+	// ft_printf("# tabs: %d\n", count);
 	return (count);	
 }
 
@@ -118,6 +124,14 @@ char **split_token(t_prg *prg)
 	}
 	while (*s)
 	{
+		if (has_operators(*s, ">|<"))
+		{
+			*tab++ = copy_operator(s);
+			check = 0;
+			if (*(s + 1) && ((*s == '>' && *(s + 1) == '>')\
+			||(*s == '<' && *(s + 1) == '<')))
+				s++;
+		}
 		if (check && !(has_operators(*s, ">|< ")))
 		{
 			*tab++ = copy_token(s);
@@ -136,11 +150,6 @@ char **split_token(t_prg *prg)
 					check = 0;
 				}
 			}
-		}
-		if (has_operators(*s, ">|<"))
-		{
-			*tab++ = copy_operator(s);
-			check = 1;
 		}
 		s++;
 	}
