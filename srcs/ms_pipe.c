@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 17:39:24 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/27 19:41:02 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,47 @@ void	wait_free(int no_cmds, t_prg *prg, int **fd)
 	(void)no_cmds;
 }
 
+char **get_cmd(t_prg *prg)
+{
+	int i;
+	int no_cmd;
+	char **split;
+	char **save;
+	
+	i = 0;
+	save = prg->all_token;
+	no_cmd = 0;
+	while (*prg->all_token)
+	{
+		if (!ft_strncmp(*prg->all_token, "|", 1))
+			no_cmd++;
+		prg->all_token++;
+	}
+	prg->all_token = save;
+	no_cmd += 1;
+	// ft_printf("# cmd: %d\n", no_cmd);
+	split = malloc(sizeof(char *) * (no_cmd + 1));
+
+	while (i < no_cmd && *prg->all_token)
+	{
+		split[i] = ft_strdup(*prg->all_token++);
+		// ft_printf("token: %s i: %d\n", *prg->all_token, i);
+		while (ft_strncmp(*prg->all_token, "|", 1) && *prg->all_token)
+		{
+			// ft_printf("token: %s\n", *prg->all_token);
+			split[i] = ft_strjoin(split[i], " ");
+			split[i] = ft_strjoin(split[i], *prg->all_token);
+			// ft_printf("joint: %s\n", split[i]);
+			prg->all_token++;
+		}
+		prg->all_token++;
+		i++;
+	}
+	prg->all_token = save;
+	split[i] = NULL;
+	return (split);
+}
+
 /* Create pipes for each pair of commands */
 /* then calls fork for each command given */
 /* Examples */
@@ -115,7 +156,7 @@ void	do_pipex(t_prg *prg)
 
 	no_cmds = 0;
 	fd = make_pipes(prg);
-	split = ft_split(prg->input, '|');
+	split = get_cmd(prg);
 	while (split[no_cmds] != NULL)
 		no_cmds++;
 	if (prg->no_pipes == 1)
