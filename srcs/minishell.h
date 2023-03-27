@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/25 15:48:23 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/27 14:48:18 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_exp
 	char	**pair;
 	char	*key;
 	char	*value;
-	int		quote;
 }	t_exp;
 
 /**
@@ -107,14 +106,20 @@ void	error_nl(t_prg *prg, char *str);
 
 /* Nicholas */
 
+/* variables */
+int find_var(char *token, char *var);
+void get_value(t_prg *prg, char *key);
+
 /* lexer_utils */
-int		has_pair_first(char *s, t_prg *prg);
-int		has_pair(char *s, t_prg *prg);
+int		has_pair_first(char *s);
+int		has_pair(char *s);
 
 /* lexer */
 char	**split_token(t_prg *prg);
 
 /* expand */
+int 	is_question(t_prg *prg, char *key);
+int		has_value(t_prg *prg, char *key, int i);
 char	**expand_tokens(t_prg *prg);
 char	*get_var(char *token, int i);
 
