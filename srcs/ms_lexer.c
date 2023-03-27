@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/27 13:51:43 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/27 15:15:57 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	count_tab(char *s, char c)
 {
 	int check;
 	int count;
-	int i = 0;
+	int i;
 	
+	i = 0;
 	count = 0;
 	check = 1;
 	if (*s)
@@ -76,10 +77,8 @@ char **split_token(t_prg *prg)
 	int		count;
 	int		check;
 	char	*s;
-	char	c;
 	int		i;
 
-	c = 32;
 	s = prg->input;
 	if (!s)
 		return (NULL);
@@ -103,12 +102,12 @@ char **split_token(t_prg *prg)
 	}
 	while (*s)
 	{
-		if (check && !(*s == c))
+		if (check && !(*s == ' '))
 		{
-			*tab++ = copy_token(s, 32);
+			*tab++ = copy_token(s, ' ');
 			check = 0;
 		}
-		else if (!check && (*s == c))
+		else if (!check && (*s == ' '))
 		{
 			check = 1;
 			if ((*(s + 1) == '\'') || (*(s + 1) == '\"'))
