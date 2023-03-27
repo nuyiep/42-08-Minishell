@@ -6,11 +6,39 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/25 15:22:55 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/27 17:45:38 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* new */
+void	close_pipes(int **fd)
+{
+	int	i;
+
+	i = -1;
+	while (fd[++i])
+	{
+		close(fd[i][0]);
+		close(fd[i][1]);
+		free(fd[i]);
+	}
+	free(fd);
+}
+
+/* new */
+void	close_last(int **fd)
+{
+	int	i;
+
+	i = -1;
+	while (fd[++i])
+	{
+		close(fd[i][0]);
+		close(fd[i][1]);
+	}
+}
 
 /* Finds the PATH where the command is located */
 /* and executes it. Process ends when execve is successful */
@@ -44,6 +72,7 @@ void	run_process(t_prg *prg, char **av)
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 {
 	int	pid;
+int status;
 
 	if (check_redirection_builtins(prg, av_one) == 1)
 		return ;
@@ -56,21 +85,22 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i][1], STDOUT_FILENO);
-		close(fd[i][0]);
-		close(fd[i][1]);
+		/* new */
+		close_pipes(fd);
 		run_process(prg, av_one);
 	}
 	else
 	{
-		close(fd[i][0]);
-		close(fd[i][1]);
+		waitpid(0, &status, -1);
 	}
 }
 
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 {
 	int	pid;
-
+	/* new */
+	int status;
+	
 	if (check_redirection_builtins(prg, av_middle) == 1)
 		return ;
 	pid = fork();
@@ -83,20 +113,21 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i - 1][0], STDIN_FILENO);
 		dup2(fd[i][1], STDOUT_FILENO);
-		close(fd[i][0]);
-		close(fd[i][1]);	
+		/* new */
+		close_pipes(fd);
 		run_process(prg, av_middle);
 	}
 	else
 	{
-		close(fd[i][1]);	
-		close(fd[i][0]);	
+		waitpid(0, &status, -1);
 	}
 }
 
 void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 {
 	int		pid;
+	/* new */
+	int		status;
 
 	if (check_redirection_builtins(prg, av_last) == 1)
 		return ;
@@ -110,16 +141,13 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i - 1][0], STDIN_FILENO);
-		
-		// close(fd[i - 1][0]);
-		
-		// close(fd[i][0]);
-		// close(fd[i][1]);
+		/* new */
+		close_pipes(fd);	
 		run_process(prg, av_last);
 	}
 	else
 	{
-		// close(fd[i][0]);
-		// close(fd[i][1]);
+		waitpid(0, &status, -1);
+		close_last(fd);
 	}
 }

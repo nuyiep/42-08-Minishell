@@ -6,13 +6,13 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/27 15:15:57 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/27 17:05:16 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_tab(char *s, char c)
+int	count_tab(char *s)
 {
 	int check;
 	int count;
@@ -36,12 +36,12 @@ int	count_tab(char *s, char c)
 	}
 	while (*s)
 	{
-		if (check && !(*s == c))
+		if (check && !(has_operators(*s, ">|< ")))
 		{
 			count++;
 			check = 0;
 		}
-		else if (!check && (*s == c))
+		else if (!check && (has_operators(*s, ">|< ")))
 		{
 			check = 1;
 			if ((*(s + 1) == '\'') | (*(s + 1) == '\"')) 
@@ -54,18 +54,34 @@ int	count_tab(char *s, char c)
 				}
 			}
 		}
+		if (has_operators(*s, ">|<")) {
+			count++;
+			check = 1;
+		}
 		s++;
 	}
 	return (count);	
 }
 
-char	*copy_token(const char *s, char c)
+char	*copy_token(const char *s)
 {
 	char *p;
 	int i;
 
 	i = 0;
-	while (s[i] && !(s[i] == c))
+	while (s[i] && !(has_operators(s[i], ">|< ")))
+		i++;
+	p = ft_strndup(s, i);
+	return (p);
+}
+
+char	*copy_operator(const char *s)
+{
+	char *p;
+	int i;
+
+	i = 0;
+	while (s[i] && (has_operators(s[i], ">|<")))
 		i++;
 	p = ft_strndup(s, i);
 	return (p);
@@ -83,7 +99,7 @@ char **split_token(t_prg *prg)
 	if (!s)
 		return (NULL);
 	check = 1;
-	count = count_tab((char *)s, 32);
+	count = count_tab((char *)s);
 	tab = malloc(sizeof(char *) * (count + 1));
 	if (!tab)
 		return (NULL);
@@ -102,12 +118,12 @@ char **split_token(t_prg *prg)
 	}
 	while (*s)
 	{
-		if (check && !(*s == ' '))
+		if (check && !(has_operators(*s, ">|< ")))
 		{
-			*tab++ = copy_token(s, ' ');
+			*tab++ = copy_token(s);
 			check = 0;
 		}
-		else if (!check && (*s == ' '))
+		else if (!check && (has_operators(*s, ">|< ")))
 		{
 			check = 1;
 			if ((*(s + 1) == '\'') || (*(s + 1) == '\"'))
@@ -120,6 +136,11 @@ char **split_token(t_prg *prg)
 					check = 0;
 				}
 			}
+		}
+		if (has_operators(*s, ">|<"))
+		{
+			*tab++ = copy_operator(s);
+			check = 1;
 		}
 		s++;
 	}

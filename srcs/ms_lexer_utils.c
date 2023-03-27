@@ -6,28 +6,22 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 00:50:42 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/27 14:10:42 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/27 16:17:51 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int has_operators(char *s, char *op)
+int has_operators(char c, char *op)
 {
-	int i;
 	int j;
-	
-	i = 0;
-	while (s[i])
+
+	j = 0;
+	while (op[j])
 	{
-		j = 0;
-		while (op[j])
-		{
-			if (s[i] == op[j])
-				return 1;
-		j++;
-		}
-		i++;
+		if (op[j] == c)
+			return 1;
+	j++;
 	}
 	return (0);
 }
