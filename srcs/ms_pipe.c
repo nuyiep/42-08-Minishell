@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 20:56:35 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 22:13:46 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char **get_cmd(t_prg *prg)
 	int no_cmd;
 	char **split;
 	char **save;
-	
+
 	i = 0;
 	save = prg->all_token;
 	no_cmd = 0;
