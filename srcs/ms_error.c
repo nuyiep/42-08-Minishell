@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:49:20 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 16:52:32 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 19:49:36 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@ void	error_nl(t_prg *prg, char *str)
 {
 	perror(str);
 	exit(1);
-	read_command(prg);
+	(void)prg;
 }

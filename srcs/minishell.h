@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 19:39:46 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 19:48:55 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@
 	parser - DONE
 	expand - DONE
 	expand_utils - DONE
-	lexer
-	lexer_utils
+	lexer - DONE
+	lexer_utils - DONE
 	pipex
 */
 
+/* Global errno is defined here */
 int exit_code;
 
 /**
@@ -63,13 +64,7 @@ typedef struct s_prg
 	int		heredoc;
 	int		heredoc_postion;
 	char	**av_execve;
-	int		testing_pid1;
-	int		testing_pid2;
-	int		testing_pid3;
 }	t_prg;
-
-/* Global errno is defined here */
-int		g_status;
 
 /* Initialization */
 void	init_struct(t_prg *prg);
@@ -77,8 +72,6 @@ void	shell_loop(t_prg *prg, char **envp);
 void	setup_signal(void);
 int		read_command(t_prg *prg);
 void	init_envp(t_prg *prg, char **envp);
-
-/* Parsing */
 
 /* Executor */
 int		executor(t_prg *prg);
@@ -103,7 +96,7 @@ int		builtins(t_prg *prg, char **envp, char **av);
 void	pwd(t_prg *prg);
 void	env(t_prg *prg);
 void	echo(t_prg *prg, char **av);
-void	export(t_prg *prg);
+void	ms_export(t_prg *prg);
 int		check_flag(char *arg);
 void	cd(t_prg *prg, char **envp);
 int		key_exist(t_prg *prg, char *key);
@@ -132,6 +125,7 @@ int		has_operators(char c, char *op);
 char	**split_token(t_prg *prg);
 int		count_tab(char *s);
 
+/* lexer_copy */
 char	*copy_token(char *s, char ***tab, int *check);
 char	*copy_operator(char *s, char ***tab, int *check);
 char	*copy_quoted(char *s, char ***tab, int *check);

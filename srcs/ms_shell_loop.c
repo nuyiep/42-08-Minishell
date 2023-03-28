@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/28 19:42:42 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 19:53:10 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,16 @@
 // {
 // 	char **tokens;
 // 	int i = 1;
-
+// 
+// 	tokens = prg->all_token;
+// 	if (!*tokens)
+// 		ft_printf("error");
+// 	while (*tokens)
+// 	{
+// 		ft_printf("token #%d: %s\n", i++, *tokens);
+// 		tokens++;
+// 	}
+// }
 // 	tokens = prg->all_token;
 // 	if (!*tokens)
 // 		ft_printf("error");
@@ -105,13 +114,15 @@ void	free_all(t_prg *prg)
 /* 		>> 		redirect output append */
 void	shell_loop(t_prg *prg, char **envp)
 {
-	exit_code = 0;
-	int	value;
+	exit_code 	= 0;
+	int			value;
 
 	value = 0;
 	while (1)
 	{
 		setup_signal();
+		if (prg->input)
+			free_all(prg);
 		init_struct(prg);
 		value = read_command(prg);
 		if (value == -1)
@@ -134,11 +145,9 @@ void	shell_loop(t_prg *prg, char **envp)
 			{
 				;
 			}
-			free_all(prg);
 			continue ;
 		}
 		else
 			executor(prg);
-		free_all(prg);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 16:58:47 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 19:50:19 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,11 @@ char	*cmd_access(t_prg *prg, char *av_zero)
 /* fd[1]- write */
 /* Check if the input is a path address */
 /* If it is not, change to address */
-int	ft_execute(int temp_fd, t_prg *prg)
+int	ft_execute(t_prg *prg)
 {
 	char	*empty_str;
 
 	empty_str = ft_strdup("");
-	dup2(temp_fd, 0);
-	close(temp_fd);
 	if ((ft_strncmp(prg->all_token[0], "/", 1) != 0))
 	{
 		get_path(prg, prg->ls_envp);
@@ -98,7 +96,7 @@ int	single_command(t_prg *prg)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (ft_execute(temp_fd, prg))
+		if (ft_execute(prg))
 			return (2);
 	}
 	else
@@ -107,7 +105,6 @@ int	single_command(t_prg *prg)
 		close(temp_fd);
 		while (waitpid(0, &status, 0) != -1)
 			;
-		ft_printf("errno is %d\n", status);
 		if (status == 256)
 			exit_code = 127;
 		temp_fd = dup(0);

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 15:32:16 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ void	declare_x(t_prg *prg)
 /* Otherwise, add the given variables to the end of env variables */
 // export a -> No value
 // export a= -> Value is empty string
-void	export(t_prg *prg)
+// export can only start with underscore or alphabets
+void	ms_export(t_prg *prg)
 {
 	char	**pair;
 	int		i;
@@ -124,6 +125,11 @@ void	export(t_prg *prg)
 		while (prg->all_token[++i])
 		{
 			pair = separate_key_value(prg->all_token[i]);
+			if (pair[0][0] != 95 && (pair[0][0] < 65 || pair[0][0] > 122))
+			{
+				printf("export: `%s': not a valid identifier\n", pair[0]);		
+				exit_code = 1;
+			}
 			if (key_exist(prg, pair[0]))
 				update_key(prg, prg->all_token[i], pair[0]);
 			else

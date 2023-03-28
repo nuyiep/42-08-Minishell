@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 13:47:18 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/27 14:45:13 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,4 @@ void	init_struct(t_prg *prg)
 	prg->av_execve = NULL;
 	prg->npath = 0;
 	prg->path = NULL;
-	prg->testing_pid1 = 0;
-	prg->testing_pid2 = 0;
-	prg->testing_pid3 = 0;
 }

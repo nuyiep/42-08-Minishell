@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/28 17:10:27 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 19:50:37 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	*create_new_token(t_prg *prg, char *old, int *i)
 	int		var_pos;
 	int		size;
 
+	var_pos = 0;
 	var = get_var(old, *i + 1);
 	var_pos = 0;
 	*i = -1;

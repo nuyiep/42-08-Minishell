@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 19:45:05 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 19:50:52 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	wait_free(int no_cmds, t_prg *prg, int **fd)
 		i++;
 	}
 	free(fd);
-	(void)no_cmds;
 }
 
 char **get_cmd(t_prg *prg)
@@ -161,9 +160,7 @@ void	do_pipex(t_prg *prg)
 		return ;
 	}
 	else
-	{
 		multiple_pipes(prg, fd, no_cmds, split);
-	}
 	ft_freesplit(split);
 	wait_free(no_cmds, prg, fd);
 }
