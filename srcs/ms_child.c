@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 15:41:47 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 18:13:19 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,11 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 		run_process(prg, av_one);
 	}
 	else
-		waitpid(0, &status, -1);
+	{
+		waitpid(0, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			exit_code = (WEXITSTATUS(status));
+	}
 }
 
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
@@ -111,7 +115,11 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 		run_process(prg, av_middle);
 	}
 	else
-		waitpid(0, &status, -1);
+	{
+		waitpid(0, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			exit_code = (WEXITSTATUS(status));
+	}
 }
 
 void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
@@ -134,7 +142,9 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 	}
 	else
 	{
-		waitpid(0, &status, -1);
+		waitpid(0, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			exit_code = (WEXITSTATUS(status));
 		close_last(fd);
 	}
 }

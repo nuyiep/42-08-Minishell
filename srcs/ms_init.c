@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 14:45:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 20:13:41 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	init_exp(t_prg *prg)
 	prg->exp->pair = NULL;
 	prg->exp->key = NULL;
 	prg->exp->value = ft_strdup(" ");
-
 }
 
 /* To get the "PATH=" line from env */

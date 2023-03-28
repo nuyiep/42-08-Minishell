@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 15:42:08 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 20:11:12 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ char	*cmd_access(t_prg *prg, char *av_zero)
 	}
 	if (prg->no_pipes == 0)
 	{
-		exit_code = 1;
+		exit_code = 127;
 		error_nl(prg, prg->all_token[0]);
 	}
 	else
+	{
+		exit_code = 127;
 		error_nl(prg, av_zero);
+	}
 	return (NULL);
 }
 
@@ -88,17 +91,20 @@ int	ft_execute(t_prg *prg)
 /* Just to execute one command */
 int	single_command(t_prg *prg)
 {
+	int	status;
+
 	if (fork() == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (ft_execute(prg))
-			return (2);
+		ft_execute(prg);
 	}
 	else
 	{
 		signal(SIGINT, SIG_IGN);
-		waitpid(-1, NULL, 0);
+		waitpid(0, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			exit_code = (WEXITSTATUS(status));
 	}
 	return (0);
 }

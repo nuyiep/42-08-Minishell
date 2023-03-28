@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 15:43:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 19:37:20 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,33 @@ int	ft_execute_redirection_output(t_prg *prg, int i, char **av)
 	}
 	prg->av_execve[j] = NULL;
 	execve(av_zero, prg->av_execve, prg->ls_envp);
+	error_nl(prg, av_zero);
 	return (1);
-}
-
-void	execute_command_output(t_prg *prg, int outfile, int i, char **av)
-{
-	if (fork() == 0)
-	{
-		if (ft_execute_redirection_output(prg, i, av))
-			error_nl(prg, "Redirection_output");
-	}
-	else
-	{
-		close(outfile);
-		while (waitpid(-1, NULL, 0) != -1)
-			;
-	}
-	return ;
 }
 
 /* cat < Makefile */
 int	redirect_output(t_prg *prg, int i, char **av)
 {
 	int	outfile;
+	int	status;
 
 	outfile = open(prg->all_token[i], O_RDONLY, 0644);
-	if (outfile == -1)
+	if (fork() == 0)
 	{
-		exit_code = 2;
-		error_nl(prg, "unable to open file");
+		if (outfile == -1)
+		{
+			exit_code = 1;
+			error_nl(prg, prg->all_token[i]);
+		}
+		if (ft_execute_redirection_output(prg, i, av))
+			error_nl(prg, "Redirection_output");
 	}
-	execute_command_output(prg, outfile, i, av);
+	else
+	{
+		close(outfile);
+		waitpid(0, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			exit_code = (WEXITSTATUS(status));
+	}
 	return (1);
 }
