@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 20:16:08 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 22:18:45 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,6 @@ int	ft_execute_redirection(int infile, char **envp, t_prg *prg, char **av)
 	error_nl(prg, av_zero);
 	return (1);
 }
-
-// void	execute_single_command(t_prg *prg, char **envp, int file, char **av)
-// {
-// 	int	status;
-	
-// 	if (fork() == 0)
-// 	{
-// 		if (ft_execute_redirection(file, envp, prg, av))
-// 			return ;
-// 	}
-// 	else
-// 	{
-// 		close(file);
-// 		waitpid(0, &status, WUNTRACED);
-// 		if (WIFEXITED(status))
-// 			exit_code = (WEXITSTATUS(status));
-// 	}
-// 	return ;
-// }
 
 void	redirect_append(t_prg *prg, int i, char **av)
 {
@@ -96,7 +77,6 @@ void	redirect_input(t_prg *prg, int i, char **av)
 			exit_code = 2;
 			error_nl(prg, prg->all_token[i]);
 		}
-			
 		prg->av_execve = av;
 		free(prg->av_execve[i]);
 		free(prg->av_execve[i - 1]);
