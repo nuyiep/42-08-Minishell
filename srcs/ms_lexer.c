@@ -6,151 +6,42 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 15:00:46 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/27 20:02:59 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 19:43:15 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_tab(char *s)
+char	*check_after_operator(char *s, char ***tab, int *check)
 {
-	int check;
-	int count;
-	int i;
-	
-	i = 0;
-	count = 0;
-	check = 1;
-	if (*s)
-	{
-		if ((*s == '\'') || (*s == '\"'))
-		{
-			i = has_pair_first(s);
-			if (i != 0)
-			{
-				count++;
-				check = 0;
-				s += i;
-			}
-		}	
-	}
-	// ft_printf("start: %s\n", s);
-	while (*s)
-	{
-		if (has_operators(*s, ">|<")) 
-		{
-			count++;
-			check = 0;
-			if (*(s + 1) && ((*s == '>' && *(s + 1) == '>')\
-			||(*s == '<' && *(s + 1) == '<')))
-				s++;
-		}
-		if (check && !(has_operators(*s, ">|< ")))
-		{
-			count++;
-			check = 0;
-		}
-		else if (!check && (has_operators(*s, ">|< ")))
-		{
-			check = 1;
-			if ((*(s + 1) == '\'') | (*(s + 1) == '\"')) 
-			{
-				if (has_pair(s) != 0)
-				{
-					count++;
-					s += has_pair(s);
-					check = 0;
-				}
-			}
-		}
-		s++;
-	}
-	// ft_printf("# tabs: %d\n", count);
-	return (count);	
+	*check = 1;
+	if ((*(s + 1) == '\'') || (*(s + 1) == '\"'))
+		s = copy_quoted(s, tab, check);
+	return (s);
 }
 
-char	*copy_token(const char *s)
-{
-	char *p;
-	int i;
-
-	i = 0;
-	while (s[i] && !(has_operators(s[i], ">|< ")))
-		i++;
-	p = ft_strndup(s, i);
-	return (p);
-}
-
-char	*copy_operator(const char *s)
-{
-	char *p;
-	int i;
-
-	i = 0;
-	while (s[i] && (has_operators(s[i], ">|<")))
-		i++;
-	p = ft_strndup(s, i);
-	return (p);
-}
-
-char **split_token(t_prg *prg)
+char	**split_token(t_prg *prg)
 {
 	char	**tab;
 	int		count;
 	int		check;
 	char	*s;
-	int		i;
 
 	s = prg->input;
 	if (!s)
 		return (NULL);
 	check = 1;
-	count = count_tab((char *)s);
+	count = count_tab(s);
 	tab = malloc(sizeof(char *) * (count + 1));
-	if (!tab)
-		return (NULL);
-	if (*s)
-	{
-		if ((*s == '\'') || (*s == '\"'))
-		{
-			i = has_pair_first(s);
-			if (i != 0)
-			{
-				*tab++ = ft_strndup(s, i);
-				s += i;
-				check = 0;
-			}
-		}		
-	}
+	s = check_first_quote(s, &tab, &check);
 	while (*s)
 	{
 		if (has_operators(*s, ">|<"))
-		{
-			*tab++ = copy_operator(s);
-			check = 0;
-			if (*(s + 1) && ((*s == '>' && *(s + 1) == '>')\
-			||(*s == '<' && *(s + 1) == '<')))
-				s++;
-		}
+			s = copy_operator(s, &tab, &check);
 		if (check && !(has_operators(*s, ">|< ")))
-		{
-			*tab++ = copy_token(s);
-			check = 0;
-		}
+			s = copy_token(s, &tab, &check);
 		else if (!check && (has_operators(*s, ">|< ")))
-		{
-			check = 1;
-			if ((*(s + 1) == '\'') || (*(s + 1) == '\"'))
-			{
-				i = has_pair(s);
-				if (i != 0)
-				{
-					*tab++ = ft_strndup(s + 1, i);
-					s += i;
-					check = 0;
-				}
-			}
-		}
+			s = check_after_operator(s, &tab, &check);
 		s++;
 	}
 	*tab = 0;

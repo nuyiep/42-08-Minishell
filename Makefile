@@ -6,7 +6,7 @@
 #    By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/27 19:59:05 by nchoo            ###   ########.fr        #
+#    Updated: 2023/03/28 19:53:52 by nchoo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ SRCS_FILES    	=   	ms_main \
 						ms_expand \
 						ms_expand_utils \
 						ms_lexer \
+						ms_lexer_count \
+						ms_lexer_copy \
 						ms_lexer_utils \
 						ms_free \
 						ms_executor \

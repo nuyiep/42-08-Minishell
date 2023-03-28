@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_shell_loop.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/27 20:50:03 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 19:53:10 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,16 @@
 // {
 // 	char **tokens;
 // 	int i = 1;
-
+// 
+// 	tokens = prg->all_token;
+// 	if (!*tokens)
+// 		ft_printf("error");
+// 	while (*tokens)
+// 	{
+// 		ft_printf("token #%d: %s\n", i++, *tokens);
+// 		tokens++;
+// 	}
+// }
 // 	tokens = prg->all_token;
 // 	if (!*tokens)
 // 		ft_printf("error");
@@ -81,8 +90,8 @@ int	parsing(t_prg *prg)
 	if (prg->all_token == NULL)
 		return (1);
 	prg->all_token = expand_tokens(prg);
-	prg->all_token = remove_quotes(prg);
-	//print_tokens(prg);
+	prg->all_token = remove_all_quotes(prg);
+	// print_tokens(prg);
 	count_pipe_n_heredoc(prg);
 	return (0);
 }
@@ -133,7 +142,9 @@ void	shell_loop(t_prg *prg, char **envp)
 			else if (builtins(prg, envp, prg->all_token))
 				;
 			else if (executor(prg) == 0)
+			{
 				;
+			}
 			continue ;
 		}
 		else

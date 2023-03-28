@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:29:40 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/27 14:44:06 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 19:50:30 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	Checks if the variable is "?"
+	Checks whether the variable is "?"
 */
-int is_question(t_prg *prg, char *key)
+int	is_question(t_prg *prg, char *key)
 {
 	if (!ft_strncmp(key, "?", 1))
 	{
@@ -27,11 +27,11 @@ int is_question(t_prg *prg, char *key)
 }
 
 /*
-	Checks if the given key has an associated value
+	Checks whether the given key has an associated value
 */
-int has_value(t_prg *prg, char *key, int i)
+int	has_value(t_prg *prg, char *key, int i)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(key);
 	if (!ft_strncmp(prg->ls_envp[i], key, len) \

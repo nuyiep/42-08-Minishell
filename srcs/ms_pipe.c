@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 18:03:54 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 20:56:35 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,19 +115,15 @@ char **get_cmd(t_prg *prg)
 	}
 	prg->all_token = save;
 	no_cmd += 1;
-	// ft_printf("# cmd: %d\n", no_cmd);
 	split = malloc(sizeof(char *) * (no_cmd + 1));
 
 	while (i < no_cmd && *prg->all_token)
 	{
 		split[i] = ft_strdup(*prg->all_token++);
-		// ft_printf("token: %s i: %d\n", *prg->all_token, i);
 		while (ft_strncmp(*prg->all_token, "|", 1) && *prg->all_token)
 		{
-			// ft_printf("token: %s\n", *prg->all_token);
 			split[i] = ft_strjoin(split[i], " ");
 			split[i] = ft_strjoin(split[i], *prg->all_token);
-			// ft_printf("joint: %s\n", split[i]);
 			prg->all_token++;
 		}
 		prg->all_token++;

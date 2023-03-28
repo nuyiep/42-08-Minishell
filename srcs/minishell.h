@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 15:39:12 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 19:48:55 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@
 # include <termios.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+
+/*
+	In need of refactoring:
+	parser - DONE
+	expand - DONE
+	expand_utils - DONE
+	lexer - DONE
+	lexer_utils - DONE
+	pipex
+*/
 
 /* Global errno is defined here */
 int exit_code;
@@ -113,6 +123,13 @@ int		has_operators(char c, char *op);
 
 /* lexer */
 char	**split_token(t_prg *prg);
+int		count_tab(char *s);
+
+/* lexer_copy */
+char	*copy_token(char *s, char ***tab, int *check);
+char	*copy_operator(char *s, char ***tab, int *check);
+char	*copy_quoted(char *s, char ***tab, int *check);
+char	*check_first_quote(char *s, char ***tab, int *check);
 
 /* expand */
 int 	is_question(t_prg *prg, char *key);
@@ -124,6 +141,6 @@ char	*get_var(char *token, int i);
 void	free_exp(t_prg *prg, int value);
 
 /* parser */
-char	**remove_quotes(t_prg *prg);
+char	**remove_all_quotes(t_prg *prg);
 
 #endif

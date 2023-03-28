@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/27 18:13:00 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 19:50:37 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ char	*create_new_token(t_prg *prg, char *old, int *i)
 	return (new_token);
 }
 
+/*
+	Loops through all tokens and checks for variables
+	
+	When found, creates a new string expanding the found variables,
+	one at a time, until no more variables are found
+*/
 char	**expand_tokens(t_prg *prg)
 {
 	char	**save_state;
