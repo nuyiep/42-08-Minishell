@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 18:32:37 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 15:37:57 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*cmd_access(t_prg *prg, char *av_zero)
 	}
 	if (prg->no_pipes == 0)
 	{
-		exit_code = 1;
+		exit_code = 127;
 		error_nl(prg, prg->all_token[0]);
 	}
 	else

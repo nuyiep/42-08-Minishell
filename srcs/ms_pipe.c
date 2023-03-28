@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 19:41:02 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:02:46 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,10 @@ char **get_cmd(t_prg *prg)
 	while (i < no_cmd && *prg->all_token)
 	{
 		split[i] = ft_strdup(*prg->all_token++);
-		// ft_printf("token: %s i: %d\n", *prg->all_token, i);
 		while (ft_strncmp(*prg->all_token, "|", 1) && *prg->all_token)
 		{
-			// ft_printf("token: %s\n", *prg->all_token);
 			split[i] = ft_strjoin(split[i], " ");
 			split[i] = ft_strjoin(split[i], *prg->all_token);
-			// ft_printf("joint: %s\n", split[i]);
 			prg->all_token++;
 		}
 		prg->all_token++;
