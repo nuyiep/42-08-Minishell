@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 22:13:46 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 23:29:58 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	one_pipe(t_prg *prg, char **split, int **fd, int no_cmds)
 	ft_freesplit(av_one);
 	ft_freesplit(av_last);
 	ft_freesplit(split);
-	free(fd[0]);
-	free(fd);
 }
 
 void	multiple_pipes(t_prg *prg, int **fd, int no_cmds, char **split)

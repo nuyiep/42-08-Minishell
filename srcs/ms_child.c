@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_child.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 18:13:19 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 23:24:44 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 	}
 	else
 	{
-		waitpid(0, &status, WUNTRACED);
+		waitpid(0, &status, -1);
 		if (WIFEXITED(status))
 			exit_code = (WEXITSTATUS(status));
 	}
@@ -116,7 +116,7 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 	}
 	else
 	{
-		waitpid(0, &status, WUNTRACED);
+		waitpid(0, &status, -1);
 		if (WIFEXITED(status))
 			exit_code = (WEXITSTATUS(status));
 	}
@@ -142,7 +142,7 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 	}
 	else
 	{
-		waitpid(0, &status, WUNTRACED);
+		waitpid(0, &status, -1);
 		if (WIFEXITED(status))
 			exit_code = (WEXITSTATUS(status));
 		close_last(fd);

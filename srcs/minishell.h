@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 19:48:55 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 23:08:25 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	ms_exit(t_prg *prg);
 
 /* Helper functions */
 void	error_nl(t_prg *prg, char *str);
+void	close_pipes(int **fd);
+void	close_last(int **fd);
 
 /* Nicholas */
 
