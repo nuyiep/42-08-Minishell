@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 15:37:57 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:58:47 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int	ft_execute(int temp_fd, t_prg *prg)
 int	single_command(t_prg *prg)
 {
 	int	temp_fd;
-
+	int status;
+	
 	temp_fd = dup(0);
 	if (fork() == 0)
 	{
@@ -104,8 +105,11 @@ int	single_command(t_prg *prg)
 	{
 		signal(SIGINT, SIG_IGN);
 		close(temp_fd);
-		while (waitpid(0, NULL, 0) != -1)
+		while (waitpid(0, &status, 0) != -1)
 			;
+		ft_printf("errno is %d\n", status);
+		if (status == 256)
+			exit_code = 127;
 		temp_fd = dup(0);
 	}
 	return (0);

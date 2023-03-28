@@ -6,7 +6,7 @@
 #    By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/27 19:59:05 by nchoo            ###   ########.fr        #
+#    Updated: 2023/03/28 19:41:49 by nchoo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ RM            	=    	rm -f
 CFLAGS       	=    	-Wall -Wextra -Werror
 CFLAGS		    +=		-I/usr/local/opt/readline/include
 # CFLAGS			+=		-I/opt/homebrew/opt/readline/include
-# CFLAGS       	+=    	-fsanitize=address -g3
+CFLAGS       	+=    	-fsanitize=address -g3
 READLINE		=		-lreadline
 READLINE		+=		-L/usr/local/opt/readline/lib
 # READLINE		+=		-L/opt/homebrew/opt/readline/lib
@@ -38,6 +38,8 @@ SRCS_FILES    	=   	ms_main \
 						ms_expand \
 						ms_expand_utils \
 						ms_lexer \
+						ms_lexer_count \
+						ms_lexer_copy \
 						ms_lexer_utils \
 						ms_free \
 						ms_executor \

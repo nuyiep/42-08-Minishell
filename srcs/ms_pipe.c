@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 16:02:46 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/28 19:45:05 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ char **get_cmd(t_prg *prg)
 	}
 	prg->all_token = save;
 	no_cmd += 1;
-	// ft_printf("# cmd: %d\n", no_cmd);
 	split = malloc(sizeof(char *) * (no_cmd + 1));
 
 	while (i < no_cmd && *prg->all_token)
