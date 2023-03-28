@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:15:00 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 11:17:15 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 14:06:41 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,10 @@ void	unset(t_prg *prg)
 	{
 		if (match(prg, output) == 1)
 			remove_update_envp(prg, output);
+		else
+		{
+			printf("unset: `%s': not a valid identifier\n", prg->all_token[1]);
+			exit_code = 1;
+		}
 	}
 }

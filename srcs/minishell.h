@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 18:06:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 12:05:33 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
+/* Global errno is defined here */
 int exit_code;
 
 /**
@@ -55,17 +56,13 @@ typedef struct s_prg
 	char	**av_execve;
 }	t_prg;
 
-/* Global errno is defined here */
-int		g_status;
-
 /* Initialization */
 void	init_struct(t_prg *prg);
 void	shell_loop(t_prg *prg, char **envp);
 void	setup_signal(void);
 int		read_command(t_prg *prg);
 void	init_envp(t_prg *prg, char **envp);
-
-/* Parsing */
+void	sigint_handler(int sig);
 
 /* Executor */
 int		executor(t_prg *prg);
