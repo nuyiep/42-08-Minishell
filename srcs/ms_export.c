@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 14:09:08 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 15:32:16 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	declare_x(t_prg *prg)
 // export a -> No value
 // export a= -> Value is empty string
 // export can only start with underscore or alphabets
-void	export(t_prg *prg)
+void	ms_export(t_prg *prg)
 {
 	char	**pair;
 	int		i;

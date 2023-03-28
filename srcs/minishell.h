@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 12:05:33 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 15:32:00 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		builtins(t_prg *prg, char **envp, char **av);
 void	pwd(t_prg *prg);
 void	env(t_prg *prg);
 void	echo(t_prg *prg, char **av);
-void	export(t_prg *prg);
+void	ms_export(t_prg *prg);
 int		check_flag(char *arg);
 void	cd(t_prg *prg, char **envp);
 int		key_exist(t_prg *prg, char *key);

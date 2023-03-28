@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:27:06 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 11:46:48 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 15:32:33 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	builtins(t_prg *prg, char **envp, char **av)
 	}
 	if (ft_strcmp(av[0], "export") == 0)
 	{
-		export(prg);
+		ms_export(prg);
 		return (1);
 	}
 	else

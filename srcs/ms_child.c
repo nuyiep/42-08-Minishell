@@ -6,13 +6,13 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 20:31:30 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/28 15:35:30 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* new */
+/* Close pipes for each child process */
 void	close_pipes(int **fd)
 {
 	int	i;
@@ -27,7 +27,7 @@ void	close_pipes(int **fd)
 	free(fd);
 }
 
-/* new */
+/* Close pipes for all parent process only at the end */
 void	close_last(int **fd)
 {
 	int	i;
@@ -74,9 +74,6 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 	int	pid;
 	int status;
 
-	// for (int i = 0; av_one[i]; i++)
-	// 	ft_printf("%s", av_one[i]);
-	// ft_printf("\n");
 	if (check_redirection_builtins(prg, av_one) == 1)
 		return ;
 	pid = fork();
@@ -87,7 +84,6 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i][1], STDOUT_FILENO);
-		/* new */
 		close_pipes(fd);
 		run_process(prg, av_one);
 	}
@@ -100,7 +96,6 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 {
 	int	pid;
-	/* new */
 	int status;
 	
 	if (check_redirection_builtins(prg, av_middle) == 1)
@@ -114,7 +109,6 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i - 1][0], STDIN_FILENO);
 		dup2(fd[i][1], STDOUT_FILENO);
-		/* new */
 		close_pipes(fd);
 		run_process(prg, av_middle);
 	}
@@ -127,7 +121,6 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 {
 	int		pid;
-	/* new */
 	int		status;
 
 	if (check_redirection_builtins(prg, av_last) == 1)
@@ -140,7 +133,6 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i - 1][0], STDIN_FILENO);
-		/* new */
 		close_pipes(fd);	
 		run_process(prg, av_last);
 	}
