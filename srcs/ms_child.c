@@ -6,39 +6,11 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 17:13:25 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 18:14:05 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* Close pipes for each child process */
-void	close_pipes(int **fd)
-{
-	int	i;
-
-	i = -1;
-	while (fd[++i])
-	{
-		close(fd[i][0]);
-		close(fd[i][1]);
-		free(fd[i]);
-	}
-	free(fd);
-}
-
-/* Close pipes for all parent process only at the end */
-void	close_last(int **fd)
-{
-	int	i;
-
-	i = -1;
-	while (fd[++i])
-	{
-		close(fd[i][0]);
-		close(fd[i][1]);
-	}
-}
 
 /* Finds the PATH where the command is located */
 /* and executes it. Process ends when execve is successful */
@@ -53,6 +25,15 @@ void	run_process(t_prg *prg, char **av)
 	}
 	execve(av[0], av, prg->ls_envp);
 	error_nl(prg, av[0]);
+}
+
+void	wait_function(void)
+{
+	int	status;
+
+	waitpid(0, &status, -1);
+	if (WIFEXITED(status))
+		exit_code = (WEXITSTATUS(status));
 }
 
 /* SIGINT - CONTROL C */
@@ -72,10 +53,10 @@ void	run_process(t_prg *prg, char **av)
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 {
 	int	pid;
-	int status;
 
 	prg->cmd_pos = i;
-	if (check_redirection_builtins(prg, av_one, fd) == 1) {
+	if (check_redirection_builtins(prg, av_one, fd) == 1)
+	{
 		waitpid(-1, NULL, -1);
 		return ;
 	}
@@ -91,20 +72,16 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 		run_process(prg, av_one);
 	}
 	else
-	{
-		waitpid(0, &status, -1);
-		if (WIFEXITED(status))
-			exit_code = (WEXITSTATUS(status));
-	}
+		wait_function();
 }
 
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 {
 	int	pid;
-	int	status;
 
 	prg->cmd_pos = i;
-	if (check_redirection_builtins(prg, av_middle, fd) == 1) {
+	if (check_redirection_builtins(prg, av_middle, fd) == 1)
+	{
 		waitpid(-1, NULL, -1);
 		return ;
 	}
@@ -121,20 +98,16 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 		run_process(prg, av_middle);
 	}
 	else
-	{
-		waitpid(0, &status, -1);
-		if (WIFEXITED(status))
-			exit_code = (WEXITSTATUS(status));
-	}
+		wait_function();
 }
 
 void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 {
 	int		pid;
-	int		status;
 
 	prg->cmd_pos = i;
-	if (check_redirection_builtins(prg, av_last, fd) == 1) {
+	if (check_redirection_builtins(prg, av_last, fd) == 1)
+	{
 		waitpid(-1, NULL, -1);
 		return ;
 	}
@@ -146,14 +119,12 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i - 1][0], STDIN_FILENO);
-		close_pipes(fd);	
+		close_pipes(fd);
 		run_process(prg, av_last);
 	}
 	else
 	{
-		waitpid(0, &status, -1);
-		if (WIFEXITED(status))
-			exit_code = (WEXITSTATUS(status));
+		wait_function();
 		close_last(fd);
 	}
 }

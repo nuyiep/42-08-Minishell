@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 17:49:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 17:50:10 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 18:11:46 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,32 @@ int	executor(t_prg *prg)
 	}
 	do_pipex(prg);
 	return (0);
+}
+
+/* Close pipes for each child process */
+void	close_pipes(int **fd)
+{
+	int	i;
+
+	i = -1;
+	while (fd[++i])
+	{
+		close(fd[i][0]);
+		close(fd[i][1]);
+		free(fd[i]);
+	}
+	free(fd);
+}
+
+/* Close pipes for all parent process only at the end */
+void	close_last(int **fd)
+{
+	int	i;
+
+	i = -1;
+	while (fd[++i])
+	{
+		close(fd[i][0]);
+		close(fd[i][1]);
+	}
 }
