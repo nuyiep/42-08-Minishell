@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 14:59:51 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/29 16:07:03 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	one_pipe(t_prg *prg, char **split, int **fd, int no_cmds)
 	execute_first_cmd(prg, fd, av_one, i);
 	prg->av_execve = NULL;
 	av_last = ft_split(split[no_cmds - 1], ' ');
+	
+	// for (int j = 0; av_last[j]; j++) {
+	// 	ft_printf("%s\n", av_last[j]);
+	// }
+	
 	execute_last_cmd(prg, fd, av_last, i + 1);
 	waitpid(-1, NULL, 0);
 	waitpid(-1, NULL, 0);
@@ -73,6 +78,11 @@ void	multiple_pipes(t_prg *prg, int **fd, int no_cmds, char **split)
 		i++;
 	}
 	av_last = ft_split(split[no_cmds - 1], ' ');
+
+	// for (int j = 0; av_last[j]; j++) {
+	// 	ft_printf("%s\n", av_last[j]);
+	// }
+	
 	execute_last_cmd(prg, fd, av_last, i);
 	ft_freesplit(av_one);
 	ft_freesplit(av_last);

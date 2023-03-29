@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 15:43:16 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 16:17:47 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	redirect_input(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
-	infile = open(prg->all_token[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	infile = open(av[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (infile == -1)
 	{
 		exit_code = 2;

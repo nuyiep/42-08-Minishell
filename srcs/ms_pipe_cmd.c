@@ -6,12 +6,20 @@
 /*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:58:07 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/29 15:11:55 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/29 15:43:04 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// void print_cmds(char **split)
+// {
+// 	int i;
+
+// 	for (i = 0; split[i]; i++) {
+// 		ft_printf("%s\n", split[i]);
+// 	}
+// }
 
 int	get_no_cmd(t_prg *prg)
 {
@@ -53,5 +61,6 @@ char	**get_cmd(t_prg *prg)
 		i++;
 	}
 	split[i] = NULL;
+	// print_cmds(split);
 	return (split);
 }
