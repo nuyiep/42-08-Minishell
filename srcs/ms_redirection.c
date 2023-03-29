@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 16:09:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 17:31:39 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,7 @@ int	redirections(t_prg *prg)
 			return (1);
 		}
 		else if (ft_strcmp(prg->all_token[i], "<") == 0)
-		{
-			redirect_output(prg, i + 1, prg->all_token, fd);
-			return (1);
-		}
+			return (redirect_output(prg, i + 1, prg->all_token, fd));
 		i++;
 	}
 	return (0);

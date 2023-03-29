@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 17:18:56 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 17:35:12 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,22 @@ int	ft_execute_redirection_output(t_prg *prg, int i, char **av)
 	return (1);
 }
 
+void	redirect_output2(t_prg *prg, int i, int **fd, char **av)
+{
+	if (prg->cmd_pos != prg->no_pipes)
+	{
+		dup2(fd[prg->cmd_pos][1], STDOUT_FILENO);
+		close_pipes(fd);
+		if (ft_execute_redirection_output(prg, i, av))
+			error_nl(prg, "Redirection_output");
+	}
+	else
+	{
+		if (ft_execute_redirection_output(prg, i, av))
+			error_nl(prg, "Redirection_output");
+	}
+}
+
 /* cat < Makefile */
 /* Only print out the last command, the rest store in pipe */
 int	redirect_output(t_prg *prg, int i, char **av, int **fd)
@@ -59,18 +75,7 @@ int	redirect_output(t_prg *prg, int i, char **av, int **fd)
 			exit_code = 1;
 			error_nl(prg, prg->all_token[i]);
 		}
-		if (prg->cmd_pos != prg->no_pipes)
-		{
-			dup2(fd[prg->cmd_pos][1], STDOUT_FILENO);
-			close_pipes(fd);
-			if (ft_execute_redirection_output(prg, i, av))
-				error_nl(prg, "Redirection_output");
-		}
-		else
-		{
-			if (ft_execute_redirection_output(prg, i, av))
-				error_nl(prg, "Redirection_output");
-		}
+		redirect_output2(prg, i, fd, av);
 	}
 	else
 	{
