@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_main.c                                          :+:      :+:    :+:   */
+/*   ms_executor2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 17:56:01 by plau             ###   ########.fr       */
+/*   Created: 2023/03/29 17:49:57 by plau              #+#    #+#             */
+/*   Updated: 2023/03/29 17:50:10 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Start of the main function */
-int	main(int ac, char **av, char **envp)
+/* Main function for executor */
+/* If only one command, just execute using ft_execute */
+/* Else, do_pipex */
+/* temp_fd = dup(0) - Save stdin 0 to temp_fd */
+/* fd[2] - create an empty fd[0] and fd[1] */
+int	executor(t_prg *prg)
 {
-	t_prg	prg;
-
-	init_struct(&prg);
-	init_envp(&prg, envp);
-	shell_loop(&prg, prg.ls_envp);
-	if (prg.ls_envp)
-		ft_freesplit(prg.ls_envp);
-	ft_printf("BYE BYE\n");
-	// system("leaks -q minishell");
-	(void)ac;
-	(void)av;
+	if (prg->no_pipes == 0)
+	{
+		single_command(prg);
+		return (1);
+	}
+	do_pipex(prg);
+	return (0);
 }

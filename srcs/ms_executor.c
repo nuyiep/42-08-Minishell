@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 21:01:53 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 17:50:13 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ char	*cmd_access2(t_prg *prg, char *temp, char *av_zero)
 	return (NULL);
 }
 
+void	cmd_access3(t_prg *prg, char *av_zero)
+{
+	if (prg->no_pipes == 0)
+	{
+		exit_code = 127;
+		error_nl(prg, prg->all_token[0]);
+	}
+	else
+	{
+		exit_code = 127;
+		error_nl(prg, av_zero);
+	}
+}
+
 /* Check cmd access */
 char	*cmd_access(t_prg *prg, char *av_zero)
 {
@@ -52,16 +66,7 @@ char	*cmd_access(t_prg *prg, char *av_zero)
 		j++;
 		free(temp);
 	}
-	if (prg->no_pipes == 0)
-	{
-		exit_code = 127;
-		error_nl(prg, prg->all_token[0]);
-	}
-	else
-	{
-		exit_code = 127;
-		error_nl(prg, av_zero);
-	}
+	cmd_access3(prg, av_zero);
 	return (NULL);
 }
 
@@ -92,7 +97,7 @@ int	ft_execute(t_prg *prg)
 int	single_command(t_prg *prg)
 {
 	int	status;
-	
+
 	if (fork() == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -106,21 +111,5 @@ int	single_command(t_prg *prg)
 			exit_code = (WEXITSTATUS(status));
 		waitpid(-1, NULL, 0);
 	}
-	return (0);
-}
-
-/* Main function for executor */
-/* If only one command, just execute using ft_execute */
-/* Else, do_pipex */
-/* temp_fd = dup(0) - Save stdin 0 to temp_fd */
-/* fd[2] - create an empty fd[0] and fd[1] */
-int	executor(t_prg *prg)
-{
-	if (prg->no_pipes == 0)
-	{
-		single_command(prg);
-		return (1);
-	}
-	do_pipex(prg);
 	return (0);
 }
