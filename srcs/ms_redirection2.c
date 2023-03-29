@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 21:26:09 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:35:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	redirect_output(t_prg *prg, int i, char **av, int **fd)
 	{
 		if (outfile == -1)
 		{
-			exit_code = 1;
+			g_error = 1;
 			error_nl(prg, prg->all_token[i]);
 		}
 		redirect_output2(prg, i, fd, av);
@@ -82,9 +82,9 @@ int	redirect_output(t_prg *prg, int i, char **av, int **fd)
 		close(outfile);
 		waitpid(-1, &status, WUNTRACED);
 		if (WIFEXITED(status))
-			exit_code = (WEXITSTATUS(status));
+			g_error = (WEXITSTATUS(status));
 		if (WIFSIGNALED(status))
-			exit_code = 130;
+			g_error = 130;
 	}
 	return (1);
 }

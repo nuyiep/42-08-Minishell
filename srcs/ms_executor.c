@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 21:25:19 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:35:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void	cmd_access3(t_prg *prg, char *av_zero)
 {
 	if (prg->no_pipes == 0)
 	{
-		exit_code = 127;
+		g_error = 127;
 		error_nl(prg, prg->all_token[0]);
 	}
 	else
 	{
-		exit_code = 127;
+		g_error = 127;
 		error_nl(prg, av_zero);
 	}
 }
@@ -108,9 +108,9 @@ int	single_command(t_prg *prg)
 	{
 		waitpid(0, &status, WUNTRACED);
 		if (WIFEXITED(status))
-			exit_code = (WEXITSTATUS(status));
+			g_error = (WEXITSTATUS(status));
 		if (WIFSIGNALED(status))
-			exit_code = 130;
+			g_error = 130;
 		waitpid(-1, NULL, 0);
 	}
 	return (0);

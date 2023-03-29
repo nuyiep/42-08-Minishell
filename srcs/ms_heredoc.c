@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:44:45 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 21:28:37 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:35:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	wait_heredoc(void)
 
 	waitpid(0, &status, WUNTRACED);
 	if (WIFEXITED(status))
-		exit_code = (WEXITSTATUS(status));
+		g_error = (WEXITSTATUS(status));
 	if (WIFSIGNALED(status))
-		exit_code = 130;
+		g_error = 130;
 }
 
 void	execute_heredoc(t_prg *prg)

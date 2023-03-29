@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 17:15:00 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 14:06:41 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:35:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	unset(t_prg *prg)
 		else
 		{
 			printf("unset: `%s': not a valid identifier\n", prg->all_token[1]);
-			exit_code = 1;
+			g_error = 1;
 		}
 	}
 }

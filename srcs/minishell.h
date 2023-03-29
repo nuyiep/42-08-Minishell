@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 19:49:18 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:33:36 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 	pipex
 */
 
-/* Global errno is defined here */
-int exit_code;
+/* Global error is defined here */
+int g_error;
 
 /**
  * quote:
