@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 22:18:45 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 12:43:38 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	ft_execute_redirection(int infile, char **envp, t_prg *prg, char **av)
 	return (1);
 }
 
+/* pwd >> file.txt - redirect append */
 void	redirect_append(t_prg *prg, int i, char **av)
 {
 	int	infile;
@@ -63,7 +64,7 @@ void	redirect_append(t_prg *prg, int i, char **av)
 	}
 }
 
-/* ls > ls.txt */
+/* ls > ls.txt - redirect input */
 void	redirect_input(t_prg *prg, int i, char **av)
 {
 	int	infile;
@@ -74,7 +75,7 @@ void	redirect_input(t_prg *prg, int i, char **av)
 	{
 		if (infile == -1)
 		{
-			exit_code = 2;
+			exit_code = 1;
 			error_nl(prg, prg->all_token[i]);
 		}
 		prg->av_execve = av;
@@ -94,9 +95,9 @@ void	redirect_input(t_prg *prg, int i, char **av)
 
 /* Main function for redirections */
 /* Examples */
-/* pwd >> file.txt */
-/* ls > file.txt*/
-/* cat < file.txt */
+/* pwd >> file.txt - redirect append */
+/* ls > file.txt - redirect input */
+/* cat < file.txt -redirect output */
 int	redirections(t_prg *prg)
 {
 	int	i;

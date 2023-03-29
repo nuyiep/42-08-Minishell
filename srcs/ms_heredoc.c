@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:44:45 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 12:09:10 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 12:53:15 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	execute_heredoc(t_prg *prg)
 {
 	int		pid;
 	char	*empty_str;
+	int		status;
 
 	pid = 0;
 	empty_str = ft_strdup("");
@@ -35,8 +36,11 @@ void	execute_heredoc(t_prg *prg)
 		error_nl(prg, prg->all_token[0]);
 	}
 	else
-		while (waitpid(-1, NULL, 0) != -1)
-			;
+	{
+		waitpid(0, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			exit_code = (WEXITSTATUS(status));
+	}
 	free(empty_str);
 }
 

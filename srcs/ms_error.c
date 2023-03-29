@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:49:20 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 20:54:41 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 12:48:18 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,4 @@ void	error_nl(t_prg *prg, char *str)
 	else
 		perror(str);
 	exit(exit_code);
-	(void)prg;
 }

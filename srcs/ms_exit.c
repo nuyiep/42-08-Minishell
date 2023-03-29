@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:40:00 by plau              #+#    #+#             */
-/*   Updated: 2023/03/24 14:27:45 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/29 12:49:11 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Built-in exit */
 void	ms_exit(t_prg *prg)
 {
 	ft_printf("exit\n");
