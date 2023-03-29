@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 21:35:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:52:02 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	ms_export(t_prg *prg)
 			pair = separate_key_value(prg->all_token[i]);
 			if (pair[0][0] != 95 && (pair[0][0] < 65 || pair[0][0] > 122))
 			{
-				printf("export: `%s': not a valid identifier\n", pair[0]);		
+				printf("export: `%s': not a valid identifier\n", pair[0]);
 				g_error = 1;
 			}
 			if (key_exist(prg, pair[0]))

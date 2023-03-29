@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 21:35:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:57:02 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,21 @@ int	ft_execute_redirection(int infile, char **envp, t_prg *prg, char **av)
 	return (1);
 }
 
+void	wait_redirection(void)
+{
+	int	status;
+
+	waitpid(0, &status, WUNTRACED);
+	if (WIFEXITED(status))
+		g_error = (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		g_error = 130;
+}
+
 /* pwd >> file.txt - redirect append */
 void	redirect_append(t_prg *prg, int i, char **av)
 {
 	int	infile;
-	int	status;
 
 	infile = open(av[i], O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fork() == 0)
@@ -57,13 +67,7 @@ void	redirect_append(t_prg *prg, int i, char **av)
 			return ;
 	}
 	else
-	{
-		waitpid(0, &status, WUNTRACED);
-		if (WIFEXITED(status))
-			g_error = (WEXITSTATUS(status));
-		if (WIFSIGNALED(status))
-			g_error = 130;
-	}
+		wait_redirection();
 }
 
 /* ls > ls.txt - redirect input */
@@ -88,14 +92,7 @@ void	redirect_input(t_prg *prg, int i, char **av)
 			return ;
 	}
 	else
-	{
-		waitpid(0, &status, WUNTRACED);
-		if (WIFEXITED(status))
-			g_error = (WEXITSTATUS(status));
-		if (WIFSIGNALED(status))
-			g_error = 130;
-		
-	}
+		wait_redirection();
 }
 
 /* Main function for redirections */

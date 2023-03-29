@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 21:33:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:58:55 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 */
 
 /* Global error is defined here */
-int g_error;
+int	g_error;
 
 /**
  * quote:
@@ -117,8 +117,8 @@ void	close_last(int **fd);
 /* Nicholas */
 
 /* variables */
-int find_var(char *token, char *var);
-void get_value(t_prg *prg, char *key);
+int		find_var(char *token, char *var);
+void	get_value(t_prg *prg, char *key);
 
 /* lexer_utils */
 int		has_pair_first(char *s);
@@ -136,7 +136,7 @@ char	*copy_quoted(char *s, char ***tab, int *check);
 char	*check_first_quote(char *s, char ***tab, int *check);
 
 /* expand */
-int 	is_question(t_prg *prg, char *key);
+int		is_question(t_prg *prg, char *key);
 int		has_value(t_prg *prg, char *key, int i);
 char	**expand_tokens(t_prg *prg);
 char	*get_var(char *token, int i);
