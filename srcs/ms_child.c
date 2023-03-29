@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_child.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 15:41:47 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 15:02:43 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	run_process(t_prg *prg, char **av)
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 {
 	int	pid;
-	int status;
+	int	status;
 
 	if (check_redirection_builtins(prg, av_one) == 1)
 		return ;
@@ -94,7 +94,7 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 {
 	int	pid;
-	int status;
+	int	status;
 	
 	if (check_redirection_builtins(prg, av_middle) == 1)
 		return ;
@@ -129,7 +129,7 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		dup2(fd[i - 1][0], STDIN_FILENO);
-		close_pipes(fd);	
+		close_pipes(fd);
 		run_process(prg, av_last);
 	}
 	else

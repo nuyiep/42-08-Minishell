@@ -77,6 +77,7 @@ void	init_envp(t_prg *prg, char **envp);
 int		executor(t_prg *prg);
 int		ms_heredoc(t_prg *prg, char **av);
 void	do_pipex(t_prg *prg);
+char	**get_cmd(t_prg *prg);
 char	*cmd_access(t_prg *prg, char *cmd_zero);
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i);
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i);

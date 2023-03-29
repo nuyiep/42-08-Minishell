@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 14:45:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 15:08:19 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	init_exp(t_prg *prg)
 	prg->exp->pair = NULL;
 	prg->exp->key = NULL;
 	prg->exp->value = ft_strdup(" ");
-
 }
 
 /* To get the "PATH=" line from env */

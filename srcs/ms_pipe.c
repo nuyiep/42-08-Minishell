@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 19:50:52 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/29 14:59:51 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,43 +95,6 @@ void	wait_free(int no_cmds, t_prg *prg, int **fd)
 		i++;
 	}
 	free(fd);
-}
-
-char **get_cmd(t_prg *prg)
-{
-	int i;
-	int no_cmd;
-	char **split;
-	char **save;
-	
-	i = 0;
-	save = prg->all_token;
-	no_cmd = 0;
-	while (*prg->all_token)
-	{
-		if (!ft_strncmp(*prg->all_token, "|", 1))
-			no_cmd++;
-		prg->all_token++;
-	}
-	prg->all_token = save;
-	no_cmd += 1;
-	split = malloc(sizeof(char *) * (no_cmd + 1));
-
-	while (i < no_cmd && *prg->all_token)
-	{
-		split[i] = ft_strdup(*prg->all_token++);
-		while (ft_strncmp(*prg->all_token, "|", 1) && *prg->all_token)
-		{
-			split[i] = ft_strjoin(split[i], " ");
-			split[i] = ft_strjoin(split[i], *prg->all_token);
-			prg->all_token++;
-		}
-		prg->all_token++;
-		i++;
-	}
-	prg->all_token = save;
-	split[i] = NULL;
-	return (split);
 }
 
 /* Create pipes for each pair of commands */

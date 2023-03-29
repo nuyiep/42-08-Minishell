@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+         #
+#    By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/28 19:53:52 by nchoo            ###   ########.fr        #
+#    Updated: 2023/03/29 15:15:41 by nchoo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRCS_FILES    	=   	ms_main \
 						ms_executor \
 						ms_heredoc \
 						ms_pipe \
+						ms_pipe_cmd \
 						ms_child \
 						ms_redirection \
 						ms_redirection2 \
@@ -64,10 +65,12 @@ all:
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 				$(CC) $(CFLAGS) -c $< -o $@
+				$(info CREATED $@)
 
 $(NAME):        $(OBJS)
 				$(CC) $(CFLAGS) $^ $(READLINE) -Llibft -lft -o $@
-
+				$(info CREATED $(NAME))
+				
 libft:
 				make -C $(LIBFT_DIR)
 
@@ -82,3 +85,5 @@ fclean:         clean
 re:             fclean all
 
 .PHONY:         all libft clean fclean re
+
+.SILENT:
