@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 17:31:39 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:28:27 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	redirect_append(t_prg *prg, int i, char **av)
 		waitpid(0, &status, WUNTRACED);
 		if (WIFEXITED(status))
 			exit_code = (WEXITSTATUS(status));
+		if (WIFSIGNALED(status))
+			exit_code = 130;
 	}
 }
 
@@ -90,6 +92,9 @@ void	redirect_input(t_prg *prg, int i, char **av)
 		waitpid(0, &status, WUNTRACED);
 		if (WIFEXITED(status))
 			exit_code = (WEXITSTATUS(status));
+		if (WIFSIGNALED(status))
+			exit_code = 130;
+		
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 18:14:05 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:28:49 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	wait_function(void)
 	waitpid(0, &status, -1);
 	if (WIFEXITED(status))
 		exit_code = (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		exit_code = 130;
 }
 
 /* SIGINT - CONTROL C */
