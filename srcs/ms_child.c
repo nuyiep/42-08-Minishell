@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_child.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 23:24:44 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/29 17:13:25 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,11 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 	int	pid;
 	int status;
 
-	if (check_redirection_builtins(prg, av_one) == 1)
+	prg->cmd_pos = i;
+	if (check_redirection_builtins(prg, av_one, fd) == 1) {
+		waitpid(-1, NULL, -1);
 		return ;
+	}
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
@@ -98,10 +101,13 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 {
 	int	pid;
-	int status;
-	
-	if (check_redirection_builtins(prg, av_middle) == 1)
+	int	status;
+
+	prg->cmd_pos = i;
+	if (check_redirection_builtins(prg, av_middle, fd) == 1) {
+		waitpid(-1, NULL, -1);
 		return ;
+	}
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
@@ -127,8 +133,11 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 	int		pid;
 	int		status;
 
-	if (check_redirection_builtins(prg, av_last) == 1)
+	prg->cmd_pos = i;
+	if (check_redirection_builtins(prg, av_last, fd) == 1) {
+		waitpid(-1, NULL, -1);
 		return ;
+	}
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");

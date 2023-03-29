@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 19:37:20 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 17:18:56 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ int	ft_execute_redirection_output(t_prg *prg, int i, char **av)
 	{
 		if (k == i - 1)
 			k++;
-		prg->av_execve[j] = av[k];
-		j++;
-		k++;
+		prg->av_execve[j++] = av[k++];
 	}
 	prg->av_execve[j] = NULL;
 	execve(av_zero, prg->av_execve, prg->ls_envp);
@@ -47,12 +45,13 @@ int	ft_execute_redirection_output(t_prg *prg, int i, char **av)
 }
 
 /* cat < Makefile */
-int	redirect_output(t_prg *prg, int i, char **av)
+/* Only print out the last command, the rest store in pipe */
+int	redirect_output(t_prg *prg, int i, char **av, int **fd)
 {
 	int	outfile;
 	int	status;
 
-	outfile = open(prg->all_token[i], O_RDONLY, 0644);
+	outfile = open(av[i], O_RDONLY, 0644);
 	if (fork() == 0)
 	{
 		if (outfile == -1)
@@ -60,13 +59,23 @@ int	redirect_output(t_prg *prg, int i, char **av)
 			exit_code = 1;
 			error_nl(prg, prg->all_token[i]);
 		}
-		if (ft_execute_redirection_output(prg, i, av))
-			error_nl(prg, "Redirection_output");
+		if (prg->cmd_pos != prg->no_pipes)
+		{
+			dup2(fd[prg->cmd_pos][1], STDOUT_FILENO);
+			close_pipes(fd);
+			if (ft_execute_redirection_output(prg, i, av))
+				error_nl(prg, "Redirection_output");
+		}
+		else
+		{
+			if (ft_execute_redirection_output(prg, i, av))
+				error_nl(prg, "Redirection_output");
+		}
 	}
 	else
 	{
 		close(outfile);
-		waitpid(0, &status, WUNTRACED);
+		waitpid(-1, &status, WUNTRACED);
 		if (WIFEXITED(status))
 			exit_code = (WEXITSTATUS(status));
 	}

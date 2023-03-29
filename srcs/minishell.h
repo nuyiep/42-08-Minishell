@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 12:48:16 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 14:16:49 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_prg
 	int		heredoc;
 	int		heredoc_postion;
 	char	**av_execve;
+	int		cmd_pos;
 }	t_prg;
 
 /* Initialization */
@@ -81,13 +82,13 @@ char	*cmd_access(t_prg *prg, char *cmd_zero);
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i);
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i);
 void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i);
-int		check_redirection_builtins(t_prg *prg, char **av);
+int		check_redirection_builtins(t_prg *prg, char **av, int **fd);
 void	get_path(t_prg *prg, char **envp);
 void	find_npath(t_prg *prg);
 
 /* Redirection */
 int		redirections(t_prg *prg);
-int		redirect_output(t_prg *prg, int i, char **av);
+int		redirect_output(t_prg *prg, int i, char **av, int **fd);
 void	redirect_append(t_prg *prg, int i, char **av);
 void	redirect_input(t_prg *prg, int i, char **av);
 

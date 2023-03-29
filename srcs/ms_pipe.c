@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 23:29:58 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/29 14:19:48 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ void	one_pipe(t_prg *prg, char **split, int **fd, int no_cmds)
 	av_one = NULL;
 	av_last = NULL;
 	i = 0;
+	prg->cmd_pos = i;
 	av_one = ft_split(split[0], ' ');
-	execute_first_cmd(prg, fd, av_one, i);
+	execute_first_cmd(prg, fd, av_one, prg->cmd_pos);
 	prg->av_execve = NULL;
 	av_last = ft_split(split[no_cmds - 1], ' ');
-	execute_last_cmd(prg, fd, av_last, i + 1);
+	execute_last_cmd(prg, fd, av_last, prg->cmd_pos + 1);
 	waitpid(-1, NULL, 0);
 	waitpid(-1, NULL, 0);
 	ft_freesplit(av_one);
