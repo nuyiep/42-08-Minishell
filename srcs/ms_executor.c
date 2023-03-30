@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 19:50:19 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 15:55:29 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ int	executor(t_prg *prg)
 {
 	if (prg->no_pipes == 0)
 	{
+		if (!check_syntax(prg->all_token))
+			return (1);
 		single_command(prg);
 		return (1);
 	}

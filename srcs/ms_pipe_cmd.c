@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:58:07 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/29 15:43:04 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 16:28:31 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,19 @@ int	get_no_cmd(t_prg *prg)
 	return (no_cmd + 1);
 }
 
+char	*join_cmd(char *split, char *token)
+{
+	char *temp;
+
+	temp = split;
+	split = ft_strjoin(split, " ");
+	free(temp);
+	temp = split;
+	split = ft_strjoin(split, token);
+	free(temp);
+	return (split);
+}
+
 char	**get_cmd(t_prg *prg)
 {
 	char	**split;
@@ -53,14 +66,12 @@ char	**get_cmd(t_prg *prg)
 		split[i] = ft_strdup(*tokens++);
 		while (*tokens && ft_strncmp(*tokens, "|", 1))
 		{
-			split[i] = ft_strjoin(split[i], " ");
-			split[i] = ft_strjoin(split[i], *tokens);
+			split[i] = join_cmd(split[i], *tokens);
 			tokens++;
 		}
 		tokens++;
 		i++;
 	}
 	split[i] = NULL;
-	// print_cmds(split);
 	return (split);
 }

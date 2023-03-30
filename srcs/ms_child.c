@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_child.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 15:02:43 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 15:57:21 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 	int	pid;
 	int	status;
 
+	if (!check_syntax(av_one))
+		return ;
 	if (check_redirection_builtins(prg, av_one) == 1)
 		return ;
 	pid = fork();
@@ -96,6 +98,8 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 	int	pid;
 	int	status;
 	
+	if (!check_syntax(av_middle))
+		return ;
 	if (check_redirection_builtins(prg, av_middle) == 1)
 		return ;
 	pid = fork();
@@ -119,6 +123,8 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 	int		pid;
 	int		status;
 
+	if (!check_syntax(av_last))
+		return ;
 	if (check_redirection_builtins(prg, av_last) == 1)
 		return ;
 	pid = fork();

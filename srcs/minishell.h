@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 19:48:55 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 15:55:25 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,7 @@ void	free_exp(t_prg *prg, int value);
 
 /* parser */
 char	**remove_all_quotes(t_prg *prg);
+
+int check_syntax(char **av);
 
 #endif
