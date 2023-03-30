@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 21:58:55 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 21:15:57 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	init_envp(t_prg *prg, char **envp);
 int		executor(t_prg *prg);
 int		ms_heredoc(t_prg *prg, char **av);
 void	do_pipex(t_prg *prg);
+char	**get_cmd(t_prg *prg);
 char	*cmd_access(t_prg *prg, char *cmd_zero);
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i);
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i);
@@ -146,5 +147,7 @@ void	free_exp(t_prg *prg, int value);
 
 /* parser */
 char	**remove_all_quotes(t_prg *prg);
+
+int check_syntax(char **av);
 
 #endif

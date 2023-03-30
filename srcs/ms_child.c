@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_child.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 21:35:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 21:24:57 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 	int	pid;
 
 	prg->cmd_pos = i;
+	if (!check_syntax(av_one))
+		return ;
 	if (check_redirection_builtins(prg, av_one, fd) == 1)
 	{
 		waitpid(-1, NULL, -1);
@@ -80,13 +82,11 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 {
 	int	pid;
-
-	prg->cmd_pos = i;
-	if (check_redirection_builtins(prg, av_middle, fd) == 1)
-	{
-		waitpid(-1, NULL, -1);
+	
+	if (!check_syntax(av_middle))
 		return ;
-	}
+	if (check_redirection_builtins(prg, av_middle, fd) == 1)
+		return ;
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
@@ -108,6 +108,8 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 	int		pid;
 
 	prg->cmd_pos = i;
+	if (!check_syntax(av_last))
+		return ;
 	if (check_redirection_builtins(prg, av_last, fd) == 1)
 	{
 		waitpid(-1, NULL, -1);

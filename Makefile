@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
+#    By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/29 18:18:25 by plau             ###   ########.fr        #
+#    Updated: 2023/03/30 21:22:26 by nchoo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +45,15 @@ SRCS_FILES    	=   	ms_main \
 						ms_executor \
 						ms_heredoc \
 						ms_pipe \
+						ms_pipe_cmd \
 						ms_child \
 						ms_redirection \
 						ms_redirection2 \
 						ms_parser \
 						ms_check \
 						ms_variable \
-						ms_executor2
+						ms_executor2 \
+						ms_syntax
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJS        	=     	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS_FILES)))
 SRCS_DIR    	=    	srcs/
@@ -65,10 +67,12 @@ all:
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 				$(CC) $(CFLAGS) -c $< -o $@
+				$(info CREATED $@)
 
 $(NAME):        $(OBJS)
 				$(CC) $(CFLAGS) $^ $(READLINE) -Llibft -lft -o $@
-
+				$(info CREATED $(NAME))
+				
 libft:
 				make -C $(LIBFT_DIR)
 
@@ -83,3 +87,5 @@ fclean:         clean
 re:             fclean all
 
 .PHONY:         all libft clean fclean re
+
+.SILENT:

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_executor2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 17:49:57 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 18:11:46 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 21:32:38 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	executor(t_prg *prg)
 {
 	if (prg->no_pipes == 0)
 	{
+		if (!check_syntax(prg->all_token))
+			return (1);
 		single_command(prg);
 		return (1);
 	}
