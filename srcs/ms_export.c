@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:19:09 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:46:47 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	ms_export(t_prg *prg)
 {
 	char	**pair;
 	int		i;
-	
+
 	ft_printf("%s\n", prg->input);
 	if (prg->all_token[1] == NULL)
 		declare_x(prg);

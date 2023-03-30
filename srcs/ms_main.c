@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 13:41:25 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 21:59:01 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av, char **envp)
 	if (prg.ls_envp)
 		ft_freesplit(prg.ls_envp);
 	ft_printf("BYE BYE\n");
-	// system("leaks -q minishell");
+	system("leaks -q minishell");
 	(void)ac;
 	(void)av;
 }

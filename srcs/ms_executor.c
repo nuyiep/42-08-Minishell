@@ -6,69 +6,11 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:41:35 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 21:57:08 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* Check for cmd access part 2 */
-char	*cmd_access2(t_prg *prg, char *temp, char *av_zero)
-{
-	if (access(temp, X_OK) == 0)
-	{
-		if (prg->no_pipes == 0)
-		{
-			prg->all_token[0] = temp;
-			return (prg->all_token[0]);
-		}
-		else
-		{
-			av_zero = temp;
-			return (av_zero);
-		}
-	}
-	return (NULL);
-}
-
-void	cmd_access3(t_prg *prg, char *av_zero)
-{
-	if (prg->no_pipes == 0)
-	{
-		g_error = 127;
-		error_nl(prg, prg->all_token[0]);
-	}
-	else
-	{
-		g_error = 127;
-		error_nl(prg, av_zero);
-	}
-}
-
-/* Check cmd access */
-char	*cmd_access(t_prg *prg, char *av_zero)
-{
-	int		j;
-	char	*temp;
-	char	*results;
-
-	j = 0;
-	while (j < prg->npath)
-	{
-		temp = ft_strjoin(prg->path[j], "/");
-		if (prg->no_pipes == 0)
-			temp = ft_strjoin(temp, prg->all_token[0]);
-		else
-			temp = ft_strjoin(temp, av_zero);
-		results = cmd_access2(prg, temp, av_zero);
-		if (results != NULL)
-			return (results);
-		j++;
-		free(temp);
-	}
-	cmd_access3(prg, av_zero);
-	return (NULL);
-}
 
 /* dup2(temp_fd, 0) - redirects the stdin of the current process */
 /*						to temp_fd */
@@ -102,8 +44,8 @@ void	sigint_handler_cat(int signum)
 /* Just to execute one command */
 int	single_command(t_prg *prg)
 {
-	int		status;
-	struct 	sigaction sa;
+	int					status;
+	struct sigaction	sa;
 
 	if (fork() == 0)
 	{

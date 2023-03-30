@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ms_syntax.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:49:27 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/30 21:25:21 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 22:05:49 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int check_syntax(char **av)
+int	check_syntax(char **av)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	while (av[i])
@@ -27,8 +27,8 @@ int check_syntax(char **av)
 			{
 				if (!av[i + 1])
 				{
-					g_error = 268;
-					ft_printf("syntax error near unexpected token 'newline'\n");
+					g_error = 258;
+					ft_printf("syntax error near unexpected token `newline'\n");
 					return (0);
 				}
 			}

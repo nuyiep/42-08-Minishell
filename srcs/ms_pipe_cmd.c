@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 14:58:07 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/30 16:28:31 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:47:23 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	get_no_cmd(t_prg *prg)
 
 char	*join_cmd(char *split, char *token)
 {
-	char *temp;
+	char	*temp;
 
 	temp = split;
 	split = ft_strjoin(split, " ");

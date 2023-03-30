@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:15:57 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:45:21 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,6 @@ void	free_exp(t_prg *prg, int value);
 /* parser */
 char	**remove_all_quotes(t_prg *prg);
 
-int check_syntax(char **av);
+int		check_syntax(char **av);
 
 #endif
