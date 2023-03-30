@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 16:17:47 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:21:03 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,81 +21,92 @@ int	ft_execute_redirection(int infile, char **envp, t_prg *prg, char **av)
 	char	*av_zero;
 
 	av_zero = NULL;
-	dup2(infile, STDOUT_FILENO);
-	close(infile);
 	if ((ft_strncmp(av[0], "/", 1) != 0))
 	{
 		get_path(prg, prg->ls_envp);
 		find_npath(prg);
 		av_zero = cmd_access(prg, av[0]);
 	}
+	dup2(infile, STDOUT_FILENO);
+	close(infile);
 	execve(av_zero, prg->av_execve, envp);
 	error_nl(prg, av_zero);
 	return (1);
 }
 
-void	execute_single_command(t_prg *prg, char **envp, int file, char **av)
+void	wait_redirection(void)
 {
-	if (fork() == 0)
-	{
-		if (ft_execute_redirection(file, envp, prg, av))
-			return ;
-	}
-	else
-	{
-		close(file);
-		while (waitpid(-1, NULL, 0) != -1)
-			;
-	}
-	return ;
+	int	status;
+
+	waitpid(0, &status, WUNTRACED);
+	if (WIFEXITED(status))
+		g_error = (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		g_error = 130;
 }
 
+/* pwd >> file.txt - redirect append */
 void	redirect_append(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
 	infile = open(av[i], O_WRONLY | O_APPEND | O_CREAT, 0644);
-	if (infile == -1)
+	if (fork() == 0)
 	{
-		exit_code = 2;
-		error_nl(prg, "unable to open file");
+		if (infile == -1)
+		{
+			g_error = 2;
+			error_nl(prg, prg->all_token[i]);
+		}
+		prg->av_execve = NULL;
+		prg->av_execve = av;
+		free(prg->av_execve[i]);
+		free(prg->av_execve[i - 1]);
+		prg->av_execve[i - 1] = NULL;
+		if (ft_execute_redirection(infile, prg->ls_envp, prg, av))
+			return ;
 	}
-	prg->av_execve = NULL;
-	prg->av_execve = av;
-	free(prg->av_execve[i]);
-	free(prg->av_execve[i - 1]);
-	prg->av_execve[i - 1] = NULL;
-	execute_single_command(prg, prg->ls_envp, infile, av);
+	else
+		wait_redirection();
 }
 
-/* ls > ls.txt */
+/* ls > ls.txt - redirect input */
 void	redirect_input(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
 	infile = open(av[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	if (infile == -1)
+	if (fork() == 0)
 	{
-		exit_code = 2;
-		error_nl(prg, "unable to open file");
+		if (infile == -1)
+		{
+			g_error = 1;
+			error_nl(prg, prg->all_token[i]);
+		}
+		prg->av_execve = av;
+		free(prg->av_execve[i]);
+		free(prg->av_execve[i - 1]);
+		prg->av_execve[i - 1] = NULL;
+		if (ft_execute_redirection(infile, prg->ls_envp, prg, av))
+			return ;
 	}
-	prg->av_execve = av;
-	free(prg->av_execve[i]);
-	free(prg->av_execve[i - 1]);
-	prg->av_execve[i - 1] = NULL;
-	execute_single_command(prg, prg->ls_envp, infile, av);
+	else
+		wait_redirection();
 }
 
 /* Main function for redirections */
 /* Examples */
-/* pwd >> file.txt */
-/* ls > file.txt */
-/* cat < file.txt */
+/* pwd >> file.txt - redirect append */
+/* ls > file.txt - redirect input */
+/* cat < file.txt -redirect output */
 int	redirections(t_prg *prg)
 {
 	int	i;
+	int	**fd;
 
 	i = 0;
+	prg->cmd_pos = 0;
+	fd = NULL;
 	while (prg->all_token[i] != NULL && (prg->all_token[i + 1] != NULL))
 	{
 		if (ft_strcmp(prg->all_token[i], ">>") == 0)
@@ -109,10 +120,7 @@ int	redirections(t_prg *prg)
 			return (1);
 		}
 		else if (ft_strcmp(prg->all_token[i], "<") == 0)
-		{
-			redirect_output(prg, i + 1, prg->all_token);
-			return (1);
-		}
+			return (redirect_output(prg, i + 1, prg->all_token, fd));
 		i++;
 	}
 	return (0);

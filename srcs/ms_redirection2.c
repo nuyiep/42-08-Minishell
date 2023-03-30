@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redirection2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 15:31:51 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:21:22 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,42 +36,55 @@ int	ft_execute_redirection_output(t_prg *prg, int i, char **av)
 	{
 		if (k == i - 1)
 			k++;
-		prg->av_execve[j] = av[k];
-		j++;
-		k++;
+		prg->av_execve[j++] = av[k++];
 	}
 	prg->av_execve[j] = NULL;
 	execve(av_zero, prg->av_execve, prg->ls_envp);
+	error_nl(prg, av_zero);
 	return (1);
 }
 
-void	execute_command_output(t_prg *prg, int outfile, int i, char **av)
+void	redirect_output2(t_prg *prg, int i, int **fd, char **av)
 {
-	if (fork() == 0)
+	if (prg->cmd_pos != prg->no_pipes)
 	{
+		dup2(fd[prg->cmd_pos][1], STDOUT_FILENO);
+		close_pipes(fd);
 		if (ft_execute_redirection_output(prg, i, av))
 			error_nl(prg, "Redirection_output");
 	}
 	else
 	{
-		close(outfile);
-		while (waitpid(-1, NULL, 0) != -1)
-			;
+		if (ft_execute_redirection_output(prg, i, av))
+			error_nl(prg, "Redirection_output");
 	}
-	return ;
 }
 
 /* cat < Makefile */
-int	redirect_output(t_prg *prg, int i, char **av)
+/* Only print out the last command, the rest store in pipe */
+int	redirect_output(t_prg *prg, int i, char **av, int **fd)
 {
 	int	outfile;
+	int	status;
 
-	outfile = open(prg->all_token[i], O_RDONLY, 0644);
-	if (outfile == -1)
+	outfile = open(av[i], O_RDONLY, 0644);
+	if (fork() == 0)
 	{
-		exit_code = 2;
-		error_nl(prg, "unable to open file");
+		if (outfile == -1)
+		{
+			g_error = 1;
+			error_nl(prg, prg->all_token[i]);
+		}
+		redirect_output2(prg, i, fd, av);
 	}
-	execute_command_output(prg, outfile, i, av);
+	else
+	{
+		close(outfile);
+		waitpid(-1, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			g_error = (WEXITSTATUS(status));
+		if (WIFSIGNALED(status))
+			g_error = 130;
+	}
 	return (1);
 }

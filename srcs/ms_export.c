@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 18:03:58 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:19:09 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ void	ms_export(t_prg *prg)
 			pair = separate_key_value(prg->all_token[i]);
 			if (pair[0][0] != 95 && (pair[0][0] < 65 || pair[0][0] > 122))
 			{
-				printf("export: `%s': not a valid identifier\n", pair[0]);		
-				exit_code = 1;
+				printf("export: `%s': not a valid identifier\n", pair[0]);
+				g_error = 1;
 			}
 			if (key_exist(prg, pair[0]))
 				update_key(prg, prg->all_token[i], pair[0]);

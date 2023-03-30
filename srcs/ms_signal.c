@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 13:45:41 by plau              #+#    #+#             */
-/*   Updated: 2023/03/23 21:03:09 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 14:26:05 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	g_error = 1;
 }
 
 /* Tcgetattr- Retrieve the current terminal attributes */

@@ -6,39 +6,11 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 15:57:21 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:24:57 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* Close pipes for each child process */
-void	close_pipes(int **fd)
-{
-	int	i;
-
-	i = -1;
-	while (fd[++i])
-	{
-		close(fd[i][0]);
-		close(fd[i][1]);
-		free(fd[i]);
-	}
-	free(fd);
-}
-
-/* Close pipes for all parent process only at the end */
-void	close_last(int **fd)
-{
-	int	i;
-
-	i = -1;
-	while (fd[++i])
-	{
-		close(fd[i][0]);
-		close(fd[i][1]);
-	}
-}
 
 /* Finds the PATH where the command is located */
 /* and executes it. Process ends when execve is successful */
@@ -53,6 +25,17 @@ void	run_process(t_prg *prg, char **av)
 	}
 	execve(av[0], av, prg->ls_envp);
 	error_nl(prg, av[0]);
+}
+
+void	wait_function(void)
+{
+	int	status;
+
+	waitpid(0, &status, -1);
+	if (WIFEXITED(status))
+		g_error = (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		g_error = 130;
 }
 
 /* SIGINT - CONTROL C */
@@ -72,12 +55,15 @@ void	run_process(t_prg *prg, char **av)
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 {
 	int	pid;
-	int	status;
 
+	prg->cmd_pos = i;
 	if (!check_syntax(av_one))
 		return ;
-	if (check_redirection_builtins(prg, av_one) == 1)
+	if (check_redirection_builtins(prg, av_one, fd) == 1)
+	{
+		waitpid(-1, NULL, -1);
 		return ;
+	}
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
@@ -90,17 +76,16 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 		run_process(prg, av_one);
 	}
 	else
-		waitpid(0, &status, -1);
+		wait_function();
 }
 
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 {
 	int	pid;
-	int	status;
 	
 	if (!check_syntax(av_middle))
 		return ;
-	if (check_redirection_builtins(prg, av_middle) == 1)
+	if (check_redirection_builtins(prg, av_middle, fd) == 1)
 		return ;
 	pid = fork();
 	if (pid < 0)
@@ -115,18 +100,21 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 		run_process(prg, av_middle);
 	}
 	else
-		waitpid(0, &status, -1);
+		wait_function();
 }
 
 void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 {
 	int		pid;
-	int		status;
 
+	prg->cmd_pos = i;
 	if (!check_syntax(av_last))
 		return ;
-	if (check_redirection_builtins(prg, av_last) == 1)
+	if (check_redirection_builtins(prg, av_last, fd) == 1)
+	{
+		waitpid(-1, NULL, -1);
 		return ;
+	}
 	pid = fork();
 	if (pid < 0)
 		error_nl(prg, "Fork process");
@@ -140,7 +128,7 @@ void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 	}
 	else
 	{
-		waitpid(0, &status, -1);
+		wait_function();
 		close_last(fd);
 	}
 }

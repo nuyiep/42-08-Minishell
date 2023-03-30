@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/03/30 21:09:12 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:23:58 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // {
 // 	char **tokens;
 // 	int i = 1;
-	
+// 
 // 	tokens = prg->all_token;
 // 	if (!*tokens)
 // 		ft_printf("error");
@@ -105,9 +105,9 @@ void	free_all(t_prg *prg)
 /* 		>> 		redirect output append */
 void	shell_loop(t_prg *prg, char **envp)
 {
-	int			value;
+	int	value;
 
-	exit_code = 0;
+	g_error = 0;
 	value = 0;
 	while (1)
 	{

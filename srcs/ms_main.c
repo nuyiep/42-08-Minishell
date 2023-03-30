@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/27 15:32:07 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 13:41:25 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_prg	prg;
 
+	g_error = 0;
 	init_struct(&prg);
 	init_envp(&prg, envp);
 	shell_loop(&prg, prg.ls_envp);

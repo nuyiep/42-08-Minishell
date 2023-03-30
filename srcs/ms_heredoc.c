@@ -6,11 +6,22 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:44:45 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 12:09:10 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/29 21:35:42 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	wait_heredoc(void)
+{
+	int	status;
+
+	waitpid(0, &status, WUNTRACED);
+	if (WIFEXITED(status))
+		g_error = (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+		g_error = 130;
+}
 
 void	execute_heredoc(t_prg *prg)
 {
@@ -35,8 +46,7 @@ void	execute_heredoc(t_prg *prg)
 		error_nl(prg, prg->all_token[0]);
 	}
 	else
-		while (waitpid(-1, NULL, 0) != -1)
-			;
+		wait_heredoc();
 	free(empty_str);
 }
 

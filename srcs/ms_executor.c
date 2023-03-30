@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 15:55:29 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:29:49 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ char	*cmd_access2(t_prg *prg, char *temp, char *av_zero)
 	return (NULL);
 }
 
+void	cmd_access3(t_prg *prg, char *av_zero)
+{
+	if (prg->no_pipes == 0)
+	{
+		g_error = 127;
+		error_nl(prg, prg->all_token[0]);
+	}
+	else
+	{
+		g_error = 127;
+		error_nl(prg, av_zero);
+	}
+}
+
 /* Check cmd access */
 char	*cmd_access(t_prg *prg, char *av_zero)
 {
@@ -52,13 +66,7 @@ char	*cmd_access(t_prg *prg, char *av_zero)
 		j++;
 		free(temp);
 	}
-	if (prg->no_pipes == 0)
-	{
-		exit_code = 127;
-		error_nl(prg, prg->all_token[0]);
-	}
-	else
-		error_nl(prg, av_zero);
+	cmd_access3(prg, av_zero);
 	return (NULL);
 }
 
@@ -85,47 +93,36 @@ int	ft_execute(t_prg *prg)
 	return (1);
 }
 
+void	sigint_handler2(int signum)
+{
+	ft_printf("^C\n");
+	(void)signum;
+}
+
 /* Just to execute one command */
 int	single_command(t_prg *prg)
 {
-	int	temp_fd;
-	int status;
-	
-	temp_fd = dup(0);
+	int		status;
+	struct 	sigaction sa;
+
 	if (fork() == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (ft_execute(prg))
-			return (2);
+		ft_execute(prg);
 	}
 	else
 	{
-		signal(SIGINT, SIG_IGN);
-		close(temp_fd);
-		while (waitpid(0, &status, 0) != -1)
-			;
-		if (status == 256)
-			exit_code = 127;
-		temp_fd = dup(0);
+		sa.sa_handler = sigint_handler2;
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = SA_RESTART;
+		sigaction(SIGINT, &sa, NULL);
+		waitpid(0, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			g_error = (WEXITSTATUS(status));
+		if (WIFSIGNALED(status))
+			g_error = 130;
+		waitpid(-1, NULL, 0);
 	}
-	return (0);
-}
-
-/* Main function for executor */
-/* If only one command, just execute using ft_execute */
-/* Else, do_pipex */
-/* temp_fd = dup(0) - Save stdin 0 to temp_fd */
-/* fd[2] - create an empty fd[0] and fd[1] */
-int	executor(t_prg *prg)
-{
-	if (prg->no_pipes == 0)
-	{
-		if (!check_syntax(prg->all_token))
-			return (1);
-		single_command(prg);
-		return (1);
-	}
-	do_pipex(prg);
 	return (0);
 }

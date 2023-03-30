@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 15:55:25 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:15:57 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 	pipex
 */
 
-/* Global errno is defined here */
-int exit_code;
+/* Global error is defined here */
+int	g_error;
 
 /**
  * quote:
@@ -64,6 +64,7 @@ typedef struct s_prg
 	int		heredoc;
 	int		heredoc_postion;
 	char	**av_execve;
+	int		cmd_pos;
 }	t_prg;
 
 /* Initialization */
@@ -82,13 +83,14 @@ char	*cmd_access(t_prg *prg, char *cmd_zero);
 void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i);
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i);
 void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i);
-int		check_redirection_builtins(t_prg *prg, char **av);
+int		check_redirection_builtins(t_prg *prg, char **av, int **fd);
 void	get_path(t_prg *prg, char **envp);
 void	find_npath(t_prg *prg);
+int		single_command(t_prg *prg);
 
 /* Redirection */
 int		redirections(t_prg *prg);
-int		redirect_output(t_prg *prg, int i, char **av);
+int		redirect_output(t_prg *prg, int i, char **av, int **fd);
 void	redirect_append(t_prg *prg, int i, char **av);
 void	redirect_input(t_prg *prg, int i, char **av);
 
@@ -110,12 +112,14 @@ void	ms_exit(t_prg *prg);
 
 /* Helper functions */
 void	error_nl(t_prg *prg, char *str);
+void	close_pipes(int **fd);
+void	close_last(int **fd);
 
 /* Nicholas */
 
 /* variables */
-int find_var(char *token, char *var);
-void get_value(t_prg *prg, char *key);
+int		find_var(char *token, char *var);
+void	get_value(t_prg *prg, char *key);
 
 /* lexer_utils */
 int		has_pair_first(char *s);
@@ -133,7 +137,7 @@ char	*copy_quoted(char *s, char ***tab, int *check);
 char	*check_first_quote(char *s, char ***tab, int *check);
 
 /* expand */
-int 	is_question(t_prg *prg, char *key);
+int		is_question(t_prg *prg, char *key);
 int		has_value(t_prg *prg, char *key, int i);
 char	**expand_tokens(t_prg *prg);
 char	*get_var(char *token, int i);

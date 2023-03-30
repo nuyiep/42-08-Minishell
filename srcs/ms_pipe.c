@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 17:27:30 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/30 21:20:08 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,17 @@ void	one_pipe(t_prg *prg, char **split, int **fd, int no_cmds)
 	av_one = NULL;
 	av_last = NULL;
 	i = 0;
+	prg->cmd_pos = i;
 	av_one = ft_split(split[0], ' ');
-	execute_first_cmd(prg, fd, av_one, i);
+	execute_first_cmd(prg, fd, av_one, prg->cmd_pos);
 	prg->av_execve = NULL;
 	av_last = ft_split(split[no_cmds - 1], ' ');
-	execute_last_cmd(prg, fd, av_last, i + 1);
+	execute_last_cmd(prg, fd, av_last, prg->cmd_pos + 1);
 	waitpid(-1, NULL, 0);
 	waitpid(-1, NULL, 0);
 	ft_freesplit(av_one);
 	ft_freesplit(av_last);
 	ft_freesplit(split);
-	free(fd[0]);
-	free(fd);
 }
 
 void	multiple_pipes(t_prg *prg, int **fd, int no_cmds, char **split)
