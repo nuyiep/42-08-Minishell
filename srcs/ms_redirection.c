@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 21:57:02 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 13:41:17 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	redirect_append(t_prg *prg, int i, char **av)
 void	redirect_input(t_prg *prg, int i, char **av)
 {
 	int	infile;
-	int	status;
 
 	infile = open(av[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fork() == 0)
