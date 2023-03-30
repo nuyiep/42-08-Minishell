@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/29 21:35:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 15:05:34 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,17 @@ int	ft_execute(t_prg *prg)
 	return (1);
 }
 
+void	sigint_handler2(int signum)
+{
+	ft_printf("^C\n");
+	(void)signum;
+}
+
 /* Just to execute one command */
 int	single_command(t_prg *prg)
 {
-	int	status;
+	int		status;
+	struct 	sigaction sa;
 
 	if (fork() == 0)
 	{
@@ -106,6 +113,10 @@ int	single_command(t_prg *prg)
 	}
 	else
 	{
+		sa.sa_handler = sigint_handler2;
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = SA_RESTART;
+		sigaction(SIGINT, &sa, NULL);
 		waitpid(0, &status, WUNTRACED);
 		if (WIFEXITED(status))
 			g_error = (WEXITSTATUS(status));
