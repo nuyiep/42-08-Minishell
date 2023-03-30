@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:15:57 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 01:30:31 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int		find_var(char *token, char *var);
 void	get_value(t_prg *prg, char *key);
 
 /* lexer_utils */
-int		has_pair_first(char *s);
+int		has_pair_first(char *s, int i);
 int		has_pair(char *s);
 int		has_operators(char c, char *op);
 

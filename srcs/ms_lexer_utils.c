@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 00:50:42 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/28 19:44:38 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 01:33:41 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,19 @@ int	has_operators(char c, char *op)
 	return (0);
 }
 
-int	has_pair_first(char *s)
+int	has_pair_first(char *s, int i)
 {
 	char	*temp;
 	char	pair;
-	int		i;
 
-	i = 1;
 	temp = s;
-	pair = *temp;
-	temp++;
-	while (*temp)
+	pair = temp[i];
+	i++;
+	while (temp[i])
 	{
-		if (*temp == pair)
+		if (temp[i] == pair)
 			return (i + 1);
 		i++;
-		temp++;
 	}
 	return (0);
 }

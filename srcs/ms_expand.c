@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 16:49:28 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/28 19:50:37 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 01:33:55 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	**expand_tokens(t_prg *prg)
 		{
 			if (token[i] == '\'')
 			{
-				if (has_pair_first(token))
+				if (has_pair_first(token, i))
 					break ;
 			}
 			if (token[i] == '$')
