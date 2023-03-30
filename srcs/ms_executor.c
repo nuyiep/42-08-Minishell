@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 15:05:34 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 21:12:16 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	ft_execute(t_prg *prg)
 	return (1);
 }
 
-void	sigint_handler2(int signum)
+void	sigint_handler_cat(int signum)
 {
 	ft_printf("^C\n");
 	(void)signum;
@@ -113,7 +113,7 @@ int	single_command(t_prg *prg)
 	}
 	else
 	{
-		sa.sa_handler = sigint_handler2;
+		sa.sa_handler = sigint_handler_cat;
 		sigemptyset(&sa.sa_mask);
 		sa.sa_flags = SA_RESTART;
 		sigaction(SIGINT, &sa, NULL);
