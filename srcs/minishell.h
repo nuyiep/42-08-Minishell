@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 14:37:35 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 16:33:35 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	shell_loop(t_prg *prg, char **envp, int value);
 void	setup_signal(void);
 int		read_command(t_prg *prg);
 void	init_envp(t_prg *prg, char **envp);
+void	init_exp(t_prg *prg);
 
 /* Executor */
 int		executor(t_prg *prg);

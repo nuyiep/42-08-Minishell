@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_shell_loop.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 12:53:03 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 15:13:54 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 16:34:00 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	shell_loop(t_prg *prg, char **envp, int value)
 		setup_signal();
 		if (prg->input)
 			free_all(prg);
+		init_exp(prg);
 		init_struct(prg);
 		value = read_command(prg);
 		if (value == -1)
@@ -124,7 +125,9 @@ void	shell_loop(t_prg *prg, char **envp, int value)
 			else if (builtins(prg, envp, prg->all_token))
 				;
 			else if (executor(prg) == 0)
+			{
 				;
+			}
 		}
 		else
 			executor(prg);

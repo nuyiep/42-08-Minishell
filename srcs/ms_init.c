@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 15:23:34 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 16:34:10 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	init_envp(t_prg *prg, char **envp)
 	prg->ls_envp[i] = NULL;
 }
 
-static void	init_exp(t_prg *prg)
+void	init_exp(t_prg *prg)
 {
 	prg->exp = malloc(sizeof(t_exp));
 	prg->exp->pair = NULL;
 	prg->exp->key = NULL;
-	// prg->exp->value = ft_strdup(" ");
+	prg->exp->value = NULL;
 }
 
 /* To get the "PATH=" line from env */
@@ -70,7 +70,6 @@ void	find_npath(t_prg *prg)
 /* Initialize struct */
 void	init_struct(t_prg *prg)
 {
-	init_exp(prg);
 	prg->input = 0;
 	prg->all_token = NULL;
 	prg->no_pipes = 0;

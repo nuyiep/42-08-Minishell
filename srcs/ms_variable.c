@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_variable.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 17:17:47 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/31 15:23:26 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 16:38:10 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 void	assign_value(t_prg *prg, char *key, int i)
 {
-	char	**save_state;
-	char	***pair;
+	char	**pair;
 
-	save_state = prg->exp->pair;
-	pair = &prg->exp->pair;
-	pair[0] = ft_split(prg->ls_envp[i], '=');
+	pair = prg->exp->pair;
+	pair = ft_split(prg->ls_envp[i], '=');
 	if (prg->exp->key)
 		free(prg->exp->key);
 	prg->exp->key = ft_strdup(key);
-	if (pair[0][1])
+	if (pair[1])
 	{
 		if (prg->exp->value)
 			free(prg->exp->value);
-		prg->exp->value = ft_strdup(pair[0][1]);
+		prg->exp->value = ft_strdup(pair[1]);
 
 	}
-	prg->exp->pair = save_state;
+	ft_freesplit(pair);
 }
 
 void	assign_empty(t_prg *prg, char *key)
 {
+	if (prg->exp->key)
+		free(prg->exp->key);
 	prg->exp->key = ft_strdup(key);
 	if (prg->exp->value)
 		free(prg->exp->value);
