@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:16:07 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/31 01:43:55 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 13:00:06 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,28 @@
 // 	}
 // }
 
-void    remove_quote(char *str) 
+void	remove_quote(char *str)
 {
-    char    buffer[ft_strlen(str) + 1];
-    char    *src;
-    char    *dst;
-    size_t  dst_size;
+	char	buffer[ft_strlen(str) + 1];
+	char	*src;
+	char	*dst;
+	size_t	dst_size;
 
-    src = str;
-    dst = buffer;
-    dst_size = sizeof(buffer);
-    while (*src && dst_size > 1) 
-    {
-        if (*src != '\"' && *src != '\'') 
-        {
-            *dst++ = *src++;
-            dst_size--;
-        }
-        else
-            src++;
-    }
-    *dst = '\0';
-    ft_strlcpy(str, buffer, ft_strlen(str) + 1);
+	src = str;
+	dst = buffer;
+	dst_size = sizeof(buffer);
+	while (*src && dst_size > 1)
+	{
+		if (*src != '\"' && *src != '\'')
+		{
+			*dst++ = *src++;
+			dst_size--;
+		}
+		else
+			src++;
+	}
+	*dst = '\0';
+	ft_strlcpy(str, buffer, ft_strlen(str) + 1);
 }
 
 /*

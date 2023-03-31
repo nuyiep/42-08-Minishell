@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 12:51:31 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 13:14:03 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char	**separate_key_value(char *arg);
 void	add_key(t_prg *prg, char *str);
 void	unset(t_prg *prg);
 void	ms_exit(t_prg *prg);
+void	bubble_sort(char **envp, int j, int k);
 
 /* Helper functions */
 void	error_nl(t_prg *prg, char *str);

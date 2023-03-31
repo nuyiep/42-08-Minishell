@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:25 by plau              #+#    #+#             */
-/*   Updated: 2023/03/22 16:19:52 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 13:13:26 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,28 @@ void	add_key(t_prg *prg, char *str)
 	new_envp[j] = 0;
 	//ft_freesplit(prg->ls_envp);
 	prg->ls_envp = new_envp;
+}
+
+/* Bubble sort */
+void	bubble_sort(char **envp, int j, int k)
+{
+	char	*smaller;
+	int		i;
+
+	while (j < k - 1)
+	{
+		i = 0;
+		while (i < k - 1)
+		{
+			if (ft_strcmp(envp[i], envp[i + 1]) > 0)
+			{
+				smaller = envp[i + 1];
+				envp[i + 1] = envp[i];
+				envp[i] = smaller;
+			}
+			else
+				i++;
+		}
+		j++;
+	}
 }
