@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_variable.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 17:17:47 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/31 16:45:54 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 17:24:37 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@ void	assign_value(t_prg *prg, char *key, int i)
 		free(prg->exp->key);
 	prg->exp->key = ft_strdup(key);
 	if (pair[1])
-	if (pair[1])
 	{
 		if (prg->exp->value)
 			free(prg->exp->value);
 		prg->exp->value = ft_strdup(pair[1]);
-
 	}
 	ft_freesplit(pair);
 }

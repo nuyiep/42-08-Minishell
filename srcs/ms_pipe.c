@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 17:07:06 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 17:26:40 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	wait_free(int no_cmds, t_prg *prg, int **fd);
+void	wait_free(int no_cmds, int **fd);
 
 int	**make_pipes(t_prg *prg)
 {
@@ -51,7 +51,7 @@ void	one_pipe(t_prg *prg, char **split, int **fd, int no_cmds)
 	ft_freesplit(av_one);
 	ft_freesplit(av_last);
 	ft_freesplit(split);
-	wait_free(2,prg, fd);
+	wait_free(2, fd);
 }
 
 void	multiple_pipes(t_prg *prg, int **fd, int no_cmds, char **split)
@@ -80,7 +80,7 @@ void	multiple_pipes(t_prg *prg, int **fd, int no_cmds, char **split)
 	ft_freesplit(av_last);
 }
 
-void	wait_free(int no_cmds, t_prg *prg, int **fd)
+void	wait_free(int no_cmds, int **fd)
 {
 	int	i;
 
@@ -96,7 +96,6 @@ void	wait_free(int no_cmds, t_prg *prg, int **fd)
 		free(fd[i]);
 		i++;
 	}
-	(void)prg;
 	free(fd);
 }
 
@@ -128,5 +127,5 @@ void	do_pipex(t_prg *prg)
 	else
 		multiple_pipes(prg, fd, no_cmds, split);
 	ft_freesplit(split);
-	wait_free(no_cmds, prg, fd);
+	wait_free(no_cmds, fd);
 }

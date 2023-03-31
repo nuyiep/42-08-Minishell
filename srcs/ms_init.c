@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 16:44:12 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 17:22:20 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,9 @@ void	find_npath(t_prg *prg)
 	prg->npath = k;
 }
 
-/* Initialize struct */
-void	init_struct(t_prg *prg)
+/* Init struct 2- with init exp - To comply with norminette */
+void	init_with_exp(t_prg *prg)
 {
-	prg->input = 0;
-	prg->all_token = NULL;
-	prg->no_pipes = 0;
-	prg->heredoc = 0;
-	prg->heredoc_postion = 0;
-	prg->av_execve = NULL;
-	prg->npath = 0;
-	prg->path = NULL;
-	prg->cmd_pos = -1;
+	init_exp(prg);
+	init_struct(prg);
 }

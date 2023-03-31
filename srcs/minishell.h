@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 16:33:35 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 17:27:22 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ typedef struct s_prg
 }	t_prg;
 
 /* Initialization */
-void	init_struct(t_prg *prg);
 void	shell_loop(t_prg *prg, char **envp, int value);
 void	setup_signal(void);
 int		read_command(t_prg *prg);
 void	init_envp(t_prg *prg, char **envp);
-void	init_exp(t_prg *prg);
+void	init_with_exp(t_prg *prg);
+void	init_struct(t_prg *prg);
 
 /* Executor */
 int		executor(t_prg *prg);

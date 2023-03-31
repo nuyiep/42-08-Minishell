@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 16:34:33 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 17:25:20 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* Initialize struct */
+void	init_struct(t_prg *prg)
+{
+	prg->input = 0;
+	prg->all_token = NULL;
+	prg->no_pipes = 0;
+	prg->heredoc = 0;
+	prg->heredoc_postion = 0;
+	prg->av_execve = NULL;
+	prg->npath = 0;
+	prg->path = NULL;
+	prg->cmd_pos = -1;
+}
 
 /* Start of the main function */
 int	main(int ac, char **av, char **envp)
@@ -22,7 +36,6 @@ int	main(int ac, char **av, char **envp)
 	value = 0;
 	init_struct(&prg);
 	init_envp(&prg, envp);
-	
 	shell_loop(&prg, prg.ls_envp, value);
 	if (prg.ls_envp)
 		ft_freesplit(prg.ls_envp);
@@ -30,5 +43,5 @@ int	main(int ac, char **av, char **envp)
 	free_exp(&prg);
 	(void)ac;
 	(void)av;
-	// system("leaks -q minishell");
+	system("leaks -q minishell");
 }
