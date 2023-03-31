@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_main.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 12:45:12 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 14:46:37 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int ac, char **av, char **envp)
 	if (prg.ls_envp)
 		ft_freesplit(prg.ls_envp);
 	ft_printf("BYE BYE\n");
-	system("leaks -q minishell");
+	// system("leaks -q minishell");
 	(void)ac;
 	(void)av;
 }

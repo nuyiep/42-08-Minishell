@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_shell_loop.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 12:53:03 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 12:53:22 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 14:47:03 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	parsing(t_prg *prg)
 		return (1);
 	prg->all_token = expand_tokens(prg);
 	prg->all_token = remove_all_quotes(prg);
-	//print_tokens(prg);
 	count_pipe_n_heredoc(prg);
 	return (0);
 }
@@ -95,7 +94,7 @@ void	free_all(t_prg *prg)
 		ft_freesplit(prg->path);
 	if (prg->input)
 		free(prg->input);
-	free_exp(prg, 0);
+	free_exp(prg);
 }
 
 /* Main function for shell loop */

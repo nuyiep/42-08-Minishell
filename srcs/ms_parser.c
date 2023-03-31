@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:16:07 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/31 13:00:06 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 14:43:52 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@
 
 void	remove_quote(char *str)
 {
-	char	buffer[ft_strlen(str) + 1];
+	char	*buffer;
 	char	*src;
 	char	*dst;
 	size_t	dst_size;
 
+	buffer = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	src = str;
 	dst = buffer;
 	dst_size = sizeof(buffer);
@@ -55,6 +56,7 @@ void	remove_quote(char *str)
 	}
 	*dst = '\0';
 	ft_strlcpy(str, buffer, ft_strlen(str) + 1);
+	free(buffer);
 }
 
 /*

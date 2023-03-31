@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 13:14:03 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 14:37:35 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ char	**expand_tokens(t_prg *prg);
 char	*get_var(char *token, int i);
 
 /* free */
-void	free_exp(t_prg *prg, int value);
+void	free_exp(t_prg *prg);
 
 /* parser */
 char	**remove_all_quotes(t_prg *prg);
