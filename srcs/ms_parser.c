@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:16:07 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/31 14:43:52 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 17:42:57 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	remove_quote(char *str)
 	src = str;
 	dst = buffer;
 	dst_size = sizeof(buffer);
-	while (*src && dst_size > 1)
+	while (*src && dst_size >= 1)
 	{
 		if (*src != '\"' && *src != '\'')
 		{

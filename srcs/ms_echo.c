@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:27:26 by plau              #+#    #+#             */
-/*   Updated: 2023/03/11 16:23:07 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 18:10:53 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	echo(t_prg *prg, char **input)
 	}
 	if (check_flag(input[1]) == 0)
 		ft_printf("\n");
+	g_error = 0;
 }
 	/*
 		check if echo command
