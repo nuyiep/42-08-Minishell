@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 15:29:40 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/29 21:35:42 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 15:04:45 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ int	is_question(t_prg *prg, char *key)
 {
 	if (!ft_strncmp(key, "?", 1))
 	{
+		if (prg->exp->key)
+			free(prg->exp->key);
+		if (prg->exp->value)
+			free(prg->exp->value);
 		prg->exp->key = ft_strdup("?");
 		prg->exp->value = ft_itoa(g_error);
 		return (1);

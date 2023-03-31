@@ -6,7 +6,7 @@
 #    By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/03/31 14:32:09 by nchoo            ###   ########.fr        #
+#    Updated: 2023/03/31 15:03:07 by nchoo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ RM            	=    	rm -f
 CFLAGS       	=    	-Wall -Wextra -Werror
 CFLAGS		    +=		-I/usr/local/opt/readline/include
 # CFLAGS			+=		-I/opt/homebrew/opt/readline/include
-CFLAGS       	+=    	-fsanitize=address -g3
+# CFLAGS       	+=    	-fsanitize=address -g3
 READLINE		=		-lreadline
 READLINE		+=		-L/usr/local/opt/readline/lib
 # READLINE		+=		-L/opt/homebrew/opt/readline/lib

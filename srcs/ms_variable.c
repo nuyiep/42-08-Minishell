@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_variable.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
+/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 17:17:47 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/29 21:57:23 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 15:23:26 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ void	assign_value(t_prg *prg, char *key, int i)
 	if (pair[0][1])
 	{
 		if (prg->exp->value)
-		{
 			free(prg->exp->value);
-			prg->exp->value = ft_strdup(pair[0][1]);
-		}
+		prg->exp->value = ft_strdup(pair[0][1]);
+
 	}
 	prg->exp->pair = save_state;
 }
@@ -38,10 +37,8 @@ void	assign_empty(t_prg *prg, char *key)
 {
 	prg->exp->key = ft_strdup(key);
 	if (prg->exp->value)
-	{
 		free(prg->exp->value);
-		prg->exp->value = ft_strdup(" ");
-	}
+	prg->exp->value = ft_strdup(" ");
 }
 
 int	find_var(char *token, char *var)

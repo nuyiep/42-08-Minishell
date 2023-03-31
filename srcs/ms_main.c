@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 14:46:37 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 15:13:58 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ int	main(int ac, char **av, char **envp)
 	value = 0;
 	init_struct(&prg);
 	init_envp(&prg, envp);
+	
 	shell_loop(&prg, prg.ls_envp, value);
 	if (prg.ls_envp)
 		ft_freesplit(prg.ls_envp);
 	ft_printf("BYE BYE\n");
-	// system("leaks -q minishell");
+	free_exp(&prg);
 	(void)ac;
 	(void)av;
+	system("leaks -q minishell");
 }
