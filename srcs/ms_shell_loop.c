@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:48:14 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:48:29 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 22:31:43 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,8 @@ void	free_all(t_prg *prg)
 /* 		<< 		heredoc */
 /* 		> 		redirect output */
 /* 		>> 		redirect output append */
-void	shell_loop(t_prg *prg, char **envp)
+void	shell_loop(t_prg *prg, char **envp, int value)
 {
-	int	value;
-
-	g_error = 0;
-	value = 0;
 	while (1)
 	{
 		setup_signal();
@@ -118,11 +114,7 @@ void	shell_loop(t_prg *prg, char **envp)
 		value = read_command(prg);
 		if (value == -1)
 			break ;
-		else if (value == 2)
-			continue ;
-		else if (value == 3)
-			continue ;
-		if (parsing(prg) == 1)
+		else if (value == 2 || value == 3 || (parsing(prg) == 1))
 			continue ;
 		if (prg->no_pipes == 0)
 		{
@@ -134,7 +126,6 @@ void	shell_loop(t_prg *prg, char **envp)
 				;
 			else if (executor(prg) == 0)
 				;
-			continue ;
 		}
 		else
 			executor(prg);

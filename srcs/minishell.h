@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:45:21 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/30 22:31:18 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_prg
 
 /* Initialization */
 void	init_struct(t_prg *prg);
-void	shell_loop(t_prg *prg, char **envp);
+void	shell_loop(t_prg *prg, char **envp, int value);
 void	setup_signal(void);
 int		read_command(t_prg *prg);
 void	init_envp(t_prg *prg, char **envp);
