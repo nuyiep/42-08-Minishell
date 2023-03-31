@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:55:33 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:57:24 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 18:21:27 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ char	*cmd_access(t_prg *prg, char *av_zero)
 	{
 		temp = ft_strjoin(prg->path[j], "/");
 		if (prg->no_pipes == 0)
-			temp = ft_strjoin(temp, prg->all_token[0]);
+			temp = ft_strjoin_free(temp, prg->all_token[0]);
 		else
-			temp = ft_strjoin(temp, av_zero);
+			temp = ft_strjoin_free(temp, av_zero);
 		results = cmd_access2(prg, temp, av_zero);
 		if (results != NULL)
 			return (results);

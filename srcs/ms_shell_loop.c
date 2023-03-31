@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 12:53:03 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 17:56:34 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 19:06:43 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ int	parsing(t_prg *prg)
 	if (prg->all_token == NULL)
 		return (1);
 	prg->all_token = expand_tokens(prg);
+	if (!check_quotes(prg))
+	{
+		g_error = 258;
+		ft_printf("syntax error\n");
+		return (1);
+	}
 	prg->all_token = remove_all_quotes(prg);
 	count_pipe_n_heredoc(prg);
 	return (0);

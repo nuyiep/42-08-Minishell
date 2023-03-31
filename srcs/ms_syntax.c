@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:49:27 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/30 22:05:49 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 19:11:21 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,31 @@ int	check_syntax(char **av)
 					ft_printf("syntax error near unexpected token `newline'\n");
 					return (0);
 				}
+			}
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	check_quotes(t_prg *prg)
+{
+	int		i;
+	int		j;
+	char	**tokens;
+
+	tokens = prg->all_token;
+	i = 0;
+	while (tokens[i])
+	{
+		j = 0;
+		while (tokens[i][j] && tokens[i][j + 1])
+		{
+			if (has_operators(tokens[i][j], "\'\""))
+			{
+				if (!has_pair_first(tokens[i], j))
+					return (0);
 			}
 			j++;
 		}

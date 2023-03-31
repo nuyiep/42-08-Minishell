@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 17:27:22 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 19:05:55 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,6 @@ void	free_exp(t_prg *prg);
 char	**remove_all_quotes(t_prg *prg);
 
 int		check_syntax(char **av);
+int		check_quotes(t_prg *prg);
 
 #endif

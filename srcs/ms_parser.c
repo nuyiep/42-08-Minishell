@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:16:07 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/31 17:42:57 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 18:46:14 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	remove_quote(char *str)
 	buffer = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	src = str;
 	dst = buffer;
-	dst_size = sizeof(buffer);
+	dst_size = ft_strlen(str);
 	while (*src && dst_size >= 1)
 	{
 		if (*src != '\"' && *src != '\'')

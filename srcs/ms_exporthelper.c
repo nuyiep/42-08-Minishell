@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exporthelper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:40:25 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 14:46:22 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 19:27:44 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	add_key(t_prg *prg, char *str)
 		j++;
 	}
 	new_envp[j] = ft_strdup(str);
+	ft_freesplit(prg->ls_envp);
 	j++;
 	new_envp[j] = 0;
 	prg->ls_envp = new_envp;
