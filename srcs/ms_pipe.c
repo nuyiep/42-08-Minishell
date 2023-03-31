@@ -6,11 +6,13 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:30:56 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:20:08 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 17:07:06 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	wait_free(int no_cmds, t_prg *prg, int **fd);
 
 int	**make_pipes(t_prg *prg)
 {
@@ -49,6 +51,7 @@ void	one_pipe(t_prg *prg, char **split, int **fd, int no_cmds)
 	ft_freesplit(av_one);
 	ft_freesplit(av_last);
 	ft_freesplit(split);
+	wait_free(2,prg, fd);
 }
 
 void	multiple_pipes(t_prg *prg, int **fd, int no_cmds, char **split)
@@ -88,11 +91,12 @@ void	wait_free(int no_cmds, t_prg *prg, int **fd)
 		i++;
 	}
 	i = 0;
-	while (i < prg->no_pipes)
+	while (fd[i])
 	{
 		free(fd[i]);
 		i++;
 	}
+	(void)prg;
 	free(fd);
 }
 
