@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 22:31:18 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 12:51:31 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int		find_var(char *token, char *var);
 void	get_value(t_prg *prg, char *key);
 
 /* lexer_utils */
-int		has_pair_first(char *s);
+int		has_pair_first(char *s, int i);
 int		has_pair(char *s);
 int		has_operators(char c, char *op);
 

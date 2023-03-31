@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 19:38:56 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/28 19:43:35 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 01:36:26 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ char	*check_first_quote(char *s, char ***tab, int *check)
 	{
 		if ((*s == '\'') || (*s == '\"'))
 		{
-			if (has_pair_first(s) != 0)
+			if (has_pair_first(s, 0) != 0)
 			{
-				**tab = ft_strndup(s, has_pair_first(s));
+				**tab = ft_strndup(s, has_pair_first(s, 0));
 				*tab += 1;
-				s += has_pair_first(s);
+				s += has_pair_first(s, 0);
 				*check = 0;
 			}
 		}		

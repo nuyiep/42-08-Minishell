@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/30 21:48:14 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 22:31:43 by plau             ###   ########.fr       */
+/*   Created: 2023/03/31 12:53:03 by plau              #+#    #+#             */
+/*   Updated: 2023/03/31 12:53:22 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // {
 // 	char **tokens;
 // 	int i = 1;
-// 
+
 // 	tokens = prg->all_token;
 // 	if (!*tokens)
 // 		ft_printf("error");
@@ -82,7 +82,7 @@ int	parsing(t_prg *prg)
 		return (1);
 	prg->all_token = expand_tokens(prg);
 	prg->all_token = remove_all_quotes(prg);
-	// print_tokens(prg);
+	//print_tokens(prg);
 	count_pipe_n_heredoc(prg);
 	return (0);
 }

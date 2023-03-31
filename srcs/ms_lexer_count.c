@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:48:20 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/28 17:51:53 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 01:34:57 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ char	*check_first_count(char *s, int *count, int *check)
 	{
 		if ((*s == '\'') || (*s == '\"'))
 		{
-			if (has_pair_first(s) != 0)
+			if (has_pair_first(s, 0) != 0)
 			{
 				*count += 1;
 				*check = 0;
-				s += has_pair_first(s);
+				s += has_pair_first(s, 0);
 			}
 		}	
 	}

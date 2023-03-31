@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:16:07 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/28 17:08:42 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 01:43:55 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,45 @@
 	Simple function to remove quotes from 
 	the front and back of a string
 */
-void	remove_quote(char *str)
-{
-	int	len;
+// void	remove_quote(char *str)
+// {
+// 	int	len;
 
-	len = ft_strlen(str);
-	if (len >= 2 && str[0] == '"' && str[len - 1] == '"')
-	{
-		str[len - 1] = '\0';
-		ft_memmove(str, str + 1, len - 1);
-	}
-	else if (len >= 2 && str[0] == '\'' && str[len - 1] == '\'')
-	{
-		str[len - 1] = '\0';
-		ft_memmove(str, str + 1, len - 1);
-	}
+// 	len = ft_strlen(str);
+// 	if (len >= 2 && str[0] == '"' && str[len - 1] == '"')
+// 	{
+// 		str[len - 1] = '\0';
+// 		ft_memmove(str, str + 1, len - 1);
+// 	}
+// 	else if (len >= 2 && str[0] == '\'' && str[len - 1] == '\'')
+// 	{
+// 		str[len - 1] = '\0';
+// 		ft_memmove(str, str + 1, len - 1);
+// 	}
+// }
+
+void    remove_quote(char *str) 
+{
+    char    buffer[ft_strlen(str) + 1];
+    char    *src;
+    char    *dst;
+    size_t  dst_size;
+
+    src = str;
+    dst = buffer;
+    dst_size = sizeof(buffer);
+    while (*src && dst_size > 1) 
+    {
+        if (*src != '\"' && *src != '\'') 
+        {
+            *dst++ = *src++;
+            dst_size--;
+        }
+        else
+            src++;
+    }
+    *dst = '\0';
+    ft_strlcpy(str, buffer, ft_strlen(str) + 1);
 }
 
 /*
