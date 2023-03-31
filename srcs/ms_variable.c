@@ -6,7 +6,7 @@
 /*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 17:17:47 by nchoo             #+#    #+#             */
-/*   Updated: 2023/03/31 16:38:10 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 16:45:54 by nchoo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	assign_value(t_prg *prg, char *key, int i)
 	if (prg->exp->key)
 		free(prg->exp->key);
 	prg->exp->key = ft_strdup(key);
+	if (pair[1])
 	if (pair[1])
 	{
 		if (prg->exp->value)
