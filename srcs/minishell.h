@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 19:05:55 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/01 17:51:53 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ typedef struct s_prg
 	int		heredoc_postion;
 	char	**av_execve;
 	int		cmd_pos;
+	int		total_redir_append_output;
+	int		last_file_pos;
+	char	*last_redir_symbol;
+	int		first_redir_symbol_pos;
 }	t_prg;
 
 /* Initialization */

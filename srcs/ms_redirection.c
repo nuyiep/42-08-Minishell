@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:21:03 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/04/01 18:51:40 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,56 @@ void	wait_redirection(void)
 		g_error = 130;
 }
 
+/* ls -l (> file.txt) >> outfile.txt */
+char	**remake_av(t_prg *prg, char **av)
+{
+	int		i;
+	char	**trimmed_av;
+	int		j;
+
+	i = 0;
+	trimmed_av = av;
+	while (i < prg->first_redir_symbol_pos)
+	{
+		trimmed_av[i] = av[i];
+		i++;
+	}
+	j = prg->last_file_pos - 1;
+	while (av[j] != NULL)
+	{
+		trimmed_av[i] = av[j];
+		i++;
+		j++;
+	}
+	prg->last_file_pos = i - 1; 
+	trimmed_av[i] = NULL;
+	return (trimmed_av);
+}
+
 /* pwd >> file.txt - redirect append */
+/* ls > file.txt >> outfile.txt */
+/* i - position of the file */
 void	redirect_append(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
+	if (prg->total_redir_append_output > 1)
+	{
+		if (ft_strncmp(prg->last_redir_symbol, ">>", 1) != 0)
+			return ;
+		else
+		{
+			av =  remake_av(prg, av);
+			i = prg->last_file_pos;
+		}
+	}
 	infile = open(av[i], O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fork() == 0)
 	{
 		if (infile == -1)
 		{
 			g_error = 2;
-			error_nl(prg, prg->all_token[i]);
+			error_nl(prg, av[i]);
 		}
 		prg->av_execve = NULL;
 		prg->av_execve = av;
@@ -94,11 +132,82 @@ void	redirect_input(t_prg *prg, int i, char **av)
 		wait_redirection();
 }
 
+/* PS: naming is different from subject pdf */
+/* 		< 		redirect input 				*/
+/* 		<< 		heredoc 					*/
+/* 		> 		redirect output 			*/
+/* 		>> 		redirect output append 		*/
+/*	To handle e.g. pwd > file > outfile		*/
+void	countsymbols_and_openfile(t_prg *prg)
+{
+	int	i;
+	int	redir_append;
+	int	redir_output;
+	int	redir_append_pos;
+	int	redir_output_pos;
+	
+	i = 0;
+	redir_append = 0;
+	redir_output = 0;
+	redir_append_pos = 0;
+	redir_output_pos = 0;
+	while (prg->all_token[i] != NULL && (prg->all_token[i + 1] != NULL))
+	{
+		if (ft_strcmp(prg->all_token[i], ">>") == 0)
+		{
+			open(prg->all_token[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0644);
+			redir_append++;
+			redir_append_pos = i;
+		}
+		else if (ft_strcmp(prg->all_token[i], ">") == 0)
+		{
+			open(prg->all_token[i + 1], O_CREAT, 0644);
+			redir_output++;
+			redir_output_pos = i;
+		}
+		i++;
+	}
+	prg->total_redir_append_output = redir_append + redir_output;
+	if (redir_append_pos > redir_output_pos)
+	{
+		prg->last_file_pos = redir_append_pos + 1;
+		prg->last_redir_symbol = ">>";
+	}
+	else
+	{
+		prg->last_file_pos = redir_output_pos + 1;
+		prg->last_redir_symbol = ">";
+	}
+}
+
+void	find_first_redir_symbol_pos(t_prg *prg)
+{
+	int	i;
+
+	i = 0;
+	while (prg->all_token[i] != NULL)
+	{
+		if (ft_strcmp(prg->all_token[i], ">>") == 0)
+		{
+			prg->first_redir_symbol_pos = i;
+			return ;
+		}
+		else if (ft_strcmp(prg->all_token[i], ">") == 0)
+		{
+			prg->first_redir_symbol_pos = i;
+			return ;
+		}
+		i++;
+	}
+}
+
 /* Main function for redirections */
 /* Examples */
 /* pwd >> file.txt - redirect append */
 /* ls > file.txt - redirect input */
 /* cat < file.txt -redirect output */
+/* pwd > file.txt >> outfile.txt */
+/* sort < inputfile.txt > outfile >> log.txt */
 int	redirections(t_prg *prg)
 {
 	int	i;
@@ -107,6 +216,8 @@ int	redirections(t_prg *prg)
 	i = 0;
 	prg->cmd_pos = 0;
 	fd = NULL;
+	countsymbols_and_openfile(prg);
+	find_first_redir_symbol_pos(prg);
 	while (prg->all_token[i] != NULL && (prg->all_token[i + 1] != NULL))
 	{
 		if (ft_strcmp(prg->all_token[i], ">>") == 0)
