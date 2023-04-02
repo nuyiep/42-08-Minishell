@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/04/01 18:51:40 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/02 15:38:43 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	**remake_av(t_prg *prg, char **av)
 	int		i;
 	char	**trimmed_av;
 	int		j;
+	int		k;
 
 	i = 0;
 	trimmed_av = av;
@@ -60,13 +61,16 @@ char	**remake_av(t_prg *prg, char **av)
 		i++;
 	}
 	j = prg->last_file_pos - 1;
+	k = i;
+	while (k < j)
+		free(av[k++]);
 	while (av[j] != NULL)
 	{
 		trimmed_av[i] = av[j];
 		i++;
 		j++;
 	}
-	prg->last_file_pos = i - 1; 
+	prg->last_file_pos = i - 1;
 	trimmed_av[i] = NULL;
 	return (trimmed_av);
 }
@@ -145,7 +149,7 @@ void	countsymbols_and_openfile(t_prg *prg)
 	int	redir_output;
 	int	redir_append_pos;
 	int	redir_output_pos;
-	
+
 	i = 0;
 	redir_append = 0;
 	redir_output = 0;

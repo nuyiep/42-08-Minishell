@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/04/01 17:51:53 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/01 19:10:21 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ int		redirections(t_prg *prg);
 int		redirect_output(t_prg *prg, int i, char **av, int **fd);
 void	redirect_append(t_prg *prg, int i, char **av);
 void	redirect_input(t_prg *prg, int i, char **av);
+void	countsymbols_and_openfile(t_prg *prg);
+void	find_first_redir_symbol_pos(t_prg *prg);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp, char **av);
