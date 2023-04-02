@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 21:44:31 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/02 14:39:53 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ int	main(int ac, char **av, char **envp)
 	free_exp(&prg);
 	(void)ac;
 	(void)av;
-	system("leaks -q minishell");
 }
+// system("leaks -q minishell");
