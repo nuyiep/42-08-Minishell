@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 18:09:46 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 21:49:17 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	ft_execute(t_prg *prg)
 	return (1);
 }
 
+/* To handle signal for cat and grep */
 void	sigint_handler_cat(int signum)
 {
 	ft_printf("^C\n");

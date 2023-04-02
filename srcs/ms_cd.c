@@ -6,12 +6,13 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 16:31:22 by plau              #+#    #+#             */
-/*   Updated: 2023/01/17 16:05:19 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 21:46:14 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* To get the HOME= address */
 char	*get_home_path(char **envp)
 {
 	int		i;

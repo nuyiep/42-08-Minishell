@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:02:02 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:53:40 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 21:48:10 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	run_process(t_prg *prg, char **av)
 	error_nl(prg, av[0]);
 }
 
+/* Wait function to be used in the executor */
 void	wait_function(void)
 {
 	int	status;
@@ -79,6 +80,7 @@ void	execute_first_cmd(t_prg *prg, int **fd, char **av_one, int i)
 		wait_function();
 }
 
+/* To execute middle commands */
 void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 {
 	int	pid;
@@ -103,6 +105,7 @@ void	execute_middle_cmd(t_prg *prg, int **fd, char **av_middle, int i)
 		wait_function();
 }
 
+/* To execute last command */
 void	execute_last_cmd(t_prg *prg, int **fd, char **av_last, int i)
 {
 	prg->cmd_pos = i;

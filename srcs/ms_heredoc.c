@@ -6,12 +6,14 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:44:45 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:36:03 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 21:55:09 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Wait function for heredoc */
+/* 130 is the exit code after e.g. grep/cat an empty command */
 void	wait_heredoc(void)
 {
 	int	status;
@@ -23,6 +25,11 @@ void	wait_heredoc(void)
 		g_error = 130;
 }
 
+/* To execute heredoc */
+/* E.g. pwd >> eof */
+/* 		echo hi >> eof */
+/*		exit >> eof */
+/* Heredoc can handle expansion too	*/
 void	execute_heredoc(t_prg *prg)
 {
 	int		pid;

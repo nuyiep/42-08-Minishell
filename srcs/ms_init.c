@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 20:02:19 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 17:22:20 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 21:55:29 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_envp(t_prg *prg, char **envp)
 	prg->ls_envp[i] = NULL;
 }
 
+/* To initialize exp */
 void	init_exp(t_prg *prg)
 {
 	prg->exp = malloc(sizeof(t_exp));

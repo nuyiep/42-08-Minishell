@@ -6,12 +6,13 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:27:06 by plau              #+#    #+#             */
-/*   Updated: 2023/03/28 15:32:33 by plau             ###   ########.fr       */
+/*   Updated: 2023/03/31 21:45:54 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Part of builtins function- To comply with norminette */
 int	builtins_2(t_prg *prg, char **envp, char **av)
 {
 	if (ft_strcmp(av[0], "cd") == 0)

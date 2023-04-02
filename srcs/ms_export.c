@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:08:26 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 14:46:10 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/03/31 21:50:20 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	**separate_key_value(char *arg)
 	return (output);
 }
 
+/* Add in declare -x */
 void	separate_print(int k, char **output, char **new_envp)
 {
 	int	j;
