@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/04/03 14:58:47 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/03 15:59:30 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,6 @@ void	redirect_append(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
-	if (prg->total_redir_append_output > 1)
-	{
-		if (ft_strncmp(prg->last_redir_symbol, ">>", 1) != 0)
-			return ;
-		else
-		{
-			av = remake_av(prg, av);
-			i = prg->last_file_pos;
-		}
-	}
 	infile = open(av[i], O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fork() == 0)
 	{
@@ -117,16 +107,6 @@ void	redirect_input(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
-	if (prg->total_redir_append_output > 1)
-	{
-		if (ft_strncmp(prg->last_redir_symbol, ">", 1) != 0)
-			return ;
-		else
-		{
-			av = remake_av(prg, av);
-			i = prg->last_file_pos;
-		}
-	}
 	infile = open(av[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fork() == 0)
 	{
@@ -152,7 +132,7 @@ void	redirect_input(t_prg *prg, int i, char **av)
 /* 		> 		redirect output 			*/
 /* 		>> 		redirect output append 		*/
 /*	To handle e.g. pwd > file > outfile		*/
-void	countsymbols_and_openfile(t_prg *prg)
+void	countsymbols_and_openfile(t_prg *prg, char **av)
 {
 	int	i;
 	int	redir_append;
@@ -165,17 +145,17 @@ void	countsymbols_and_openfile(t_prg *prg)
 	redir_output = 0;
 	redir_append_pos = 0;
 	redir_output_pos = 0;
-	while (prg->all_token[i] != NULL && (prg->all_token[i + 1] != NULL))
+	while (av[i] != NULL && (av[i + 1] != NULL))
 	{
-		if (ft_strcmp(prg->all_token[i], ">>") == 0)
+		if (ft_strcmp(av[i], ">>") == 0)
 		{
-			open(prg->all_token[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0644);
+			open(av[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0644);
 			redir_append++;
 			redir_append_pos = i;
 		}
-		else if (ft_strcmp(prg->all_token[i], ">") == 0)
+		else if (ft_strcmp(av[i], ">") == 0)
 		{
-			open(prg->all_token[i + 1], O_CREAT, 0644);
+			open(av[i + 1], O_CREAT, 0644);
 			redir_output++;
 			redir_output_pos = i;
 		}
@@ -194,19 +174,19 @@ void	countsymbols_and_openfile(t_prg *prg)
 	}
 }
 
-void	find_first_redir_symbol_pos(t_prg *prg)
+void	find_first_redir_symbol_pos(t_prg *prg, char **av)
 {
 	int	i;
 
 	i = 0;
-	while (prg->all_token[i] != NULL)
+	while (av[i] != NULL)
 	{
-		if (ft_strcmp(prg->all_token[i], ">>") == 0)
+		if (ft_strcmp(av[i], ">>") == 0)
 		{
 			prg->first_redir_symbol_pos = i;
 			return ;
 		}
-		else if (ft_strcmp(prg->all_token[i], ">") == 0)
+		else if (ft_strcmp(av[i], ">") == 0)
 		{
 			prg->first_redir_symbol_pos = i;
 			return ;
@@ -230,8 +210,10 @@ int	redirections(t_prg *prg)
 	i = 0;
 	prg->cmd_pos = 0;
 	fd = NULL;
-	countsymbols_and_openfile(prg);
-	find_first_redir_symbol_pos(prg);
+	countsymbols_and_openfile(prg, prg->all_token);
+	find_first_redir_symbol_pos(prg, prg->all_token);
+	if (prg->total_redir_append_output > 1)
+		remake_av(prg, prg->all_token);
 	while (prg->all_token[i] != NULL && (prg->all_token[i + 1] != NULL))
 	{
 		if (ft_strcmp(prg->all_token[i], ">>") == 0)

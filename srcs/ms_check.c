@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 18:26:40 by plau              #+#    #+#             */
-/*   Updated: 2023/04/02 15:23:37 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/03 16:04:17 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ int	check_redirection_builtins(t_prg *prg, char **av, int **fd)
 	int	i;
 
 	i = 0;
-	countsymbols_and_openfile(prg);
-	find_first_redir_symbol_pos(prg);
-	while (av[i] != NULL)
+	countsymbols_and_openfile(prg, av);
+	find_first_redir_symbol_pos(prg, av);
+	if (prg->total_redir_append_output > 1)
+		remake_av(prg, av);
+	while (av[i] != NULL && av[i + 1] != NULL)
 	{
 		if (ft_strcmp(av[i], "<<") == 0)
 		{
