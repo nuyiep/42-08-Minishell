@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/04/03 16:00:11 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/03 18:57:04 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_prg
 	int		cmd_pos;
 	int		total_redir_append_output;
 	int		last_file_pos;
-	char	*last_redir_symbol;
 	int		first_redir_symbol_pos;
 }	t_prg;
 
@@ -96,8 +95,8 @@ int		single_command(t_prg *prg);
 /* Redirection */
 int		redirections(t_prg *prg);
 int		redirect_output(t_prg *prg, int i, char **av, int **fd);
-void	redirect_append(t_prg *prg, int i, char **av);
-void	redirect_input(t_prg *prg, int i, char **av);
+int		redirect_append(t_prg *prg, int i, char **av);
+int		redirect_input(t_prg *prg, int i, char **av);
 void	countsymbols_and_openfile(t_prg *prg, char **av);
 void	find_first_redir_symbol_pos(t_prg *prg, char **av);
 char	**remake_av(t_prg *prg, char **av);

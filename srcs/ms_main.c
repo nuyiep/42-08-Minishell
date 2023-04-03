@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:42:23 by plau              #+#    #+#             */
-/*   Updated: 2023/04/02 15:06:13 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/03 19:00:00 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	init_struct(t_prg *prg)
 	prg->cmd_pos = -1;
 	prg->total_redir_append_output = 0;
 	prg->last_file_pos = 0;
-	prg->last_redir_symbol = NULL;
 	prg->first_redir_symbol_pos = 0;
 }
 
@@ -45,7 +44,7 @@ int	main(int ac, char **av, char **envp)
 		ft_freesplit(prg.ls_envp);
 	ft_printf("BYE BYE\n");
 	free_exp(&prg);
-	system("leaks -q minishell");
 	(void)ac;
 	(void)av;
 }
+	// system("leaks -q minishell");
