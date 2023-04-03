@@ -6,7 +6,7 @@
 #    By: plau <plau@student.42.kl>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/29 09:10:03 by plau              #+#    #+#              #
-#    Updated: 2023/04/03 18:49:33 by plau             ###   ########.fr        #
+#    Updated: 2023/04/03 21:35:15 by plau             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,8 @@ SRCS_FILES    	=   	ms_main \
 						ms_executor2 \
 						ms_syntax \
 						ms_cmd_access \
-						ms_redirection3
+						ms_redirection3 \
+						ms_redirection4
 SRCS       		=     	$(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJS        	=     	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRCS_FILES)))
 SRCS_DIR    	=    	srcs/

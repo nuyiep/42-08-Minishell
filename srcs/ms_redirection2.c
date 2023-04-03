@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redirection2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 16:48:23 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:21:22 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/04/03 22:48:41 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,11 @@ void	redirect_output2(t_prg *prg, int i, int **fd, char **av)
 /* Only print out the last command, the rest store in pipe */
 int	redirect_output(t_prg *prg, int i, char **av, int **fd)
 {
-	int	outfile;
-	int	status;
+	int		outfile;
+	int		status;
 
+	if (redirect_output3(prg, av, fd) == 1)
+		return (1);
 	outfile = open(av[i], O_RDONLY, 0644);
 	if (fork() == 0)
 	{

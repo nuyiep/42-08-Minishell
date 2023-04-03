@@ -6,11 +6,13 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 18:37:05 by plau              #+#    #+#             */
-/*   Updated: 2023/04/03 18:54:58 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/03 19:29:27 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* THIS FILE IS TO HANDLE MULTIPLE >> AND > */
 
 /* Part of the countsymbols_and_openfile function */
 /* To comply with norminette 					  */
