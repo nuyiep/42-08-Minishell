@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/04/02 15:38:43 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/03 14:58:47 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	redirect_append(t_prg *prg, int i, char **av)
 			return ;
 		else
 		{
-			av =  remake_av(prg, av);
+			av = remake_av(prg, av);
 			i = prg->last_file_pos;
 		}
 	}
@@ -117,6 +117,16 @@ void	redirect_input(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
+	if (prg->total_redir_append_output > 1)
+	{
+		if (ft_strncmp(prg->last_redir_symbol, ">", 1) != 0)
+			return ;
+		else
+		{
+			av = remake_av(prg, av);
+			i = prg->last_file_pos;
+		}
+	}
 	infile = open(av[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fork() == 0)
 	{
