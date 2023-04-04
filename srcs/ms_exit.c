@@ -6,12 +6,16 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:40:00 by plau              #+#    #+#             */
-/*   Updated: 2023/04/04 20:42:18 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/04 20:48:36 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* Part of the function for ms_exit */
+/* Separate it to comply with Norminette */
+/* It handles when arguments is exactly 2 */
+/* E.g. exit 78, exit ah8 */
 void	when_i_is_2(int i, t_prg *prg)
 {
 	if (i == 2)
@@ -34,6 +38,9 @@ void	when_i_is_2(int i, t_prg *prg)
 }
 
 /* Built-in exit */
+/* Exit only allows a maximum of 2 arguments */
+/* Exit doesnt allow non-numeric values */
+/* When exit 89 -> echo $? will show 89 (the number after exit) */
 void	ms_exit(t_prg *prg)
 {
 	int	i;
