@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 15:44:45 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:36:03 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/04 15:06:07 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,16 @@ void	execute_heredoc(t_prg *prg)
 	free(empty_str);
 }
 
+/* Part of get_str function */
+/* Separate it to comply with norminette */
+void	get_str2(char *all_lines, t_prg *prg)
+{
+	if (ft_strcmp(prg->all_token[0], "cat") == 0)
+		printf("%s", all_lines);
+	else
+		execute_heredoc(prg);
+}
+
 /* Printing out heredoc- until the delimiter is found */
 void	get_str(char *delimiter, t_prg *prg)
 {
@@ -67,14 +77,14 @@ void	get_str(char *delimiter, t_prg *prg)
 			free(each_line);
 			break ;
 		}
-		each_line = ft_strjoin_free(each_line, "\n");
+		if (each_line == NULL)
+			each_line = ft_strdup("");
+		else
+			each_line = ft_strjoin_free(each_line, "\n");
 		all_lines = ft_strjoin_free(all_lines, each_line);
 		free(each_line);
 	}
-	if (ft_strcmp(prg->all_token[0], "cat") == 0)
-		printf("%s", all_lines);
-	else
-		execute_heredoc(prg);
+	get_str2(all_lines, prg);
 	free(all_lines);
 }
 
