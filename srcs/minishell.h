@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 22:54:27 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 19:05:55 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/03 22:48:57 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ typedef struct s_prg
 	int		heredoc_postion;
 	char	**av_execve;
 	int		cmd_pos;
+	int		total_redir_append_output;
+	int		last_file_pos;
+	int		first_redir_symbol_pos;
+	int		total_redir_output;
+	int		first_symbol_pos_output;
 }	t_prg;
 
 /* Initialization */
@@ -92,8 +97,16 @@ int		single_command(t_prg *prg);
 /* Redirection */
 int		redirections(t_prg *prg);
 int		redirect_output(t_prg *prg, int i, char **av, int **fd);
-void	redirect_append(t_prg *prg, int i, char **av);
-void	redirect_input(t_prg *prg, int i, char **av);
+int		redirect_append(t_prg *prg, int i, char **av);
+int		redirect_input(t_prg *prg, int i, char **av);
+void	countsymbols_and_openfile(t_prg *prg, char **av);
+void	find_first_redir_symbol_pos(t_prg *prg, char **av);
+char	**remake_av(t_prg *prg, char **av);
+int		countsymbols_and_checkfile(t_prg *prg, char **av);
+void	multiple_output(t_prg *prg, char **av, int i, int **fd);
+char	**remake_av_output(t_prg *prg, char **av, int last_file_position);
+void	redirect_output2(t_prg *prg, int i, int **fd, char **av);
+int		redirect_output3(t_prg *prg, char **av, int **fd);
 
 /* Builtins */
 int		builtins(t_prg *prg, char **envp, char **av);

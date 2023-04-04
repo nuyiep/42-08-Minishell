@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 12:53:03 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 19:06:43 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/01 19:09:44 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,12 @@ void	free_all(t_prg *prg)
 	free_exp(prg);
 }
 
-/* Main function for shell loop */
-/* 		< 		redirect input */
-/* 		<< 		heredoc */
-/* 		> 		redirect output */
-/* 		>> 		redirect output append */
+/* Main function for shell loop 			*/
+/* 		< 		redirect input 				*/
+/* 		<< 		heredoc 					*/
+/* 		> 		redirect output 			*/
+/* 		>> 		redirect output append 		*/
+/* PS: naming is different from subject pdf */
 void	shell_loop(t_prg *prg, char **envp, int value)
 {
 	while (1)

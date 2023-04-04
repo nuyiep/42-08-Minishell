@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nchoo <nchoo@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 11:49:30 by plau              #+#    #+#             */
-/*   Updated: 2023/03/30 21:21:03 by nchoo            ###   ########.fr       */
+/*   Updated: 2023/04/03 19:36:11 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void	wait_redirection(void)
 }
 
 /* pwd >> file.txt - redirect append */
-void	redirect_append(t_prg *prg, int i, char **av)
+/* ls > file.txt >> outfile.txt */
+/* i - position of the file */
+int	redirect_append(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
@@ -56,7 +58,7 @@ void	redirect_append(t_prg *prg, int i, char **av)
 		if (infile == -1)
 		{
 			g_error = 2;
-			error_nl(prg, prg->all_token[i]);
+			error_nl(prg, av[i]);
 		}
 		prg->av_execve = NULL;
 		prg->av_execve = av;
@@ -64,14 +66,15 @@ void	redirect_append(t_prg *prg, int i, char **av)
 		free(prg->av_execve[i - 1]);
 		prg->av_execve[i - 1] = NULL;
 		if (ft_execute_redirection(infile, prg->ls_envp, prg, av))
-			return ;
+			return (1);
 	}
 	else
 		wait_redirection();
+	return (1);
 }
 
 /* ls > ls.txt - redirect input */
-void	redirect_input(t_prg *prg, int i, char **av)
+int	redirect_input(t_prg *prg, int i, char **av)
 {
 	int	infile;
 
@@ -88,10 +91,11 @@ void	redirect_input(t_prg *prg, int i, char **av)
 		free(prg->av_execve[i - 1]);
 		prg->av_execve[i - 1] = NULL;
 		if (ft_execute_redirection(infile, prg->ls_envp, prg, av))
-			return ;
+			return (1);
 	}
 	else
 		wait_redirection();
+	return (1);
 }
 
 /* Main function for redirections */
@@ -99,6 +103,8 @@ void	redirect_input(t_prg *prg, int i, char **av)
 /* pwd >> file.txt - redirect append */
 /* ls > file.txt - redirect input */
 /* cat < file.txt -redirect output */
+/* pwd > file.txt >> outfile.txt */
+/* sort < inputfile.txt > outfile >> log.txt */
 int	redirections(t_prg *prg)
 {
 	int	i;
@@ -107,18 +113,16 @@ int	redirections(t_prg *prg)
 	i = 0;
 	prg->cmd_pos = 0;
 	fd = NULL;
+	countsymbols_and_openfile(prg, prg->all_token);
+	find_first_redir_symbol_pos(prg, prg->all_token);
+	if (prg->total_redir_append_output > 1)
+		remake_av(prg, prg->all_token);
 	while (prg->all_token[i] != NULL && (prg->all_token[i + 1] != NULL))
 	{
 		if (ft_strcmp(prg->all_token[i], ">>") == 0)
-		{
-			redirect_append(prg, i + 1, prg->all_token);
-			return (1);
-		}
+			return (redirect_append(prg, i + 1, prg->all_token));
 		else if (ft_strcmp(prg->all_token[i], ">") == 0)
-		{
-			redirect_input(prg, i + 1, prg->all_token);
-			return (1);
-		}
+			return (redirect_input(prg, i + 1, prg->all_token));
 		else if (ft_strcmp(prg->all_token[i], "<") == 0)
 			return (redirect_output(prg, i + 1, prg->all_token, fd));
 		i++;
