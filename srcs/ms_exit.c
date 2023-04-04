@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:40:00 by plau              #+#    #+#             */
-/*   Updated: 2023/04/04 20:48:36 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/04 20:51:00 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /* Separate it to comply with Norminette */
 /* It handles when arguments is exactly 2 */
 /* E.g. exit 78, exit ah8 */
-void	when_i_is_2(int i, t_prg *prg)
+void	exit_with_two_arguments(int i, t_prg *prg)
 {
 	if (i == 2)
 	{
@@ -55,7 +55,7 @@ void	ms_exit(t_prg *prg)
 		g_error = 1;
 		return ;
 	}
-	when_i_is_2(i, prg);
+	exit_with_two_arguments(i, prg);
 	if (ft_atoi(prg->all_token[1]) > 256)
 		g_error = (ft_atoi(prg->all_token[1]) % 256);
 	else
