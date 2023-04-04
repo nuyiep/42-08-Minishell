@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/04/04 18:37:10 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/04 18:42:18 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	sig_handler(int signum)
 	if (signum == SIGINT)
 		ft_printf("^C\n");
 	else if (signum == SIGQUIT)
-		ft_printf("^\\Quit: 3\n");
+		ft_printf("^\\Quit: %d\n", signum);
 }
 
 /* Just to execute one command */
