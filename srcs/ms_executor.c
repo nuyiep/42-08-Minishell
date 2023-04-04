@@ -6,7 +6,7 @@
 /*   By: plau <plau@student.42.kl>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:33:39 by plau              #+#    #+#             */
-/*   Updated: 2023/03/31 18:09:46 by plau             ###   ########.fr       */
+/*   Updated: 2023/04/04 13:10:16 by plau             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ int	ft_execute(t_prg *prg)
 	return (1);
 }
 
-void	sigint_handler_cat(int signum)
+void	sig_handler(int signum)
 {
-	ft_printf("^C\n");
-	(void)signum;
+	if (signum == SIGINT)
+		ft_printf("^C\n");
+	else if (signum == SIGQUIT)
+		ft_printf("^\\Quit: 3\n");
 }
 
 /* Just to execute one command */
@@ -55,10 +57,11 @@ int	single_command(t_prg *prg)
 	}
 	else
 	{
-		sa.sa_handler = sigint_handler_cat;
+		sa.sa_handler = sig_handler;
 		sigemptyset(&sa.sa_mask);
 		sa.sa_flags = SA_RESTART;
 		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
 		waitpid(0, &status, WUNTRACED);
 		if (WIFEXITED(status))
 			g_error = (WEXITSTATUS(status));
