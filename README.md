@@ -1,3 +1,4 @@
 # 42-08-Minishell
 
-Teammates with @nicchooyf 🐉
+Teammates
+      <a href="https://github.com/nicchooyf">nicchooyf🐉</a>
